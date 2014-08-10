@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <departure>
+    <airport type="string">KHAF</airport>
+  </departure>
+  <destination>
+    <airport type="string">KHAF</airport>
+  </destination>
+  <route>
+    <wp>
+      <type type="string">navaid</type>
+      <departure type="bool">true</departure>
+      <ident type="string">KHAF</ident>
+      <lon type="double">-122.4963758</lon>
+      <lat type="double">37.51314351</lat>
+    </wp>
+    <wp n="1">
+      <type type="string">navaid</type>
+      <ident type="string">KSFO</ident>
+      <lon type="double">-122.381048</lon>
+      <lat type="double">37.62084548</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">navaid</type>
+      <ident type="string">KJFK</ident>
+      <lon type="double">-73.78598385</lon>
+      <lat type="double">40.64590752</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">navaid</type>
+      <ident type="string">EGLL</ident>
+      <lon type="double">-0.4557092809</lon>
+      <lat type="double">51.46951435</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">navaid</type>
+      <ident type="string">HECA</ident>
+      <lon type="double">31.40778621</lon>
+      <lat type="double">30.11957059</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">navaid</type>
+      <ident type="string">OMDB</ident>
+      <lon type="double">55.36036422</lon>
+      <lat type="double">25.24962132</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">navaid</type>
+      <ident type="string">WSSS</ident>
+      <lon type="double">103.9898669</lon>
+      <lat type="double">1.359461756</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">navaid</type>
+      <ident type="string">YSSY</ident>
+      <lon type="double">151.1797731</lon>
+      <lat type="double">-33.94339206</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">navaid</type>
+      <ident type="string">PHNL</ident>
+      <lon type="double">-157.9236099</lon>
+      <lat type="double">21.32187632</lat>
+    </wp>
+    <wp n="9">
+      <type type="string">navaid</type>
+      <approach type="bool">true</approach>
+      <ident type="string">KHAF</ident>
+      <lon type="double">-122.4963758</lon>
+      <lat type="double">37.51314351</lat>
+    </wp>
+  </route>
+</PropertyList>

@@ -1,0 +1,26 @@
+**********
+Installation Commands
+**********
+
+cp pause-manager.xml $FG_DATA/gui/dialogs
+cp pause_manager.nas $FG_DATA/Nasal
+
+**********
+Scripts add to $FG_DATA/gui/menubar.xml
+**********
+
+<menu>
+	<name>autopilot</name>
+    ......
+    <item>
+	  <name>pause-manager</name>
+      <label>Pause Manager</label>
+      <binding>
+        <command>dialog-show</command>
+        <dialog-name>pause-manager</dialog-name>
+      </binding>
+    </item>
+    ......
+  </default>
+</menu>
+
