@@ -51,9 +51,9 @@ A daemon program to detect the following conditions:
 
 * Simulation paused and waiting for manual operation.  
   \* When this happend, an email will be sent and the daemon program will exit.  
-  \*The email sent contains a description of the condition happend, a report generated when the condition happend.
+  \* The email sent contains a description of the condition happend, a report generated when the condition happend.
 * When the aircraft reached a waypoint, get its name and send an E-mail.  
-  \*The email sent contains a description of the condition happend, a report generated when the condition happend, a screenshot captured when the condition happend.
+  \* The email sent contains a description of the condition happend, a report generated when the condition happend, a screenshot captured when the condition happend.
 
 Accessories
 -----------
