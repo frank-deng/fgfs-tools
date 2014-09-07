@@ -5,7 +5,7 @@
   <departure>
     <airport type="string">FACT</airport>
     <sid type="string">DEFAULT</sid>
-    <runway type="string">34</runway>
+    <runway type="string">01</runway>
   </departure>
   <destination>
     <airport type="string">RJAA</airport>
@@ -16,7 +16,7 @@
     <wp>
       <type type="string">runway</type>
       <departure type="bool">true</departure>
-      <ident type="string">34</ident>
+      <ident type="string">01</ident>
       <icao type="string">FACT</icao>
     </wp>
     <wp n="1">
@@ -25,9 +25,9 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">3151</altitude-ft>
-      <ident type="string">34-3</ident>
-      <lon type="double">18.55553808</lon>
-      <lat type="double">-33.92582287</lat>
+      <ident type="string">01-3</ident>
+      <lon type="double">18.58495053</lon>
+      <lat type="double">-33.9116711</lat>
     </wp>
     <wp n="2">
       <type type="string">basic</type>
@@ -35,27 +35,19 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">6151</altitude-ft>
-      <ident type="string">34-6</ident>
-      <lon type="double">18.51335063</lon>
-      <lat type="double">-33.89016217</lat>
+      <ident type="string">01-6</ident>
+      <lon type="double">18.56969718</lon>
+      <lat type="double">-33.86322339</lat>
     </wp>
     <wp n="3">
       <type type="string">basic</type>
       <departure type="bool">true</departure>
       <generated type="bool">true</generated>
       <ident type="string">DEP-3</ident>
-      <lon type="double">18.51371732</lon>
-      <lat type="double">-33.84007292</lat>
+      <lon type="double">18.59994849</lon>
+      <lat type="double">-33.81995865</lat>
     </wp>
     <wp n="4">
-      <type type="string">basic</type>
-      <departure type="bool">true</departure>
-      <generated type="bool">true</generated>
-      <ident type="string">DEP-4</ident>
-      <lon type="double">18.55640417</lon>
-      <lat type="double">-33.80486321</lat>
-    </wp>
-    <wp n="5">
       <type type="string">navaid</type>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">35000</altitude-ft>
@@ -63,475 +55,241 @@
       <lon type="double">19.186903</lon>
       <lat type="double">-33.413917</lat>
     </wp>
-    <wp n="6">
+    <wp n="5">
       <type type="string">navaid</type>
       <ident type="string">SLV</ident>
       <lon type="double">20.622361</lon>
       <lat type="double">-32.450111</lat>
     </wp>
-    <wp n="7">
+    <wp n="6">
       <type type="string">navaid</type>
       <ident type="string">VWV</ident>
       <lon type="double">23.108889</lon>
       <lat type="double">-31.396944</lat>
     </wp>
-    <wp n="8">
-      <type type="string">navaid</type>
-      <ident type="string">EGSOK</ident>
-      <lon type="double">25.646017</lon>
-      <lat type="double">-29.586822</lat>
-    </wp>
-    <wp n="9">
+    <wp n="7">
       <type type="string">navaid</type>
       <ident type="string">BLV</ident>
       <lon type="double">26.300658</lon>
       <lat type="double">-29.1005</lat>
     </wp>
-    <wp n="10">
-      <type type="string">navaid</type>
-      <ident type="string">NIDEM</ident>
-      <lon type="double">28.735861</lon>
-      <lat type="double">-29.569306</lat>
-    </wp>
-    <wp n="11">
+    <wp n="8">
       <type type="string">navaid</type>
       <ident type="string">DNV</ident>
       <lon type="double">30.951192</lon>
       <lat type="double">-29.972156</lat>
     </wp>
-    <wp n="12">
-      <type type="string">navaid</type>
-      <ident type="string">ESRET</ident>
-      <lon type="double">33.13485</lon>
-      <lat type="double">-29.277683</lat>
-    </wp>
-    <wp n="13">
-      <type type="string">navaid</type>
-      <ident type="string">APLUK</ident>
-      <lon type="double">34.425556</lon>
-      <lat type="double">-28.870278</lat>
-    </wp>
-    <wp n="14">
+    <wp n="9">
       <type type="string">navaid</type>
       <ident type="string">ETMOS</ident>
       <lon type="double">35.938332</lon>
       <lat type="double">-28.373333</lat>
     </wp>
-    <wp n="15">
+    <wp n="10">
       <type type="string">navaid</type>
       <ident type="string">ETGUN</ident>
       <lon type="double">40</lon>
       <lat type="double">-27</lat>
     </wp>
-    <wp n="16">
+    <wp n="11">
       <type type="string">navaid</type>
       <ident type="string">KEDOM</ident>
       <lon type="double">43.5</lon>
       <lat type="double">-26.062222</lat>
     </wp>
-    <wp n="17">
+    <wp n="12">
       <type type="string">navaid</type>
       <ident type="string">VSP</ident>
       <lon type="double">46.953056</lon>
       <lat type="double">-25.037444</lat>
     </wp>
-    <wp n="18">
+    <wp n="13">
       <type type="string">navaid</type>
       <ident type="string">LOPIN</ident>
       <lon type="double">50</lon>
       <lat type="double">-23.829167</lat>
     </wp>
-    <wp n="19">
+    <wp n="14">
       <type type="string">navaid</type>
       <ident type="string">GETIR</ident>
       <lon type="double">53.367417</lon>
       <lat type="double">-22.395806</lat>
     </wp>
-    <wp n="20">
-      <type type="string">navaid</type>
-      <ident type="string">PASAR</ident>
-      <lon type="double">56.399444</lon>
-      <lat type="double">-21.018</lat>
-    </wp>
-    <wp n="21">
+    <wp n="15">
       <type type="string">navaid</type>
       <ident type="string">PLS</ident>
       <lon type="double">57.662333</lon>
       <lat type="double">-20.420028</lat>
     </wp>
-    <wp n="22">
+    <wp n="16">
       <type type="string">navaid</type>
       <ident type="string">GUTKO</ident>
       <lon type="double">59.903889</lon>
       <lat type="double">-19.078333</lat>
     </wp>
-    <wp n="23">
+    <wp n="17">
       <type type="string">navaid</type>
       <ident type="string">KABDO</ident>
       <lon type="double">65</lon>
       <lat type="double">-15.845833</lat>
     </wp>
-    <wp n="24">
+    <wp n="18">
       <type type="string">navaid</type>
       <ident type="string">KANSA</ident>
       <lon type="double">70</lon>
       <lat type="double">-12.451389</lat>
     </wp>
-    <wp n="25">
+    <wp n="19">
       <type type="string">navaid</type>
       <ident type="string">KALBI</ident>
       <lon type="double">75</lon>
       <lat type="double">-8.871667</lat>
     </wp>
-    <wp n="26">
+    <wp n="20">
       <type type="string">navaid</type>
       <ident type="string">KABTA</ident>
       <lon type="double">79</lon>
       <lat type="double">-5.908333</lat>
     </wp>
-    <wp n="27">
+    <wp n="21">
       <type type="string">navaid</type>
       <ident type="string">KADAP</ident>
       <lon type="double">84.16</lon>
       <lat type="double">-2</lat>
     </wp>
-    <wp n="28">
+    <wp n="22">
       <type type="string">navaid</type>
       <ident type="string">KALOX</ident>
       <lon type="double">86.371478</lon>
       <lat type="double">-0.310842</lat>
     </wp>
-    <wp n="29">
+    <wp n="23">
       <type type="string">navaid</type>
       <ident type="string">GUTOX</ident>
       <lon type="double">89.772722</lon>
       <lat type="double">2.289047</lat>
     </wp>
-    <wp n="30">
+    <wp n="24">
       <type type="string">navaid</type>
       <ident type="string">NIXUL</ident>
       <lon type="double">92</lon>
       <lat type="double">4.008056</lat>
     </wp>
-    <wp n="31">
+    <wp n="25">
       <type type="string">navaid</type>
       <ident type="string">BEDAX</ident>
       <lon type="double">93.787575</lon>
       <lat type="double">5.364328</lat>
     </wp>
-    <wp n="32">
-      <type type="string">navaid</type>
-      <ident type="string">POVUS</ident>
-      <lon type="double">94.666111</lon>
-      <lat type="double">6</lat>
-    </wp>
-    <wp n="33">
-      <type type="string">navaid</type>
-      <ident type="string">IGEBO</ident>
-      <lon type="double">95.080833</lon>
-      <lat type="double">6.235833</lat>
-    </wp>
-    <wp n="34">
-      <type type="string">navaid</type>
-      <ident type="string">SANOB</ident>
-      <lon type="double">95.669167</lon>
-      <lat type="double">6.586111</lat>
-    </wp>
-    <wp n="35">
+    <wp n="26">
       <type type="string">navaid</type>
       <ident type="string">DOVUM</ident>
       <lon type="double">96.042778</lon>
       <lat type="double">6.793056</lat>
     </wp>
-    <wp n="36">
-      <type type="string">navaid</type>
-      <ident type="string">UXARA</ident>
-      <lon type="double">97.336389</lon>
-      <lat type="double">7.538889</lat>
-    </wp>
-    <wp n="37">
-      <type type="string">navaid</type>
-      <ident type="string">RUSET</ident>
-      <lon type="double">97.715833</lon>
-      <lat type="double">7.771111</lat>
-    </wp>
-    <wp n="38">
-      <type type="string">navaid</type>
-      <ident type="string">PUT</ident>
-      <lon type="double">98.306303</lon>
-      <lat type="double">8.115231</lat>
-    </wp>
-    <wp n="39">
+    <wp n="27">
       <type type="string">navaid</type>
       <ident type="string">STN</ident>
       <lon type="double">99.134747</lon>
       <lat type="double">9.129511</lat>
     </wp>
-    <wp n="40">
-      <type type="string">navaid</type>
-      <ident type="string">SMU</ident>
-      <lon type="double">100.061742</lon>
-      <lat type="double">9.547075</lat>
-    </wp>
-    <wp n="41">
-      <type type="string">navaid</type>
-      <ident type="string">UPNEP</ident>
-      <lon type="double">100.493444</lon>
-      <lat type="double">9.703639</lat>
-    </wp>
-    <wp n="42">
+    <wp n="28">
       <type type="string">navaid</type>
       <ident type="string">EMELA</ident>
       <lon type="double">101.124761</lon>
       <lat type="double">10.213664</lat>
     </wp>
-    <wp n="43">
-      <type type="string">navaid</type>
-      <ident type="string">ALUMO</ident>
-      <lon type="double">101.85635</lon>
-      <lat type="double">10.764969</lat>
-    </wp>
-    <wp n="44">
-      <type type="string">navaid</type>
-      <ident type="string">ANOBO</ident>
-      <lon type="double">102.244892</lon>
-      <lat type="double">11.056389</lat>
-    </wp>
-    <wp n="45">
+    <wp n="29">
       <type type="string">navaid</type>
       <ident type="string">KK</ident>
       <lon type="double">102.996444</lon>
       <lat type="double">11.616861</lat>
     </wp>
-    <wp n="46">
-      <type type="string">navaid</type>
-      <ident type="string">BIDEG</ident>
-      <lon type="double">103.508333</lon>
-      <lat type="double">12.066667</lat>
-    </wp>
-    <wp n="47">
-      <type type="string">navaid</type>
-      <ident type="string">AKNAT</ident>
-      <lon type="double">103.711667</lon>
-      <lat type="double">12.233333</lat>
-    </wp>
-    <wp n="48">
-      <type type="string">navaid</type>
-      <ident type="string">SATON</ident>
-      <lon type="double">104.563611</lon>
-      <lat type="double">12.949444</lat>
-    </wp>
-    <wp n="49">
-      <type type="string">navaid</type>
-      <ident type="string">VIBUN</ident>
-      <lon type="double">105.431667</lon>
-      <lat type="double">13.796667</lat>
-    </wp>
-    <wp n="50">
+    <wp n="30">
       <type type="string">navaid</type>
       <ident type="string">LAVAN</ident>
       <lon type="double">105.73</lon>
       <lat type="double">14.142167</lat>
     </wp>
-    <wp n="51">
-      <type type="string">navaid</type>
-      <ident type="string">PAPRA</ident>
-      <lon type="double">107.183333</lon>
-      <lat type="double">15.766666</lat>
-    </wp>
-    <wp n="52">
+    <wp n="31">
       <type type="string">navaid</type>
       <ident type="string">DAN</ident>
       <lon type="double">108.198228</lon>
       <lat type="double">16.052764</lat>
     </wp>
-    <wp n="53">
-      <type type="string">navaid</type>
-      <ident type="string">BUNTA</ident>
-      <lon type="double">109.395</lon>
-      <lat type="double">16.833333</lat>
-    </wp>
-    <wp n="54">
-      <type type="string">navaid</type>
-      <ident type="string">CAVOI</ident>
-      <lon type="double">110</lon>
-      <lat type="double">17.225</lat>
-    </wp>
-    <wp n="55">
+    <wp n="32">
       <type type="string">navaid</type>
       <ident type="string">DAGON</ident>
       <lon type="double">111.865</lon>
       <lat type="double">19.088333</lat>
     </wp>
-    <wp n="56">
+    <wp n="33">
       <type type="string">navaid</type>
       <ident type="string">CH</ident>
       <lon type="double">114.030056</lon>
       <lat type="double">22.219542</lat>
     </wp>
-    <wp n="57">
+    <wp n="34">
       <type type="string">navaid</type>
       <ident type="string">ELATO</ident>
       <lon type="double">117.5</lon>
       <lat type="double">22.333334</lat>
     </wp>
-    <wp n="58">
-      <type type="string">navaid</type>
-      <ident type="string">KADLO</ident>
-      <lon type="double">118.541722</lon>
-      <lat type="double">22.955056</lat>
-    </wp>
-    <wp n="59">
+    <wp n="35">
       <type type="string">navaid</type>
       <ident type="string">MKG</ident>
       <lon type="double">119.6372778</lon>
       <lat type="double">23.59544444</lat>
     </wp>
-    <wp n="60">
-      <type type="string">navaid</type>
-      <ident type="string">SWORD</ident>
-      <lon type="double">120.094167</lon>
-      <lat type="double">24.0025</lat>
-    </wp>
-    <wp n="61">
-      <type type="string">navaid</type>
-      <ident type="string">HLG</ident>
-      <lon type="double">120.7833333</lon>
-      <lat type="double">24.64</lat>
-    </wp>
-    <wp n="62">
+    <wp n="36">
       <type type="string">navaid</type>
       <ident type="string">APU</ident>
       <lon type="double">121.5222222</lon>
       <lat type="double">25.17694444</lat>
     </wp>
-    <wp n="63">
-      <type type="string">navaid</type>
-      <ident type="string">ROBIN</ident>
-      <lon type="double">122.207778</lon>
-      <lat type="double">25.419167</lat>
-    </wp>
-    <wp n="64">
-      <type type="string">navaid</type>
-      <ident type="string">MORSU</ident>
-      <lon type="double">123</lon>
-      <lat type="double">25.905556</lat>
-    </wp>
-    <wp n="65">
+    <wp n="37">
       <type type="string">navaid</type>
       <ident type="string">MOLKA</ident>
       <lon type="double">124</lon>
       <lat type="double">26.658611</lat>
     </wp>
-    <wp n="66">
-      <type type="string">navaid</type>
-      <ident type="string">MUMBA</ident>
-      <lon type="double">124.998269</lon>
-      <lat type="double">27.397756</lat>
-    </wp>
-    <wp n="67">
+    <wp n="38">
       <type type="string">navaid</type>
       <ident type="string">MELEN</ident>
       <lon type="double">127.96575</lon>
       <lat type="double">29.527011</lat>
     </wp>
-    <wp n="68">
+    <wp n="39">
       <type type="string">navaid</type>
       <ident type="string">MOMPA</ident>
       <lon type="double">129.915825</lon>
       <lat type="double">30.844675</lat>
     </wp>
-    <wp n="69">
+    <wp n="40">
       <type type="string">navaid</type>
       <ident type="string">MADOG</ident>
       <lon type="double">132.396239</lon>
       <lat type="double">32.125192</lat>
     </wp>
-    <wp n="70">
-      <type type="string">navaid</type>
-      <ident type="string">MANEP</ident>
-      <lon type="double">133.409556</lon>
-      <lat type="double">32.653692</lat>
-    </wp>
-    <wp n="71">
-      <type type="string">navaid</type>
-      <ident type="string">JAKAL</ident>
-      <lon type="double">134.23425</lon>
-      <lat type="double">33.062028</lat>
-    </wp>
-    <wp n="72">
-      <type type="string">navaid</type>
-      <ident type="string">HALON</ident>
-      <lon type="double">134.997222</lon>
-      <lat type="double">33.248778</lat>
-    </wp>
-    <wp n="73">
-      <type type="string">navaid</type>
-      <ident type="string">ALBAT</ident>
-      <lon type="double">135.4415</lon>
-      <lat type="double">33.3645</lat>
-    </wp>
-    <wp n="74">
+    <wp n="41">
       <type type="string">navaid</type>
       <ident type="string">KEC</ident>
       <lon type="double">135.7945</lon>
       <lat type="double">33.44775</lat>
     </wp>
-    <wp n="75">
-      <type type="string">navaid</type>
-      <ident type="string">XMC</ident>
-      <lon type="double">136.957947</lon>
-      <lat type="double">34.704631</lat>
-    </wp>
-    <wp n="76">
+    <wp n="42">
       <type type="string">navaid</type>
       <ident type="string">NAKTU</ident>
       <lon type="double">137.463078</lon>
       <lat type="double">35.467097</lat>
     </wp>
-    <wp n="77">
+    <wp n="43">
       <type type="string">navaid</type>
-      <ident type="string">CHINO</ident>
-      <lon type="double">138.565492</lon>
-      <lat type="double">35.8843</lat>
+      <ident type="string">NAEBA</ident>
+      <lon type="double">138.535717</lon>
+      <lat type="double">37.254139</lat>
     </wp>
-    <wp n="78">
-      <type type="string">navaid</type>
-      <ident type="string">AY</ident>
-      <lon type="double">139.311028</lon>
-      <lat type="double">36.163939</lat>
-    </wp>
-    <wp n="79">
-      <type type="string">navaid</type>
-      <ident type="string">AKAGI</ident>
-      <lon type="double">139.698975</lon>
-      <lat type="double">36.391208</lat>
-    </wp>
-    <wp n="80">
-      <type type="string">navaid</type>
-      <ident type="string">JD</ident>
-      <lon type="double">139.863392</lon>
-      <lat type="double">36.489817</lat>
-    </wp>
-    <wp n="81">
-      <type type="string">navaid</type>
-      <ident type="string">GOC</ident>
-      <lon type="double">140.34985</lon>
-      <lat type="double">36.744367</lat>
-    </wp>
-    <wp n="82">
-      <type type="string">navaid</type>
-      <ident type="string">COMET</ident>
-      <lon type="double">140.589067</lon>
-      <lat type="double">36.20435</lat>
-    </wp>
-    <wp n="83">
-      <type type="string">navaid</type>
-      <ident type="string">SASMA</ident>
-      <lon type="double">139.950894</lon>
-      <lat type="double">36.088203</lat>
-    </wp>
-    <wp n="84">
+    <wp n="44">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -539,7 +297,7 @@
       <lon type="double">140.1841239</lon>
       <lat type="double">35.95974126</lat>
     </wp>
-    <wp n="85">
+    <wp n="45">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -549,7 +307,7 @@
       <lon type="double">140.2437197</lon>
       <lat type="double">35.94711729</lat>
     </wp>
-    <wp n="86">
+    <wp n="46">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -559,7 +317,7 @@
       <lon type="double">140.2853038</lon>
       <lat type="double">35.88955622</lat>
     </wp>
-    <wp n="87">
+    <wp n="47">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -569,7 +327,7 @@
       <lon type="double">140.3031592</lon>
       <lat type="double">35.86481047</lat>
     </wp>
-    <wp n="88">
+    <wp n="48">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
       <ident type="string">16R</ident>
