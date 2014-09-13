@@ -4,36 +4,44 @@ config = {
 	'fg_url': 'localhost',
 	'fg_port': 5401,
 	'import_path': '/usr/local/bin',
-	'config_file': '/home/frank/.EmailRemote.conf'
+	'emailremote_conf': '/home/frank/.EmailRemote.conf'
 }
 
-import sys, time, traceback;
+import sys, locale, datetime;
 from FlightGear import *;
 sys.path.append(config['import_path']);
 import EmailRemote;
 
 def send_mail(subject, msg_text, attachments = None):
+	conn = EmailRemote.getClient(config['emailremote_conf']);
 	try:
-		conn = EmailRemote.getClient(config['config_file']);
-		try:
-			data = {'subject': subject, 'body': msg_text};
-			if (None != attachments):
-				data['attachments'] = attachments;
-			conn.send(data);
-		except:
-			traceback.print_exc();
-		finally:
-			conn.send(None);
-			conn.close();
-	except:
-		traceback.print_exc();
+		data = {'subject': subject, 'body': msg_text};
+		if (None != attachments):
+			data['attachments'] = attachments;
+		conn.send(data);
+	except Exception, e:
+		print(str(e));
+	finally:
+		conn.send(None);
+		conn.close();
+
+def is_paused(fg):
+	if (fg['/sim/freeze/clock'] == 1 and fg['/sim/freeze/master'] == 1):
+		return True;
+	else:
+		return False;
 
 def get_report(fg):
 	report = '';
-	time_local = time.strftime('%I:%M:%S %p',
-		time.gmtime(int(fg['/sim/time/utc/day-seconds']) +
-			int(fg['/sim/time/local-offset']))
+
+	time_utc = datetime.datetime(
+		int(fg['/sim/time/utc/year']), int(fg['/sim/time/utc/month']),
+		int(fg['/sim/time/utc/day']),
+		int(fg['/sim/time/utc/hour']), int(fg['/sim/time/utc/minute']),
+		int(fg['/sim/time/utc/second']),
 	);
+	time_local = time_utc + datetime.timedelta(seconds = int(fg['/sim/time/local-offset']));
+
 	longitude = fg['/position/longitude-string'];
 	latitude = fg['/position/latitude-string'];
 	altitude = float(fg['/position/altitude-ft']);
@@ -46,13 +54,13 @@ def get_report(fg):
 	dist_total = float(fg['/autopilot/route-manager/total-distance']);
 	dist_elapsed = float(dist_total) - float(dist_remaining);
 
-	time_elapsed_sec = int(fg['/autopilot/route-manager/flight-time']);
-	time_elapsed = str(int(time_elapsed_sec / 60.0 / 60.0)) + time.strftime(':%M:%S', time.gmtime(time_elapsed_sec));
-	time_remaining_sec = int(fg['/autopilot/route-manager/ete']);
-	time_remaining = str(int(time_remaining_sec / 60.0 / 60.0)) + time.strftime(':%M:%S', time.gmtime(time_remaining_sec));
+	time_elapsed = str(datetime.timedelta(seconds\
+			= int(fg['/autopilot/route-manager/flight-time'])));
+	time_remaining = str(datetime.timedelta(seconds\
+			= int(fg['/autopilot/route-manager/ete'])));
 
-	report += 'UTC: %s\n'%(fg['/sim/time/gmt'].replace('T', ' '));
-	report += 'Local Time: %s\n'%(time_local);
+	report += 'UTC: %s\n'%(time_utc.strftime('%x %H:%M:%S'));
+	report += 'Local Time: %s\n'%(time_local.strftime('%x %X'));
 	report += '\n';
 	report += 'Longitude: %s\n'%(longitude);
 	report += 'Latitude: %s\n'%(latitude);
@@ -94,23 +102,30 @@ def screenshot(fg):
 		fg['/command/screenshot'] = 'capture';
 		while ('capture' == fg['/command/screenshot']):
 			time.sleep(0.1);
-		result = [fg['/sim/paths/screenshot-last']];
-		return result;
+		return fg['/sim/paths/screenshot-last'];
 	except:
 		return None;
 
 if __name__ == '__main__':
 	if (len(sys.argv) < 2):
-		print('Command to get a report: %s report' % sys.argv[0]);
-		print('Command to get a screenshot: %s screenshot' % sys.argv[0]);
+		sys.stderr.write('Usage: %s report|screenshot\n' % sys.argv[0]);
 		exit(1);
 	command = sys.argv[1];
-	fg = FlightGear(config['fg_url'], config['fg_port']);
-	if ('report' == command):
-		print get_report(fg);
-	elif ('screenshot' == command):
-		send_mail('FlightGear', get_report(fg), screenshot(fg));
-		print('Mail sent.');
-	fg.quit();
+
+	try:
+		locale.setlocale(locale.LC_ALL, '');
+		fg = FlightGear(config['fg_url'], config['fg_port']);
+		if ('report' == command):
+			print get_report(fg);
+		elif ('screenshot' == command):
+			imgfile = screenshot(fg);
+			if None == imgfile:
+				print('Failed to capture screenshot.');
+			else:
+				send_mail('FlightGear', get_report(fg), [imgfile]);
+				print('Mail sent.');
+		fg.quit();
+	except Exception, e:
+		print(str(e));
 	exit(0);
 

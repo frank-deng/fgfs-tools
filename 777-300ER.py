@@ -4,7 +4,7 @@
 Cruise: 35000ft, 280kt IAS
 '''
 
-import time, traceback;
+import time;
 
 from FlightGear import FlightGear;
 from FGTools import *;
@@ -23,7 +23,7 @@ def main_loop(fg):
 	elif (float(fg['/consumables/fuel/total-fuel-norm']) < 0.0001):
 		send_mail(subject, text['outoffuel'] + "\n\n" + get_report(fg));
 		return False;
-	elif (fg['/sim/freeze/clock'] == 1 and fg['/sim/freeze/master'] == 1):
+	elif (is_paused(fg)):
 		send_mail(subject, text['paused'] + "\n\n" + get_report(fg));
 		return False;
 
@@ -44,9 +44,8 @@ if __name__ == '__main__':
 				fg.quit();
 				fg = FlightGear(config['fg_url'], config['fg_port']);
 		fg.quit();
-	except:
-		print traceback.format_exc();
-		send_mail('FlightGear: ERROR', fp_errinfo.getvalue());
+	except Exception, e:
+		send_mail('FlightGear: ERROR', str(e));
 		exit(1);
 	exit(0);
 

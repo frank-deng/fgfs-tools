@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #encoding=UTF-8
 
-import sys, time, StringIO, traceback;
+import sys, time;
 
 from FlightGear import FlightGear;
 from FGTools import *;
@@ -42,7 +42,7 @@ mail_sent = False;
 def main_loop(fg):
 	global mail_sent;
 
-	if (fg['/sim/freeze/clock'] == 1 and fg['/sim/freeze/master'] == 1):
+	if (is_paused(fg)):
 		send_mail(subject, "Mission completed, ready for landing.\n\n" + get_report(fg));
 		return False;
 
@@ -75,10 +75,8 @@ if __name__ == '__main__':
 				fg.quit();
 				fg = FlightGear(config['fg_url'], config['fg_port']);
 		fg.quit();
-	except:
-		fp_errinfo = StringIO.StringIO();
-		traceback.print_exc(file = fp_errinfo);
-		send_mail('FlightGear: ERROR', fp_errinfo.getvalue());
+	except Exception, e:
+		send_mail('FlightGear: ERROR', str(e));
 		exit(1);
 	exit(0);
 
