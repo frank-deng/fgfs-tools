@@ -14,6 +14,10 @@ Useful Tools
 
 A python library to access and manipulate the Property Tree of FlightGear via telnet.
 
+#### \* FGTelnet.php
+
+PHP interface to access and manipulate the Property Tree of FlightGear via telnet.
+
 #### \* FGTools.py
 
 This program includes the following functions:
