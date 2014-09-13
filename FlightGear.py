@@ -55,6 +55,11 @@ class FGTelnet(Telnet):
         """Set variable to a new value"""
         self._putcmd('set %s %s' % (var,value))
         self._getresp() # Discard response
+
+    def run(self,command):
+        """Run fgcommand."""
+        self._putcmd('run %s' % command )
+        return self._getresp()
  
     def quit(self):
         """Terminate connection"""
@@ -148,3 +153,8 @@ class FlightGear:
     def view_prev(self):
         #move to next view
         self.telnet.set( "/command/view/prev", "true")
+
+    def run(self,command):
+        """Run fgcommand."""
+        return self.telnet.run(command)[0].replace('\r', '');
+

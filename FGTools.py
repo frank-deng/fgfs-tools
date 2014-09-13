@@ -7,7 +7,7 @@ config = {
 	'emailremote_conf': '/home/frank/.EmailRemote.conf'
 }
 
-import sys, locale, datetime;
+import sys, time, locale, datetime;
 from FlightGear import *;
 sys.path.append(config['import_path']);
 import EmailRemote;
@@ -97,13 +97,13 @@ def get_report(fg):
 
 def screenshot(fg):
 	try:
-		while ('capture' == fg['/command/screenshot']):
-			time.sleep(0.1);
-		fg['/command/screenshot'] = 'capture';
-		while ('capture' == fg['/command/screenshot']):
-			time.sleep(0.1);
+		if ('<completed>' != fg.run('screen-capture')):
+			return None;
+		while (fg['/sim/freeze/master'] == 1):
+			time.sleep(0.2);
 		return fg['/sim/paths/screenshot-last'];
-	except:
+	except Exception, e:
+		print str(e);
 		return None;
 
 if __name__ == '__main__':

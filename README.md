@@ -82,14 +82,6 @@ This file contains the FlightGear command line options for:
 
 Copy it to __$FG_DATA__ to activate it.
 
-#### \* accessories/screenshot_command.nas
-
-Send a request to take screenshot by manipulating the Property Tree of FlightGear.
-
-You can take screenshot by changing the value of __/command/screenshot__ in the Property Tree.
-
-__Installation__: Copy this file to $FG_DATA/Nasal before running FlightGear to activate this script.
-
 #### \* accessories/pause_manager
 
 A directory contains file for Pause Manager, see section __Pause Manager__ for detail.
