@@ -59,17 +59,19 @@ def get_report(fg):
 	time_remaining = str(datetime.timedelta(seconds\
 			= int(fg['/autopilot/route-manager/ete'])));
 
-	report += 'UTC: %s\n'%(time_utc.strftime('%x %H:%M:%S'));
+	report += fg['/sim/description'] + '\n';
+	report += '\n';
+	report += 'Time: %s UTC\n'%(time_utc.strftime('%x %H:%M:%S'));
 	report += 'Local Time: %s\n'%(time_local.strftime('%x %X'));
 	report += '\n';
 	report += 'Longitude: %s\n'%(longitude);
 	report += 'Latitude: %s\n'%(latitude);
-	report += 'Altitude (ft): %.2f\n'%(altitude);
-	report += 'Velocity (kts): %.2f\n'%(velocity);
+	report += 'Altitude: %.2fft\n'%(altitude);
+	report += 'Velocity: %.2fknots\n'%(velocity);
 	report += '\n';
-	report += 'Total Distance (nm): %.2f\n'%(dist_total);
-	report += 'Total Remaining Distance (nm): %.2f\n'%(dist_remaining);
-	report += 'Total Elapsed Distance (nm): %.2f\n'%(dist_elapsed);
+	report += 'Total Distance: %.2fnm\n'%(dist_total);
+	report += 'Total Remaining Distance: %.2fnm\n'%(dist_remaining);
+	report += 'Total Elapsed Distance: %.2fnm\n'%(dist_elapsed);
 	report += 'Flight Time: %s\n'%(time_elapsed);
 	report += 'Total Time Remining: %s\n'%(time_remaining);
 
@@ -89,18 +91,26 @@ def get_report(fg):
 
 		report += '\n';
 		report += 'Next Destination: %s\n'%(next_wp);
-		report += 'Distance remaining (nm): %.2f\n'%(next_wp_dist);
-		report += 'Time remaining (nm): %s\n'%(next_wp_ttw);
+		report += 'Distance remaining: %.2fnm\n'%(next_wp_dist);
+		report += 'Time remaining: %s\n'%(next_wp_ttw);
 		report += 'Bearing: %.2f\n' % bearing;
 
 	return report;
 
 def screenshot(fg):
 	try:
+		# Do capture screenshot
 		if ('<completed>' != fg.run('screen-capture')):
 			return None;
-		while (fg['/sim/freeze/master'] == 1):
-			time.sleep(0.2);
+
+		# Waiting for screenshot finishes
+		if (fg['/sim/freeze/clock'] == 1):
+			time.sleep(2);
+		else:
+			while (fg['/sim/freeze/master'] == 1):
+				time.sleep(0.2);
+
+		# Return the path of screenshot
 		return fg['/sim/paths/screenshot-last'];
 	except Exception, e:
 		print str(e);
