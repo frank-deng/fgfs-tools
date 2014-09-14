@@ -382,32 +382,38 @@ class Telnet {
  *
  * Written by Frank Deng <13382084679@163.com>
  */
-Class FGTelnet {
-	private $conn = NULL;
+Class FGTelnet extends Telnet{
 	public function __construct($host = 'localhost', $port = '5401') {
-		$this->conn = new Telnet(FG_HOST, FG_PORT, 5, FALSE, 1);
+		parent::__construct($host, $port, 5, FALSE, 1);
 	}
 	public function __destruct() {
-		if (NULL != $this->conn) {
-			$this->disconnect();
-			$this->conn = NULL;
-		}
+		parent::exec('quit');
+		parent::__destruct();
 	}
-	public function disconnect() {
-		$this->conn->disconnect();
-		$this->conn = NULL;
+	public function run($command) {
+		return parent::exec(sprintf('run %s', $command));
+	}
+	public function set($prop, $value) {
+		parent::exec(sprintf('set %s %s', $prop, $value));
 	}
 	public function get($prop) {
-		$result = $this->conn->exec(sprintf('get %s', $prop));
+		$result = parent::exec(sprintf('get %s', $prop));
 		$result_array = new ArrayObject();
 		preg_match("/'.*'/", $result, $result_array);
 		return substr($result_array[0], 1, -1);
 	}
-	public function set($prop, $value) {
-		$this->conn->exec(sprintf('set %s %s', $prop, $value));
+}
+
+function bool($str) {
+	if ('TRUE' == strtoupper($str)) {
+		return TRUE;
+	} else {
+		return FALSE;
 	}
-	public function run($command) {
-		return $this->conn->exec(sprintf('run %s', $command));
+}
+function ispaused($fg) {
+	if (!bool($fg->get('/sim/freeze/clock')) && !bool($fg->get('/sim/freeze/master'))) {
+		return False;
 	}
 }
 ?>

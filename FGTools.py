@@ -7,7 +7,7 @@ config = {
 	'emailremote_conf': '/home/frank/.EmailRemote.conf'
 }
 
-import sys, time, locale, datetime;
+import sys, StringIO, time, locale, datetime;
 from FlightGear import *;
 sys.path.append(config['import_path']);
 import EmailRemote;
@@ -32,70 +32,61 @@ def is_paused(fg):
 		return False;
 
 def get_report(fg):
-	report = '';
+	report = StringIO.StringIO();
 
-	time_utc = datetime.datetime(
-		int(fg['/sim/time/utc/year']), int(fg['/sim/time/utc/month']),
-		int(fg['/sim/time/utc/day']),
-		int(fg['/sim/time/utc/hour']), int(fg['/sim/time/utc/minute']),
-		int(fg['/sim/time/utc/second']),
-	);
+	report.write(fg['/sim/description'] + '\n');
+	report.write('\n');
+
+	time_utc = datetime.datetime(int(fg['/sim/time/utc/year']), int(fg['/sim/time/utc/month']), int(fg['/sim/time/utc/day']),
+		int(fg['/sim/time/utc/hour']), int(fg['/sim/time/utc/minute']), int(fg['/sim/time/utc/second']));
+	report.write('Time: %s UTC\n' % time_utc.strftime('%x %H:%M:%S'));
 	time_local = time_utc + datetime.timedelta(seconds = int(fg['/sim/time/local-offset']));
+	report.write('Local Time: %s\n' % time_local.strftime('%x %X'));
+	report.write('\n');
 
-	longitude = fg['/position/longitude-string'];
-	latitude = fg['/position/latitude-string'];
-	altitude = float(fg['/position/altitude-ft']);
+	report.write('Longitude: %s\n' % fg['/position/longitude-string']);
+	report.write('Latitude: %s\n' % fg['/position/latitude-string']);
+	report.write('Altitude: %.2fft\n' % float(fg['/position/altitude-ft']));
+	report.write('Above ground level: %.2fft\n' % float(fg['/position/altitude-agl-ft']));
+	velocity = int(fg['/velocities/groundspeed-kt']);
 	if ('ufo' == fg['/sim/flight-model']):
-		velocity = float(fg['/velocities/equivalent-kt']);
-	else:
-		velocity = float(fg['/velocities/groundspeed-kt']);
+		velocity = int(fg['/velocities/equivalent-kt']);
+	report.write('Velocity: %dkts\n' % velocity);
+	report.write('\n');
 
 	dist_remaining = float(fg['/autopilot/route-manager/distance-remaining-nm']);
 	dist_total = float(fg['/autopilot/route-manager/total-distance']);
 	dist_elapsed = float(dist_total) - float(dist_remaining);
-
-	time_elapsed = str(datetime.timedelta(seconds\
-			= int(fg['/autopilot/route-manager/flight-time'])));
-	time_remaining = str(datetime.timedelta(seconds\
-			= int(fg['/autopilot/route-manager/ete'])));
-
-	report += fg['/sim/description'] + '\n';
-	report += '\n';
-	report += 'Time: %s UTC\n'%(time_utc.strftime('%x %H:%M:%S'));
-	report += 'Local Time: %s\n'%(time_local.strftime('%x %X'));
-	report += '\n';
-	report += 'Longitude: %s\n'%(longitude);
-	report += 'Latitude: %s\n'%(latitude);
-	report += 'Altitude: %.2fft\n'%(altitude);
-	report += 'Velocity: %.2fknots\n'%(velocity);
-	report += '\n';
-	report += 'Total Distance: %.2fnm\n'%(dist_total);
-	report += 'Total Remaining Distance: %.2fnm\n'%(dist_remaining);
-	report += 'Total Elapsed Distance: %.2fnm\n'%(dist_elapsed);
-	report += 'Flight Time: %s\n'%(time_elapsed);
-	report += 'Total Time Remining: %s\n'%(time_remaining);
+	report.write('Total Distance: %.1fnmi\n' % dist_total);
+	report.write('Total Remaining Distance: %.1fnmi\n' % dist_remaining);
+	report.write('Total Elapsed Distance: %.1fnmi\n' % dist_elapsed);
+	time_elapsed = str(datetime.timedelta(seconds = int(fg['/autopilot/route-manager/flight-time'])));
+	report.write('Flight Time: %s\n' % time_elapsed);
+	time_remaining = str(datetime.timedelta(seconds = int(fg['/autopilot/route-manager/ete'])));
+	report.write('Total Time Remining: %s\n' % time_remaining);
 
 	if ('ufo' != fg['/sim/flight-model']):
-		report += '\n';
-		report += 'Fuel Remaining: %.2f pounds / %.2f gallons / %.1f%%\n' % (
-				float(fg['/consumables/fuel/total-fuel-lbs']),
-				float(fg['/consumables/fuel/total-fuel-gal_us']),
-				float(fg['/consumables/fuel/total-fuel-norm']) * 100
-			);
+		report.write('\n');
+		report.write('Fuel Remaining: %.2f pounds / %.2f gallons / %.1f%%\n' % (
+			float(fg['/consumables/fuel/total-fuel-lbs']),
+			float(fg['/consumables/fuel/total-fuel-gal_us']),
+			float(fg['/consumables/fuel/total-fuel-norm']) * 100
+		));
 
 	if (fg['/instrumentation/gps/wp/wp[1]/valid'] > 0):
-		next_wp = fg['/instrumentation/gps/wp/wp[1]/ID'];
-		next_wp_dist = float(fg['/instrumentation/gps/wp/wp[1]/distance-nm']);
-		next_wp_ttw = fg['/instrumentation/gps/wp/wp[1]/TTW'];
-		bearing = float(fg['/instrumentation/gps/wp/wp[1]/bearing-mag-deg']);
+		report.write('\n');
+		report.write('Next Destination: %s\n' % fg['/instrumentation/gps/wp/wp[1]/ID']);
+		report.write('Distance remaining: %.1fnmi\n' % float(fg['/instrumentation/gps/wp/wp[1]/distance-nm']));
+		report.write('Time remaining: %s\n' % fg['/instrumentation/gps/wp/wp[1]/TTW']);
+		report.write('Bearing: %d\n' % int(fg['/instrumentation/gps/wp/wp[1]/bearing-mag-deg']));
 
-		report += '\n';
-		report += 'Next Destination: %s\n'%(next_wp);
-		report += 'Distance remaining: %.2fnm\n'%(next_wp_dist);
-		report += 'Time remaining: %s\n'%(next_wp_ttw);
-		report += 'Bearing: %.2f\n' % bearing;
+	if (is_paused(fg)):
+		report.write('\n');
+		report.write('Simulation paused.\n');
 
-	return report;
+	text = report.getvalue();
+	report.close();
+	return text;
 
 def screenshot(fg):
 	try:
