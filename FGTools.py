@@ -56,7 +56,7 @@ def get_report(fg):
 
 	dist_remaining = float(fg['/autopilot/route-manager/distance-remaining-nm']);
 	dist_total = float(fg['/autopilot/route-manager/total-distance']);
-	dist_elapsed = float(dist_total) - float(dist_remaining);
+	dist_elapsed = dist_total - dist_remaining;
 	report.write('Total Distance: %.1fnmi\n' % dist_total);
 	report.write('Total Remaining Distance: %.1fnmi\n' % dist_remaining);
 	report.write('Total Elapsed Distance: %.1fnmi\n' % dist_elapsed);
