@@ -403,18 +403,5 @@ Class FGTelnet extends Telnet{
 		return substr($result_array[0], 1, -1);
 	}
 }
-
-function bool($str) {
-	if ('TRUE' == strtoupper($str)) {
-		return TRUE;
-	} else {
-		return FALSE;
-	}
-}
-function ispaused($fg) {
-	if (!bool($fg->get('/sim/freeze/clock')) && !bool($fg->get('/sim/freeze/master'))) {
-		return False;
-	}
-}
 ?>
 

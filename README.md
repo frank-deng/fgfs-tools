@@ -14,10 +14,6 @@ Useful Tools
 
 A python library to access and manipulate the Property Tree of FlightGear via telnet.
 
-#### \* FGTelnet.php
-
-PHP interface to access and manipulate the Property Tree of FlightGear via telnet.
-
 #### \* FGTools.py
 
 This program includes the following functions:
@@ -111,4 +107,34 @@ When descend to an altitude lower than a given value (in feets).
 * Pause simulation and waiting for manual operation.
 
 Installation: This was included in the patch file **accessories/777-300_frank.patch**.
+
+PHP Interface for FlightGear
+----------------------------
+
+#### Description
+
+View FlightGear report, control your aircraft via your browser.
+
+PHP is used to access and manipulate the Property Tree of FlightGear via telnet.
+
+Available for console-based browsers like [w3m](http://w3m.sourceforge.net/), [lynx](http://lynx.isc.org/), [retawq](http://retawq.sourceforge.net/).
+
+#### Install
+
+	cp fg-www/* /var/www
+	# /var/www is the root directory of your apache server.
+
+#### Filelist
+
+File  | Description
+----- | -----------
+777-300.php  | Extra feature for _777-300ER_
+bluebird.php  | Extra feature for _bluebird_
+config.php  | Configuration information
+fail.php  | Show error message when error occurred
+FGTelnet.php  | Telnet tool to access Property Tree of FlightGear.
+FGTools.php  | Extra functions and classes.
+generic.php  | Extra feature for other aircrafts.
+index.php  | The main page, including report and extra feature.
+sound.php  | Mute or unmute sound of FlightGear
 

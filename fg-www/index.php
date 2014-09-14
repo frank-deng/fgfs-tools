@@ -1,16 +1,6 @@
 <?php
-require('FGTelnet.php');
+require('FGTools.php');
 require('config.php');
-class DateInterval2 extends DateInterval {
-    public function recalculate() {
-        $from = new DateTime;
-        $to = clone $from;
-        $to = $to->add($this);
-        $diff = $from->diff($to);
-        foreach ($diff as $k => $v) $this->$k = $v;
-        return $this;
-    }
-}
 
 $fg = NULL;
 $page_all = array(
@@ -21,7 +11,6 @@ $page_all = array(
 try {
 	$fg = new FGTelnet(FG_HOST, FG_PORT);
 ?>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -29,6 +18,10 @@ try {
 		<title>FlightGear</title>
 	</head>
 	<body>
+		<p>
+| <a href='sound.php?enabled=true'>Enable Sound</a>
+| <a href='sound.php?enabled=false'>Mute Sound</a>
+|</p>
 		<p>Model: <?=$fg->get('/sim/description')?></p>
 		<p>
 <?php
@@ -121,7 +114,14 @@ try {
 		echo '<p>Simulation paused.</p>';
 	}
 ?>
-		<hr/>
+<?php
+	/*
+	$img_path = screenshot($fg);
+	if (NULL != $img_path) {
+		?><img src='<?=$img_path?>'/><?php
+	}
+	 */
+?>
 <?php
 	$page = $page_all[$fg->get('/sim/aircraft')];
 	$page = (NULL == $page ? 'generic.php' : $page);
