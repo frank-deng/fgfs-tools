@@ -122,7 +122,8 @@ Available for console-based browsers like [w3m](http://w3m.sourceforge.net/), [l
 #### Install
 
 	cp fg-www/* /var/www
-	# /var/www is the root directory of your apache server.
+
+`/var/www` is the root directory of your apache server.
 
 #### Filelist
 
