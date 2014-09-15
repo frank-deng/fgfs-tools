@@ -6,3 +6,4 @@ if (!strcmp('1', $fg->get('/autopilot/settings/pause-manager-enabled'))) {
 		.sprintf('%.1f', $distance).'nmi.</p>'."\n";
 }
 ?>
+
