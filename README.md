@@ -62,7 +62,7 @@ All the files listed here are in the directory **accessories**.
 
 #### \* accessories/777-300_frank.patch
 
-Patch for __777-300__ and __777-300ER__ from [https://code.google.com/p/b773-flightgear/](https://code.google.com/p/b773-flightgear/):
+Patch for [__777-300__](https://code.google.com/p/b773-flightgear/) and [__777-300ER__](https://code.google.com/p/b773-flightgear/):
 
 * Some new viewports added to 777-300ER
 * Some modifications to both 777-300 and 777-300ER
@@ -71,7 +71,7 @@ Patch for __777-300__ and __777-300ER__ from [https://code.google.com/p/b773-fli
 
 #### \* accessories/bluebird_U-2.patch
 
-Patch for adding 'Drift scope view' for __Bluebird Explorer Hovercraft__ from [http://seahorsecorral.org/data/718dd11bcecce7dd0546f98004d26a2d/bluebird-10.92.zip](http://seahorsecorral.org/data/718dd11bcecce7dd0546f98004d26a2d/bluebird-10.92.zip). So it could work as a reconnaissance aircraft like the Lockheed U-2S.
+Patch for adding 'Drift scope view' for [__Bluebird Explorer Hovercraft__](http://seahorsecorral.org/data/718dd11bcecce7dd0546f98004d26a2d/bluebird-10.92.zip). So it could work as a reconnaissance aircraft like the Lockheed U-2S.
 
 #### \* accessories/system.fgfsrc
 
