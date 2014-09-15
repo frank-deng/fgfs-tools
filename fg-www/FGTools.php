@@ -14,6 +14,8 @@ class DateInterval2 extends DateInterval {
 function bool($str) {
 	if ('TRUE' == strtoupper($str)) {
 		return TRUE;
+	} else if ('1' == $str) {
+		return TRUE;
 	} else {
 		return FALSE;
 	}
