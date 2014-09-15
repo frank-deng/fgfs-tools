@@ -35,7 +35,7 @@ function screenshot($fg) {
 	}
 
 	//Do capture screenshot
-	if (!strcmp('<completed>', $fg->run('screen-capture'))) {
+	if (strcmp('<completed>', $fg->run('screen-capture'))) {
 		return NULL;
 	}
 
@@ -49,6 +49,9 @@ function screenshot($fg) {
 	}
 
 	//Finish
-	return $fg->get('/sim/paths/screenshot-last');
+	$screenshot = $fg->get('/sim/paths/screenshot-last');
+	$screenshot = str_replace($_SERVER['DOCUMENT_ROOT'], '', $screenshot);
+	return $screenshot;
 }
 ?>
+

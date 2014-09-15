@@ -384,7 +384,7 @@ class Telnet {
  */
 Class FGTelnet extends Telnet{
 	public function __construct($host = 'localhost', $port = '5401') {
-		parent::__construct($host, $port, 5, FALSE, 0.1);
+		parent::__construct($host, $port, 5, FALSE, 0.5);
 	}
 	public function __destruct() {
 		parent::exec('quit');
