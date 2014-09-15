@@ -33,9 +33,11 @@ try {
 	/* Take screenshot */
 	$imgpath = screenshot($fg);
 	if (NULL != $imgpath) {
-		?><p><a href='<?=$imgpath?>'><img src='<?=$imgpath?>'/></a></p><?php
+?>
+	<p><img src='<?=$imgpath?>'/><br/><a href='<?=$imgpath?>'>Download</a></p>
+<?php
 	} else {
-		?><p>Failed to capture screenshot.</p><?php
+		echo '<p>Failed to capture screenshot.</p>'."\n";
 	}
 ?>
 		<p><a href='index.php'>Back</a></p>

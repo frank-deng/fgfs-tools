@@ -28,12 +28,6 @@ function ispaused($fg) {
 	}
 }
 function screenshot($fg) {
-	//Remove last screenshot
-	$last_screenshot = $fg->get('/sim/paths/screenshot-last');
-	if (is_file($last_screenshot)) {
-		unlink($last_screenshot);
-	}
-
 	//Do capture screenshot
 	if (strcmp('<completed>', $fg->run('screen-capture'))) {
 		return NULL;
