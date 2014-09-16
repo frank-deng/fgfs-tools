@@ -28,6 +28,12 @@ function ispaused($fg) {
 	}
 }
 function screenshot($fg) {
+	$screenshot = $fg->get('/sim/paths/screenshot-last');
+	$screenshot = str_replace($_SERVER['DOCUMENT_ROOT'].'/', '', $screenshot);
+	if (is_file($screenshot)) {
+		unlink($screenshot);
+	}
+
 	//Do capture screenshot
 	if (strcmp('<completed>', $fg->run('screen-capture'))) {
 		return NULL;
@@ -44,7 +50,7 @@ function screenshot($fg) {
 
 	//Finish
 	$screenshot = $fg->get('/sim/paths/screenshot-last');
-	$screenshot = str_replace($_SERVER['DOCUMENT_ROOT'], '', $screenshot);
+	$screenshot = str_replace($_SERVER['DOCUMENT_ROOT'].'/', '', $screenshot);
 	return $screenshot;
 }
 ?>
