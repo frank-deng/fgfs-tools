@@ -17,14 +17,17 @@ try {
 <?php
 	/* Take screenshot */
 	$imgpath = screenshot($fg);
-	$imgcompact = preg_replace('/\.png$/i', '.bmp', $imgpath);
-	exec("convert $imgpath -resize 640x480 -colors 256 bmp3:$imgcompact");
+	$img_bmp = 'screenshot/scrshot.bmp';
+	if (is_file($img_bmp)) {
+		unlink($img_bmp);
+	}
 	if (NULL != $imgpath) {
+		exec("convert $imgpath -resize 640x480 -colors 256 bmp3:$img_bmp");
 ?>
 	<p>
 		<img src='<?=$imgpath?>'/><br/>
 		<a href='<?=$imgpath?>'>Download</a> |
-		<a href='<?=$imgcompact?>'>Download Compact Version</a>
+		<a href='<?=$img_bmp?>'>BMP</a>
 	</p>
 <?php
 	} else {

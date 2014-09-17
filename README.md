@@ -117,7 +117,7 @@ View FlightGear report, control your aircraft via your browser.
 
 PHP is used to access and manipulate the Property Tree of FlightGear via telnet.
 
-Available for console-based browsers like [w3m](http://w3m.sourceforge.net/), [lynx](http://lynx.isc.org/), [retawq](http://retawq.sourceforge.net/).
+Works well on console-based browsers like [w3m](http://w3m.sourceforge.net/), [lynx](http://lynx.isc.org/), [retawq](http://retawq.sourceforge.net/).
 
 #### Install
 
