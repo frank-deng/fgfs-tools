@@ -14,27 +14,18 @@ try {
 	</head>
 	<body>
 		<h1>Screenshot</h1>
-		<p>| <a href='screenshot.php?view=prev'>Prev View</a>
-| <a href='screenshot.php?view=next'>Next View</a>
-|</p>
 <?php
-	/* Handle view switching */
-	if (isset($_GET['view'])) {
-		switch ($_GET['view']) {
-			case 'prev':
-				$fg->set('/command/view/prev', '1');
-			break;
-			case 'next':
-				$fg->set('/command/view/next', '1');
-			break;
-		}
-	}
-
 	/* Take screenshot */
 	$imgpath = screenshot($fg);
+	$imgcompact = preg_replace('/\.png$/i', '.bmp', $imgpath);
+	exec("convert $imgpath -resize 640x480 -colors 256 bmp3:$imgcompact");
 	if (NULL != $imgpath) {
 ?>
-	<p><img src='<?=$imgpath?>'/><br/><a href='<?=$imgpath?>'>Download</a></p>
+	<p>
+		<img src='<?=$imgpath?>'/><br/>
+		<a href='<?=$imgpath?>'>Download</a> |
+		<a href='<?=$imgcompact?>'>Download Compact Version</a>
+	</p>
 <?php
 	} else {
 		echo '<p>Failed to capture screenshot.</p>'."\n";
