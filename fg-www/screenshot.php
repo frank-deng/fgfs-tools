@@ -22,7 +22,7 @@ try {
 		unlink($img_bmp);
 	}
 	if (NULL != $imgpath) {
-		exec("convert $imgpath -resize 640x480 -colors 256 bmp3:$img_bmp");
+		exec("convert $imgpath -resize 640x480 -colors 256 -depth 8 bmp2:$img_bmp");
 ?>
 	<p>
 		<img src='<?=$imgpath?>'/><br/>
