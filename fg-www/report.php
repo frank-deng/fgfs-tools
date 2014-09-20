@@ -45,8 +45,8 @@ try {
 	if ('ufo' == $fg->get('/sim/flight-model')) {
 		$velocity = (int)($fg->get('/velocities/equivalent-kt'));
 	}
-	echo 'Longitude: '.$longitude.($longitude >= 0 ? 'E' : 'W')."<br/>\n";
-	echo 'Latitude: '.$latitude.($latitude >= 0 ? 'N' : 'S')."<br/>\n";
+	echo 'Longitude: '.sprintf('%.6f%s', $longitude, ($longitude >= 0 ? 'E' : 'W'))."<br/>\n";
+	echo 'Latitude: '.sprintf('%.6f%s', $latitude, ($latitude >= 0 ? 'N' : 'S'))."<br/>\n";
 	echo sprintf('Altitude: %.1fft', $altitude)."<br/>\n";
 	echo sprintf('Velocity: %dknots', $velocity)."\n";
 ?>
