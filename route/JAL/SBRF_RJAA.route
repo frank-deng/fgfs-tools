@@ -65,6 +65,8 @@
     </wp>
     <wp n="6">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">35000</altitude-ft>
       <ident type="string">AMBET</ident>
       <lon type="double">-34.445667</lon>
       <lat type="double">-7.7595</lat>
