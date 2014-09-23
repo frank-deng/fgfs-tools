@@ -51,8 +51,7 @@ def main_loop(fg):
 	try:
 		if (dist < 1 and (not mail_sent)):
 			send_mail(subject,
-				('Arrived at %s.\n\n' % fnd_dest_name.get(airport, airport)) + get_report(fg),
-				screenshot(fg));
+				('Arrived at %s.\n\n' % fnd_dest_name.get(airport, airport)) + get_report(fg), [screenshot(fg)]);
 			mail_sent = True;
 		elif (dist >= 1):
 			mail_sent = False;
