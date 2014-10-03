@@ -2,18 +2,15 @@
 #encoding=UTF-8
 config = {
 	'fg_url': 'localhost',
-	'fg_port': 5401,
-	'import_path': '/usr/local/bin',
-	'emailremote_conf': '/home/frank/.EmailRemote.conf'
+	'fg_port': 5401
 }
 
 import sys, StringIO, time, locale, datetime;
 from FlightGear import *;
-sys.path.append(config['import_path']);
-import EmailRemote;
 
 def send_mail(subject, msg_text, attachments = None):
-	conn = EmailRemote.getClient(config['emailremote_conf']);
+	import EmailRemote;
+	conn = EmailRemote.getClient();
 	try:
 		data = {'subject': subject, 'body': msg_text};
 		if (None != attachments):
@@ -108,25 +105,54 @@ def screenshot(fg):
 		return None;
 
 if __name__ == '__main__':
-	if (len(sys.argv) < 2):
-		sys.stderr.write('Usage: %s report|screenshot\n' % sys.argv[0]);
-		exit(1);
-	command = sys.argv[1];
+	def print_report(fg):
+		print get_report(fg);
 
+	def capture_email(fg):
+		imgfile = screenshot(fg);
+		if None == imgfile:
+			print('Failed to capture screenshot.');
+		else:
+			send_mail('FlightGear', get_report(fg), [imgfile]);
+			print('Mail sent.');
+
+	def toggle_sound(fg):
+		value = fg['/sim/sound/enabled'];
+		if (1 == value):
+			fg['/sim/sound/enabled'] = 0;
+		else:
+			fg['/sim/sound/enabled'] = 1;
+
+	command_all = {
+		'report': print_report,
+		'capture-email': capture_email,
+		'toggle-sound': toggle_sound,
+	};
+	
+	def usage():
+		sys.stderr.write('Usage: %s command\n' % sys.argv[0]);
+		sys.stderr.write('\n');
+		sys.stderr.write('Available commands:\n');
+		for key in command_all:
+			sys.stderr.write('\t%s\n' % key);
+		exit(1);
+
+	if (len(sys.argv) < 2):
+		usage();
+	command = sys.argv[1];
+	fg = None;
 	try:
+		func = command_all[command];
 		locale.setlocale(locale.LC_ALL, '');
 		fg = FlightGear(config['fg_url'], config['fg_port']);
-		if ('report' == command):
-			print get_report(fg);
-		elif ('screenshot' == command):
-			imgfile = screenshot(fg);
-			if None == imgfile:
-				print('Failed to capture screenshot.');
-			else:
-				send_mail('FlightGear', get_report(fg), [imgfile]);
-				print('Mail sent.');
+		func(fg);
 		fg.quit();
+	except KeyError:
+		sys.stderr.write('Command not available: %s\n' % command);
+		usage();
+		exit(1);
 	except Exception, e:
-		print(str(e));
+		sys.stderr.write(str(e) + "\n");
+		exit(1);
 	exit(0);
 
