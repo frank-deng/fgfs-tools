@@ -13,6 +13,10 @@ if (bool($fg->get('/autopilot/settings/descending-manager-running'))){
 			.sprintf('%.1f', $descending_distance).'nmi.';
 	}
 	echo "</p>\n";
+} else {
+?>
+	<p><b>WARNING</b>: Descending Manager not activated. <a href='descending_manager.php'>Click here to activate.</a></p>
+<?php
 }
 ?>
 

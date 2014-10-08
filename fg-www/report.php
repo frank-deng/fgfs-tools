@@ -77,42 +77,19 @@ try {
 		</p>
 <?php
 	if (strcmp('ufo', $fg->get('/sim/flight-model'))) {
-	?><p><?php
+		echo "<p>\n";
 		echo sprintf('Fuel Remaining: %.2f pounds / %.2f gallons / %.1f%%',
 			(float)($fg->get('/consumables/fuel/total-fuel-lbs')),
 			(float)($fg->get('/consumables/fuel/total-fuel-gal_us')),
 			(float)($fg->get('/consumables/fuel/total-fuel-norm')) * 100
 		)."\n";
-	?></p><?php
-	}
-?>
-<?php
-	if (bool($fg->get('/instrumentation/gps/wp/wp[1]/valid'))) {
-	?><p><?php
-		echo sprintf('Next Destination: %s',
-			$fg->get('/instrumentation/gps/wp/wp[1]/ID'))."<br/>\n";
-		echo sprintf('Distance remaining: %.1fnmi',
-			(float)($fg->get('/instrumentation/gps/wp/wp[1]/distance-nm')))
-			."<br/>\n";
-		echo sprintf('Time remaining: %s',
-			$fg->get('/instrumentation/gps/wp/wp[1]/TTW'))."<br/>\n";
-		echo sprintf('Bearing: %d',
-			(int)($fg->get('/instrumentation/gps/wp/wp[1]/bearing-mag-deg')))."\n";
-	?></p><?php
+		echo "</p>\n";
 	}
 ?>
 <?php
 	if (ispaused($fg)) {
 		echo '<p>Simulation paused.</p>';
 	}
-?>
-<?php
-	/*
-	$img_path = screenshot($fg);
-	if (NULL != $img_path) {
-		?><img src='<?=$img_path?>'/><?php
-	}
-	 */
 ?>
 <?php
 	$page = $page_all[$fg->get('/sim/aircraft')];
@@ -122,7 +99,6 @@ try {
 	<p><a href='index.php'>Back</a></p>
 	</body>
 </html>
-
 <?php
 } catch (Exception $e) {
 	header(sprintf('Location: fail.php?message=%s', urlencode($e->getMessage())));
