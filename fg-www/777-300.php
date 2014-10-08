@@ -15,7 +15,7 @@ if (bool($fg->get('/autopilot/settings/descending-manager-running'))){
 	echo "</p>\n";
 } else {
 ?>
-	<p><b>WARNING</b>: Descending Manager not activated. <a href='descending_manager.php'>Click here to activate.</a></p>
+	<p><b>WARNING</b>: Descending Manager not activated.</p>
 <?php
 }
 ?>
