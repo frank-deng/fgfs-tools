@@ -8,20 +8,6 @@ config = {
 import sys, StringIO, time, locale, datetime;
 from FlightGear import *;
 
-def send_mail(subject, msg_text, attachments = None):
-	import EmailRemote;
-	conn = EmailRemote.getClient();
-	try:
-		data = {'subject': subject, 'body': msg_text};
-		if (None != attachments):
-			data['attachments'] = attachments;
-		conn.send(data);
-	except Exception, e:
-		print(str(e));
-	finally:
-		conn.send(None);
-		conn.close();
-
 def is_paused(fg):
 	if (fg['/sim/freeze/clock'] == 1 and fg['/sim/freeze/master'] == 1):
 		return True;
@@ -108,14 +94,6 @@ if __name__ == '__main__':
 	def print_report(fg):
 		print get_report(fg);
 
-	def capture_email(fg):
-		imgfile = screenshot(fg);
-		if None == imgfile:
-			print('Failed to capture screenshot.');
-		else:
-			send_mail('FlightGear', get_report(fg), [imgfile]);
-			print('Mail sent.');
-
 	def toggle_sound(fg):
 		value = fg['/sim/sound/enabled'];
 		if (1 == value):
@@ -125,7 +103,6 @@ if __name__ == '__main__':
 
 	command_all = {
 		'report': print_report,
-		'capture-email': capture_email,
 		'toggle-sound': toggle_sound,
 	};
 	
