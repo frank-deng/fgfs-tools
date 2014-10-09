@@ -7,7 +7,6 @@ from FlightGear import FlightGear;
 from FGTools import *;
 sys.path.append('/usr/local/bin');
 from EmailRemote import Mailer;
-import traceback;
 
 fnd_dest_name = {
 	'KHAF':'Half Moon Bay',
