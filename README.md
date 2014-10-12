@@ -5,8 +5,6 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 Email sending functionality requires running __EmailRemote__ first.
 
-Screenshot functionality requires __screenshot_command.nas__ to be installed. See section __Accessories__ for detail.
-
 Useful Tools
 ------------
 
@@ -43,12 +41,7 @@ A daemon program to detect the following conditions:
 * When the aircraft reached a waypoint, get its name and send an E-mail.  
   \* The email sent contains a description of the condition happend, a report generated when the condition happend, a screenshot captured when the condition happend.
 
-Accessories
------------
-
-All the files listed here are in the directory **accessories**.
-
-#### \* accessories/777-300_frank.patch
+#### \* 777-300_frank.patch
 
 Patch for [__777-300__](https://code.google.com/p/b773-flightgear/) and [__777-300ER__](https://code.google.com/p/b773-flightgear/):
 
@@ -57,11 +50,11 @@ Patch for [__777-300__](https://code.google.com/p/b773-flightgear/) and [__777-3
 * Descending manager for both 777-300 and 777-300ER. For detail, see section __Descending Manager__
 * Refueling function for 777-300ER, based on the distance of the route.
 
-#### \* accessories/bluebird_U-2.patch
+#### \* bluebird_U-2.patch
 
 Patch for adding 'Drift scope view' for [__Bluebird Explorer Hovercraft__](http://seahorsecorral.org/data/718dd11bcecce7dd0546f98004d26a2d/bluebird-10.92.zip). So it could work as a reconnaissance aircraft like the Lockheed U-2S.
 
-#### \* accessories/system.fgfsrc
+#### \* system.fgfsrc
 
 This file contains the FlightGear command line options for:
 
@@ -70,7 +63,7 @@ This file contains the FlightGear command line options for:
 
 Copy it to __$FG_DATA__ to activate it.
 
-#### \* accessories/pause_manager
+#### \* pause_manager
 
 A directory contains file for Pause Manager, see section __Pause Manager__ for detail.
 
@@ -79,7 +72,7 @@ Pause Manager
 
 Pause the simulation when the remaining distance is shorter than a given value (in nautical miles).
 
-Install: see **install.txt** in the directory **accessories/pause_manager**.
+Install: see **install.txt** in the directory **pause_manager**.
 
 Descending Manager
 ------------------
@@ -94,7 +87,7 @@ When descend to an altitude lower than a given value (in feets).
 * Switch speed brake mode from off to auto.
 * Pause simulation and waiting for manual operation.
 
-Installation: This was included in the patch file **accessories/777-300_frank.patch**.
+Installation: This was included in the patch file **777-300_frank.patch**.
 
 PHP Interface for FlightGear
 ----------------------------
