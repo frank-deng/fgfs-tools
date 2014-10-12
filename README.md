@@ -24,26 +24,14 @@ This program includes the following functions:
 
 Synopsis:
 
-	FGTools.py report|screenshot
+	FGTools.py report|toggle-sound
 
 * __report__  
   Print an report of current state.
-* __screenshot__  
-  Capture screenshot, then email the screenshot as well as the report generated at the point the screenshot captured.
+* __toggle-sound__  
+  Switch the sound of FlightGear on/off.
 
 This program can also be used as a python library for sending email and generating report.
-
-#### \* 777-300ER.py
-
-A daemon program to detect the following conditions:
-
-* Simulation paused and waiting for manual operation.
-* Airliner out of fuel.
-* Airliner crashed.
-
-If one of the above conditions happend, an email will be sent and the daemon program will exit.
-
-The email sent contains a description of the condition happend, a report generated when the condition happend.
 
 #### \* GlobalFlight.py
 
@@ -130,7 +118,6 @@ Works well on console-based browsers like [w3m](http://w3m.sourceforge.net/), [l
 File  | Description
 ----- | -----------
 777-300.php  | Extra feature for _777-300ER_
-bluebird.php  | Extra feature for _bluebird_
 config.php  | Configuration information
 fail.php  | Show error message when error occurred
 FGTelnet.php  | Telnet tool to access Property Tree of FlightGear.
