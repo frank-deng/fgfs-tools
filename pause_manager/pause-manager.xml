@@ -4,7 +4,7 @@
 	<name>pause-manager</name>
 	<layout>vbox</layout>
 	<draggable>true</draggable>
-	<resizable>true</resizable>
+	<resizable>false</resizable>
 
 	<nasal>
 		<open>
