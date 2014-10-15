@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<name>flight-progress</name>
+	<layout>vbox</layout>
+	<draggable>true</draggable>
+	<resizable>false</resizable>
+
+	<nasal>
+		<open>
+		</open>
+		<close>
+		</close>
+	</nasal>
+
+	<group>
+		<layout>hbox</layout>
+
+		<empty>
+			<stretch>true</stretch>
+		</empty>
+		<text>
+			<label>Flight Progress</label>
+		</text>
+		<empty>
+			<stretch>true</stretch>
+		</empty>
+
+		<button>
+			<legend/>
+			<key>Esc</key>
+			<pref-width>16</pref-width>
+			<pref-height>16</pref-height>
+			<border>2</border>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+
+	<hrule/>
+
+	<group>
+		<stretch>true</stretch>
+		<layout>hbox</layout>
+		<halign>left</halign>
+		<valign>top</valign>
+		<padding>5</padding>
+
+		<label>Total Distance:</label>
+		<label>
+            <property>/autopilot/???</property>
+		</label>
+	</group>
+</PropertyList>
+
