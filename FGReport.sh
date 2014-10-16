@@ -28,6 +28,7 @@ fg_get\
 	'/sim/time/real/year'\
 	'/sim/time/real/month'\
    	'/sim/time/real/day'\
+	'/sim/description'\
 	'/sim/time/real/hour'\
 	'/sim/time/real/minute'\
 	'/sim/time/real/second';
