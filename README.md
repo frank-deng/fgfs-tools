@@ -14,12 +14,6 @@ A python library to access and manipulate the Property Tree of FlightGear via te
 
 #### \* FGTools.py
 
-This program includes the following functions:
-
-* Email sending
-* Report generation
-* Screenshot capture and email
-
 Synopsis:
 
 	FGTools.py report|toggle-sound
@@ -30,6 +24,12 @@ Synopsis:
   Switch the sound of FlightGear on/off.
 
 This program can also be used as a python library for sending email and generating report.
+
+#### \* FGTools.sh
+
+The same usage as FGTools.py, but uses __bash + netcat__ instead of Python.
+
+_FG_TELNET_ environment variable should be defined as the telnet address and port of FlightGear, e.g: `FG_TELNET='localhost:5000'`
 
 #### \* GlobalFlight.py
 
