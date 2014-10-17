@@ -29,10 +29,8 @@ try {
 
 	/*Start downloading*/
 	Header("Content-type: ".$type);
-	Header("Accept-Ranges: bytes");
-	Header("Accept-Length:".filesize($imgpath));
-	Header("Content-Disposition: attachment; filename=".basename($imgpath)); 
-	readfile($imgpath);
+	$image= file_get_contents($imgpath);
+	echo $image;
 } catch (Exception $e) {
 	echo $e->getMessage();
 	exit(1);

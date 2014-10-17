@@ -3,8 +3,6 @@ fgfs-tools
 
 A collection of useful tools, patches, routes, etc for FlightGear.
 
-Email sending functionality requires running __EmailRemote__ first.
-
 Useful Tools
 ------------
 
@@ -94,7 +92,7 @@ PHP Interface for FlightGear
 
 #### Description
 
-PHP is used to manipulate the Property Tree of FlightGear, or run fgcommand via telnet.
+PHP is used to manipulate the Property Tree of FlightGear via telnet.
 
 At present, screenshot capture and download is implemented.
 
@@ -111,11 +109,13 @@ File  | Description
 config.php  | Configuration information
 FGTelnet.php  | Telnet tool to access Property Tree of FlightGear.
 FGTools.php  | Extra functions and classes.
-screenshot.php  | Capture and download screenshot.
+screenshot.php  | Capture screenshot, then download it or show it in browser.
 
 #### Typical Usage
 
 Capture and download screenshot from command line:
 
 	wget -O screenshot.png localhost/screenshot.php
+
+__PS: Never add `?>` at the end of any PHP files. Otherwise the file to download will be corrupted by unexpected leading empty lines when you're intended to force a file download via PHP.__
 
