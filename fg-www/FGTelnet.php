@@ -403,5 +403,3 @@ Class FGTelnet extends Telnet{
 		return substr($result_array[0], 1, -1);
 	}
 }
-?>
-

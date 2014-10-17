@@ -53,5 +53,3 @@ function screenshot($fg) {
 	$screenshot = str_replace($_SERVER['DOCUMENT_ROOT'].'/', '', $screenshot);
 	return $screenshot;
 }
-?>
-

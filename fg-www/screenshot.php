@@ -4,43 +4,36 @@ require('config.php');
 
 $fg = NULL;
 try {
-	$fg = new FGTelnet(FG_HOST, FG_PORT);
-?>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset='UTF-8'/>
-		<title>FlightGear Screenshot</title>
-	</head>
-	<body>
-		<h1>Screenshot</h1>
-<?php
+	$fg = new FGTelnet(FG_TELNET_HOST, FG_TELNET_PORT);
+
 	/* Take screenshot */
+	$type='image/png';
 	$imgpath = screenshot($fg);
 	$img_bmp = 'screenshot/scrshot.bmp';
 	if (is_file($img_bmp)) {
 		unlink($img_bmp);
 	}
-	if (NULL != $imgpath) {
-		exec("convert $imgpath -resize 640x480 -colors 256 -depth 8 bmp2:$img_bmp");
-?>
-	<p>
-		<img src='<?=$imgpath?>'/><br/>
-		<a href='<?=$imgpath?>'>Download</a> |
-		<a href='<?=$img_bmp?>'>BMP</a>
-	</p>
-<?php
-	} else {
-		echo '<p>Failed to capture screenshot.</p>'."\n";
+
+	/* Check image */
+	if (NULL == $imgpath || !file_exists($imgpath)) {
+		throw new Exception('Failed to capture screenshot.');
+		exit(1);
 	}
-?>
-		<p><a href='index.php'>Back</a></p>
-	</body>
-</html>
-<?php
+
+	/* Convert image to Windows 3.x compatible bmp */
+	if (isset($_GET['win3x'])) {
+		exec("convert $imgpath -resize 640x480 -colors 256 -depth 8 bmp2:$img_bmp");
+		$imgpath = $img_bmp;
+		$type='image/bmp';
+	}
+
+	/*Start downloading*/
+	Header("Content-type: ".$type);
+	Header("Accept-Ranges: bytes");
+	Header("Accept-Length:".filesize($imgpath));
+	Header("Content-Disposition: attachment; filename=".basename($imgpath)); 
+	readfile($imgpath);
 } catch (Exception $e) {
-	header(sprintf('Location: fail.php?message=%s', urlencode($e->getMessage())));
+	echo $e->getMessage();
 	exit(1);
 }
-?>
-
