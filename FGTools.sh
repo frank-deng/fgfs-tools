@@ -2,7 +2,7 @@
 
 ADDRESS=${FG_TELNET%:*};
 PORT=${FG_TELNET##*:};
-#CMD_QUIT='quit\r\n';
+CMD_QUIT='quit\r\n';
 
 function fg_get(){
 	COMMAND='';
@@ -72,8 +72,8 @@ function get_report(){
 		print "";
 
 		model=$13;
-		printf("Latitude: %.6f\n", $14);
-		printf("Longitude: %.6f\n", $15);
+		printf("Latitude: %.6f%s\n", $14, $14<0 ? "S" : "N");
+		printf("Longitude: %.6f%s\n", $15, $15<0 ? "W" : "E");
 		printf("Altitude: %.2fft\n", $16);
 		printf("Above ground level: %.2fft\n", $17);
 		printf("Velocity: %dkts\n", ("ufo" == $model ? $18 : $19));
