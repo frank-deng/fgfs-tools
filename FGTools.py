@@ -1,11 +1,7 @@
 #!/usr/bin/python
 #encoding=UTF-8
-config = {
-	'fg_url': 'localhost',
-	'fg_port': 5401
-}
 
-import sys, StringIO, time, locale, datetime;
+import sys, os, StringIO, time, locale, datetime;
 from FlightGear import *;
 
 def is_paused(fg):
@@ -56,13 +52,6 @@ def get_report(fg):
 			float(fg['/consumables/fuel/total-fuel-norm']) * 100
 		));
 
-	if (fg['/instrumentation/gps/wp/wp[1]/valid'] > 0):
-		report.write('\n');
-		report.write('Next Destination: %s\n' % fg['/instrumentation/gps/wp/wp[1]/ID']);
-		report.write('Distance remaining: %.1fnmi\n' % float(fg['/instrumentation/gps/wp/wp[1]/distance-nm']));
-		report.write('Time remaining: %s\n' % fg['/instrumentation/gps/wp/wp[1]/TTW']);
-		report.write('Bearing: %d\n' % int(fg['/instrumentation/gps/wp/wp[1]/bearing-mag-deg']));
-
 	if (is_paused(fg)):
 		report.write('\n');
 		report.write('Simulation paused.\n');
@@ -94,16 +83,16 @@ if __name__ == '__main__':
 	def print_report(fg):
 		print get_report(fg);
 
-	def toggle_sound(fg):
-		value = fg['/sim/sound/enabled'];
-		if (1 == value):
-			fg['/sim/sound/enabled'] = 0;
-		else:
-			fg['/sim/sound/enabled'] = 1;
+	def sound_on(fg):
+		fg['/sim/sound/enabled'] = 1;
+
+	def sound_off(fg):
+		fg['/sim/sound/enabled'] = 0;
 
 	command_all = {
 		'report': print_report,
-		'toggle-sound': toggle_sound,
+		'soundon': sound_on,
+		'soundoff': sound_off,
 	};
 	
 	def usage():
@@ -121,7 +110,8 @@ if __name__ == '__main__':
 	try:
 		func = command_all[command];
 		locale.setlocale(locale.LC_ALL, '');
-		fg = FlightGear(config['fg_url'], config['fg_port']);
+		address, port = os.getenv('FG_TELNET').split(':');
+		fg = FlightGear(address, int(port));
 		func(fg);
 		fg.quit();
 	except KeyError:

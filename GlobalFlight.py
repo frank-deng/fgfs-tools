@@ -2,7 +2,6 @@
 #encoding=UTF-8
 
 import sys, time;
-
 from FlightGear import FlightGear;
 from FGTools import *;
 sys.path.append('/usr/local/bin');
