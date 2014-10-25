@@ -64,7 +64,9 @@ if __name__ == '__main__':
 	running = True;
 	mailer = Mailer();
 	try:
-		fg = FlightGear(config['fg_url'], config['fg_port']);
+		locale.setlocale(locale.LC_ALL, '');
+		address, port = os.getenv('FG_TELNET').split(':');
+		fg = FlightGear(address, int(port));
 		subject += fg['/sim/description'];
 		while running:
 			try:
