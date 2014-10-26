@@ -1,6 +1,33 @@
 <?php
-require('FGTools.php');
+require('FGTelnet.php');
 require('config.php');
+
+function screenshot($fg) {
+	$screenshot = $fg->get('/sim/paths/screenshot-last');
+	$screenshot = str_replace($_SERVER['DOCUMENT_ROOT'].'/', '', $screenshot);
+	if (is_file($screenshot)) {
+		unlink($screenshot);
+	}
+
+	//Do capture screenshot
+	if (strcmp('<completed>', $fg->run('screen-capture'))) {
+		return NULL;
+	}
+
+	//Waiting for screenshot finishes
+	if (bool($fg->get('/sim/freeze/clock'))) {
+		sleep(2);
+	} else {
+		while (bool($fg->get('/sim/freeze/master'))) {
+			usleep(500000);
+		}
+	}
+
+	//Finish
+	$screenshot = $fg->get('/sim/paths/screenshot-last');
+	$screenshot = str_replace($_SERVER['DOCUMENT_ROOT'].'/', '', $screenshot);
+	return $screenshot;
+}
 
 $fg = NULL;
 try {

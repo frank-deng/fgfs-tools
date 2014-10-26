@@ -10,11 +10,11 @@ Useful Tools
 
 A python library to access and manipulate the Property Tree of FlightGear via telnet.
 
-#### \* FGTools.py
+#### \* FGTools.sh
 
 Synopsis:
 
-	FGTools.py report|toggle-sound
+	FGTools.sh report|soundon|soundoff
 
 * __report__  
   Print an report of current state.
@@ -24,18 +24,6 @@ Synopsis:
   Switch the sound of FlightGear on.
 
 _FG_TELNET_ environment variable should be defined as the telnet address and port of FlightGear, e.g: `FG_TELNET='localhost:5000'`
-
-This program can also be used as a python library for generating report, taking screenshot.
-
-#### \* GlobalFlight.py
-
-A daemon program to detect the following conditions:
-
-* Simulation paused and waiting for manual operation.  
-  \* When this happend, an email will be sent and the daemon program will exit.  
-  \* The email sent contains a description of the condition happend, a report generated when the condition happend.
-* When the aircraft reached a waypoint, get its name and send an E-mail.  
-  \* The email sent contains a description of the condition happend, a report generated when the condition happend, a screenshot captured when the condition happend.
 
 #### \* 777-300_frank.patch
 
@@ -106,7 +94,6 @@ File  | Description
 ----- | -----------
 config.php  | Configuration information
 FGTelnet.php  | Telnet tool to access Property Tree of FlightGear.
-FGTools.php  | Extra functions and classes.
 screenshot.php  | Capture screenshot, then download it or show it in browser.
 
 #### Typical Usage

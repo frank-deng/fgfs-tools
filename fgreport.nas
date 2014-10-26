@@ -32,10 +32,12 @@ var get_report = func{
 					getprop('/sim/time/utc/minute'),
 					getprop('/sim/time/utc/second'));
 
-	report_text = report_text ~ sprintf("Latitude: %s\n", getprop('/position/latitude-string'));
-	report_text = report_text ~ sprintf("Longitude: %s\n", getprop('/position/longitude-string'));
-	report_text = report_text ~ sprintf("Altitude: %.2fft\n", getprop('/position/altitude-ft'));
-	report_text = report_text ~ sprintf("Above Ground Level: %.2fft\n", getprop('/position/altitude-agl-ft'));
+	var latitude = getprop('/position/latitude-deg');
+	var longitude = getprop('/position/longitude-deg');
+	report_text = report_text ~ sprintf("Latitude: %.5f%s\n", latitude, latitude < 0 ? 'S' : 'N');
+	report_text = report_text ~ sprintf("Longitude: %.5f%s\n", longitude, longitude < 0 ? 'W' : 'E');
+	report_text = report_text ~ sprintf("Altitude: %dft\n", getprop('/position/altitude-ft'));
+	report_text = report_text ~ sprintf("Above Ground Level: %dft\n", getprop('/position/altitude-agl-ft'));
 	var velocity = getprop('/velocities/groundspeed-kt');
 	if ('ufo' == getprop('/sim/flight-model')) {
 		var velocity = getprop('/velocities/equivalent-kt');
@@ -74,11 +76,12 @@ var get_report = func{
 	return report_text;
 }
 
-setprop('/sim/signals/fgreport', '0');
+setprop('/sim/signals/fgreport', '');
+setprop('/sim/fgreport/text', '');
 var report_builder_init = func() {
 	setlistener('/sim/signals/fgreport', func {
 		setprop('/sim/fgreport/text', get_report());
-		setprop('/sim/signals/fgreport', '0');
+		setprop('/sim/signals/fgreport', '');
 	});
 }
 _setlistener("/sim/signals/nasal-dir-initialized", report_builder_init);
