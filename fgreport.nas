@@ -2,7 +2,8 @@ var mod = func(n, m) {
     var x = n - m * int(n/m);      # int() truncates to zero, not -Inf
     return x < 0 ? x + abs(m) : x; # ...so must handle negative n's
 }
-var get_report = func{
+
+fgreport_generate = func{
 	var report_text = "\n";
 
 	report_text = report_text ~ getprop('/sim/description') ~ "\n\n";
@@ -37,12 +38,12 @@ var get_report = func{
 	report_text = report_text ~ sprintf("Latitude: %.5f%s\n", latitude, latitude < 0 ? 'S' : 'N');
 	report_text = report_text ~ sprintf("Longitude: %.5f%s\n", longitude, longitude < 0 ? 'W' : 'E');
 	report_text = report_text ~ sprintf("Altitude: %dft\n", getprop('/position/altitude-ft'));
-	report_text = report_text ~ sprintf("Above Ground Level: %dft\n", getprop('/position/altitude-agl-ft'));
 	var velocity = getprop('/velocities/groundspeed-kt');
 	if ('ufo' == getprop('/sim/flight-model')) {
 		var velocity = getprop('/velocities/equivalent-kt');
 	}
 	report_text = report_text ~ sprintf("Velocity: %dkts\n\n", velocity);
+	report_text = report_text ~ sprintf("Heading: %dft\n", getprop('/position/heading'));
 
 	var dist_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
 	var dist_total = getprop('/autopilot/route-manager/total-distance');
@@ -73,16 +74,17 @@ var get_report = func{
 		report_text = report_text ~ "\nSimulation paused.\n";
 	}
 
-	return report_text;
+	setprop('/sim/fgreport/text', report_text);
 }
 
-setprop('/sim/signals/fgreport', '');
-setprop('/sim/fgreport/text', '');
-var report_builder_init = func() {
+_setlistener("/sim/signals/nasal-dir-initialized", func {
+	setprop('/sim/signals/fgreport', '');
+	setprop('/sim/fgreport/text', '');
 	setlistener('/sim/signals/fgreport', func {
-		setprop('/sim/fgreport/text', get_report());
-		setprop('/sim/signals/fgreport', '');
+		if (getprop('/sim/signals/fgreport')) {
+			fgreport_generate();
+			setprop('/sim/signals/fgreport', '');
+		}
 	});
-}
-_setlistener("/sim/signals/nasal-dir-initialized", report_builder_init);
+}, 0, 0);
 
