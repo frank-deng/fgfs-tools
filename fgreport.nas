@@ -43,7 +43,6 @@ fgreport_generate = func{
 		var velocity = getprop('/velocities/equivalent-kt');
 	}
 	report_text = report_text ~ sprintf("Velocity: %dkts\n\n", velocity);
-	report_text = report_text ~ sprintf("Heading: %dft\n", getprop('/position/heading'));
 
 	var dist_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
 	var dist_total = getprop('/autopilot/route-manager/total-distance');

@@ -1,211 +1,6 @@
-diff -ruN 777-300-orig/777-300-set.xml 777-300/777-300-set.xml
---- 777-300-orig/777-300-set.xml	2012-02-16 21:15:28.000000000 +0800
-+++ 777-300/777-300-set.xml	2014-08-07 13:16:38.738590600 +0800
-@@ -188,7 +188,7 @@
- 	<view n="106">
- 	    <name>Passenger 1</name>
- 		<type>lookfrom</type>
--		<internal type="bool">false</internal>
-+		<internal type="bool">true</internal>
- 		<config>
-             <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
- 			<from-model type="bool">true</from-model>
-@@ -202,7 +202,7 @@
- 	<view n="107">
- 	    <name>Passenger 2</name>
- 		<type>lookfrom</type>
--		<internal type="bool">false</internal>
-+		<internal type="bool">true</internal>
- 		<config>
-             <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
- 			<from-model type="bool">true</from-model>
-@@ -216,7 +216,7 @@
- 	<view n="108">
- 	    <name>Passenger 3</name>
- 		<type>lookfrom</type>
--		<internal type="bool">false</internal>
-+		<internal type="bool">true</internal>
- 		<config>
-             <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
- 			<from-model type="bool">true</from-model>
-@@ -295,30 +295,10 @@
-         <help>
-             <title>777-300</title>
-             <key>
--                <name>S</name>
--                <desc>autostart / shutdown</desc>
--            </key>
--            <key>
-                 <name>Delete</name>
-                 <desc>toggle thrust reversers</desc>
-             </key>
-             <key>
--                <name>Ctrl-B</name>
--                <desc>toggle spoilers</desc>
--            </key>
--            <key>
--                <name>Ctrl-I</name>
--                <desc>toggle auto spoilers</desc>
--            </key>
--            <key>
--                <name>L</name>
--                <desc>toggle landing lights</desc>
--            </key>
--            <key>
--                <name>Ctrl-L</name>
--                <desc>toggle cabin lights</desc>
--            </key>
--            <key>
-                 <name>Ctrl-M</name>
-                 <desc>mute current master warning</desc>
-             </key>
-@@ -555,13 +535,20 @@
- 						</script>
- 					</binding>
- 				</item>					
-+					<item>
-+						<label>Descending Manager</label>
-+						<binding>
-+							<command>nasal</command>
-+							<script>dialogs.descending_manager.open()</script>
-+						</binding>
-+					</item>
-                 </menu>
-             </default>
-         </menubar>
- 
-         <weight n="0">
-             <name>Crew</name>
--            <weight-lb>350</weight-lb>
-+            <weight-lb>500</weight-lb>
-             <max-lb>500</max-lb>
-             <min-lb>350</min-lb>
-         </weight>
-@@ -668,90 +655,6 @@
-                     <script>dialogs.Radio.open()</script>
-                 </binding>
-             </key>
--        <key n="1">
--                <name>Ctrl-A</name>
--                <desc>toggle autopilot altitude lock</desc>
--                <binding>
--                    <command>property-toggle</command>
--                    <property>instrumentation/afds/inputs/alt-hold</property>
--                </binding>
--            </key>
--             <key n="7">
--                <name>Ctrl-G</name>
--                <desc>toggle autopilot glide slope lock</desc>
--                <binding>
--                    <command>property-toggle</command>
--                    <property>instrumentation/afds/inputs/app-hold</property>
--                </binding>
--            </key>
--            <key n="8">
--                <name>Ctrl-H</name>
--                <desc>toggle autopilot heading lock</desc>
--                <binding>
--                    <command>property-toggle</command>
--                    <property>instrumentation/afds/inputs/hdg-hold</property>
--                </binding>
--            </key>
--            <key n="9">
--                <name>Ctrl-I</name>
--                <desc>toggle auto spoilers</desc>
--                <binding>
--                    <command>nasal</command>
--                    <script>controls.toggleAutoSpoilers();</script>
--                </binding>
--            </key>
-- <key n="10"> <!-- OSG -->
--  <name>Enter</name>
--  <desc>Move rudder right</desc>
--  <repeatable type="bool">true</repeatable>
--  <binding>
--   <command>property-adjust</command>
--   <property>/controls/flight/rudder</property>
--   <step type="double">0.05</step>
--  </binding>
-- </key>			
--            <key n="12">
--                <name>Ctrl-L</name>
--                <desc>toggle cabin lights</desc>
--                <binding>
--                    <command>property-toggle</command>
--                    <property>controls/lighting/cabin-lights</property>
--                </binding>
--            </key>
-- <key n="13"> <!-- PLIB -->
--  <name>Enter</name>
--  <desc>Move rudder right</desc>
--  <repeatable type="bool">true</repeatable>
--  <binding>
--   <command>property-adjust</command>
--   <property>/controls/flight/rudder</property>
--   <step type="double">0.05</step>
--  </binding>
-- </key>
--            <key n="14">
--                <name>Ctrl-N</name>
--                <desc>toggle LNAV lock</desc>
--                <binding>
--                    <command>property-toggle</command>
--                    <property>instrumentation/afds/inputs/lnav-hold</property>
--                </binding>
--            </key>
--            <key n="16">
--                <name>Ctrl-P</name>
--                <desc>toggle VS</desc>
--                <binding>
--                    <command>property-toggle</command>
--                    <property>instrumentation/afds/inputs/vs-fpa-hold</property>
--                </binding>
--            </key>
--            <key n="19">
--                <name>Ctrl-S</name>
--                <desc>toggle autothrottle</desc>
--                <binding>
--                    <command>property-toggle</command>
--                    <property>instrumentation/afds/inputs/at-hold</property>
--                </binding>
--            </key>
-             <key n="23">
-                 <name>Ctrl-W</name>
-                 <desc>enable/disable EICAS warning unit</desc>
-@@ -760,22 +663,6 @@
-                     <property>instrumentation/weu/serviceable</property>
-                 </binding>
-             </key>
--            <key n="108">
--                <name>L</name>
--                <desc>toggle landing lights</desc>
--                <binding>
--                    <command>nasal</command>
--                    <script>controls.toggleLandingLights();</script>
--                </binding>
--            </key>
--            <key n="115">
--                <name>S</name>
--                <desc>autostart / shutdown</desc>
--                <binding>
--                    <command>property-toggle</command>
--                    <property>sim/model/start-idling</property>
--                </binding>
--            </key>
-  <key n="93">
-   <name>]</name>
-   <desc>FUBAR 1</desc>
-@@ -1101,6 +988,7 @@
-             <file>Aircraft/777-300/Nasal/ground_steering.nas</file>
-             <file>Aircraft/Generic/limits.nas</file>
- 			<file>Aircraft/777-300/Nasal/doors.nas</file>
-+            <file>Aircraft/777-300/Nasal/descending_manager.nas</file>
-         </b777>
-         <dialogs>
-             <file>Aircraft/777-300/Nasal/dialogs.nas</file>
-diff -ruN 777-300-orig/777-300ER-set.xml 777-300/777-300ER-set.xml
---- 777-300-orig/777-300ER-set.xml	2012-02-16 21:15:28.000000000 +0800
-+++ 777-300/777-300ER-set.xml	2014-08-07 13:16:38.749591200 +0800
+diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
+--- 777-300.orig/777-300ER-set.xml	2012-02-16 21:15:28.000000000 +0800
++++ 777-300/777-300ER-set.xml	2014-10-29 20:42:21.152270318 +0800
 @@ -7,7 +7,7 @@
          <aircraft-version>20111211</aircraft-version>
          <flight-model>yasim</flight-model>
@@ -507,20 +302,223 @@ diff -ruN 777-300-orig/777-300ER-set.xml 777-300/777-300ER-set.xml
          </b777>
          <dialogs>
              <file>Aircraft/777-300/Nasal/dialogs.nas</file>
-diff -ruN 777-300-orig/Nasal/descending_manager.nas 777-300/Nasal/descending_manager.nas
---- 777-300-orig/Nasal/descending_manager.nas	1970-01-01 08:00:00.000000000 +0800
-+++ 777-300/Nasal/descending_manager.nas	2014-08-07 12:32:49.266193400 +0800
-@@ -0,0 +1,44 @@
-+setprop('/autopilot/settings/descending-distance', '110');
-+setprop('/autopilot/settings/altitude-pause', '5000');
-+setprop('/autopilot/settings/descending-manager-running', '0');
-+
+diff -ruN 777-300.orig/777-300-set.xml 777-300/777-300-set.xml
+--- 777-300.orig/777-300-set.xml	2012-02-16 21:15:28.000000000 +0800
++++ 777-300/777-300-set.xml	2014-10-29 20:42:21.148270296 +0800
+@@ -188,7 +188,7 @@
+ 	<view n="106">
+ 	    <name>Passenger 1</name>
+ 		<type>lookfrom</type>
+-		<internal type="bool">false</internal>
++		<internal type="bool">true</internal>
+ 		<config>
+             <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
+ 			<from-model type="bool">true</from-model>
+@@ -202,7 +202,7 @@
+ 	<view n="107">
+ 	    <name>Passenger 2</name>
+ 		<type>lookfrom</type>
+-		<internal type="bool">false</internal>
++		<internal type="bool">true</internal>
+ 		<config>
+             <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
+ 			<from-model type="bool">true</from-model>
+@@ -216,7 +216,7 @@
+ 	<view n="108">
+ 	    <name>Passenger 3</name>
+ 		<type>lookfrom</type>
+-		<internal type="bool">false</internal>
++		<internal type="bool">true</internal>
+ 		<config>
+             <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
+ 			<from-model type="bool">true</from-model>
+@@ -295,30 +295,10 @@
+         <help>
+             <title>777-300</title>
+             <key>
+-                <name>S</name>
+-                <desc>autostart / shutdown</desc>
+-            </key>
+-            <key>
+                 <name>Delete</name>
+                 <desc>toggle thrust reversers</desc>
+             </key>
+             <key>
+-                <name>Ctrl-B</name>
+-                <desc>toggle spoilers</desc>
+-            </key>
+-            <key>
+-                <name>Ctrl-I</name>
+-                <desc>toggle auto spoilers</desc>
+-            </key>
+-            <key>
+-                <name>L</name>
+-                <desc>toggle landing lights</desc>
+-            </key>
+-            <key>
+-                <name>Ctrl-L</name>
+-                <desc>toggle cabin lights</desc>
+-            </key>
+-            <key>
+                 <name>Ctrl-M</name>
+                 <desc>mute current master warning</desc>
+             </key>
+@@ -555,13 +535,20 @@
+ 						</script>
+ 					</binding>
+ 				</item>					
++					<item>
++						<label>Descending Manager</label>
++						<binding>
++							<command>nasal</command>
++							<script>dialogs.descending_manager.open()</script>
++						</binding>
++					</item>
+                 </menu>
+             </default>
+         </menubar>
+ 
+         <weight n="0">
+             <name>Crew</name>
+-            <weight-lb>350</weight-lb>
++            <weight-lb>500</weight-lb>
+             <max-lb>500</max-lb>
+             <min-lb>350</min-lb>
+         </weight>
+@@ -668,90 +655,6 @@
+                     <script>dialogs.Radio.open()</script>
+                 </binding>
+             </key>
+-        <key n="1">
+-                <name>Ctrl-A</name>
+-                <desc>toggle autopilot altitude lock</desc>
+-                <binding>
+-                    <command>property-toggle</command>
+-                    <property>instrumentation/afds/inputs/alt-hold</property>
+-                </binding>
+-            </key>
+-             <key n="7">
+-                <name>Ctrl-G</name>
+-                <desc>toggle autopilot glide slope lock</desc>
+-                <binding>
+-                    <command>property-toggle</command>
+-                    <property>instrumentation/afds/inputs/app-hold</property>
+-                </binding>
+-            </key>
+-            <key n="8">
+-                <name>Ctrl-H</name>
+-                <desc>toggle autopilot heading lock</desc>
+-                <binding>
+-                    <command>property-toggle</command>
+-                    <property>instrumentation/afds/inputs/hdg-hold</property>
+-                </binding>
+-            </key>
+-            <key n="9">
+-                <name>Ctrl-I</name>
+-                <desc>toggle auto spoilers</desc>
+-                <binding>
+-                    <command>nasal</command>
+-                    <script>controls.toggleAutoSpoilers();</script>
+-                </binding>
+-            </key>
+- <key n="10"> <!-- OSG -->
+-  <name>Enter</name>
+-  <desc>Move rudder right</desc>
+-  <repeatable type="bool">true</repeatable>
+-  <binding>
+-   <command>property-adjust</command>
+-   <property>/controls/flight/rudder</property>
+-   <step type="double">0.05</step>
+-  </binding>
+- </key>			
+-            <key n="12">
+-                <name>Ctrl-L</name>
+-                <desc>toggle cabin lights</desc>
+-                <binding>
+-                    <command>property-toggle</command>
+-                    <property>controls/lighting/cabin-lights</property>
+-                </binding>
+-            </key>
+- <key n="13"> <!-- PLIB -->
+-  <name>Enter</name>
+-  <desc>Move rudder right</desc>
+-  <repeatable type="bool">true</repeatable>
+-  <binding>
+-   <command>property-adjust</command>
+-   <property>/controls/flight/rudder</property>
+-   <step type="double">0.05</step>
+-  </binding>
+- </key>
+-            <key n="14">
+-                <name>Ctrl-N</name>
+-                <desc>toggle LNAV lock</desc>
+-                <binding>
+-                    <command>property-toggle</command>
+-                    <property>instrumentation/afds/inputs/lnav-hold</property>
+-                </binding>
+-            </key>
+-            <key n="16">
+-                <name>Ctrl-P</name>
+-                <desc>toggle VS</desc>
+-                <binding>
+-                    <command>property-toggle</command>
+-                    <property>instrumentation/afds/inputs/vs-fpa-hold</property>
+-                </binding>
+-            </key>
+-            <key n="19">
+-                <name>Ctrl-S</name>
+-                <desc>toggle autothrottle</desc>
+-                <binding>
+-                    <command>property-toggle</command>
+-                    <property>instrumentation/afds/inputs/at-hold</property>
+-                </binding>
+-            </key>
+             <key n="23">
+                 <name>Ctrl-W</name>
+                 <desc>enable/disable EICAS warning unit</desc>
+@@ -760,22 +663,6 @@
+                     <property>instrumentation/weu/serviceable</property>
+                 </binding>
+             </key>
+-            <key n="108">
+-                <name>L</name>
+-                <desc>toggle landing lights</desc>
+-                <binding>
+-                    <command>nasal</command>
+-                    <script>controls.toggleLandingLights();</script>
+-                </binding>
+-            </key>
+-            <key n="115">
+-                <name>S</name>
+-                <desc>autostart / shutdown</desc>
+-                <binding>
+-                    <command>property-toggle</command>
+-                    <property>sim/model/start-idling</property>
+-                </binding>
+-            </key>
+  <key n="93">
+   <name>]</name>
+   <desc>FUBAR 1</desc>
+@@ -1101,6 +988,7 @@
+             <file>Aircraft/777-300/Nasal/ground_steering.nas</file>
+             <file>Aircraft/Generic/limits.nas</file>
+ 			<file>Aircraft/777-300/Nasal/doors.nas</file>
++            <file>Aircraft/777-300/Nasal/descending_manager.nas</file>
+         </b777>
+         <dialogs>
+             <file>Aircraft/777-300/Nasal/dialogs.nas</file>
+diff -ruN 777-300.orig/Nasal/descending_manager.nas 777-300/Nasal/descending_manager.nas
+--- 777-300.orig/Nasal/descending_manager.nas	1970-01-01 08:00:00.000000000 +0800
++++ 777-300/Nasal/descending_manager.nas	2014-10-28 23:50:06.091922322 +0800
+@@ -0,0 +1,42 @@
++setprop('/autopilot/descending-manager/target-altitude', '4500');
++setprop('/autopilot/descending-manager/active', 0);
 +var descending_manager = func{
-+	if (!getprop('/autopilot/settings/descending-manager-running')) {
++	if (!getprop('/autopilot/descending-manager/active')) {
 +		return;
 +	} else if (!getprop('/autopilot/route-manager/active')){
 +		screen.log.write('Sorry, you haven\'t activated your route yet.', 1, 0, 0);
-+		setprop('/autopilot/settings/descending-manager-running', '0');
++		setprop('/autopilot/descending-manager/active', 0);
 +		return;
 +	}
 +
@@ -528,11 +526,12 @@ diff -ruN 777-300-orig/Nasal/descending_manager.nas 777-300/Nasal/descending_man
 +	var vs = getprop('/autopilot/settings/vertical-speed-fpm');
 +	var alt = getprop('/position/altitude-ft');
 +	var dist_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
-+	var dist_descending = getprop('/autopilot/settings/descending-distance');
-+	var alt_pause = getprop('/autopilot/settings/altitude-pause');
++	var target_altitude = getprop('/autopilot/descending-manager/target-altitude');
++	var dist_descending = 110;
++
 +	if (vs < 0) {
-+		if (alt <= alt_pause) {
-+			setprop('/autopilot/settings/descending-manager-running', 0);
++		if (alt <= target_altitude + 300) {
++			setprop('/autopilot/descending-manager/active', 0);
 +
 +			setprop('/controls/flight/speedbrake-lever', 1);
 +			setprop('/instrumentation/afds/ap-modes/pitch-mode', 'FLCH SPD');
@@ -545,19 +544,18 @@ diff -ruN 777-300-orig/Nasal/descending_manager.nas 777-300/Nasal/descending_man
 +	} else if (wp >= 0 and dist_remaining <= dist_descending){
 +		b777.afds.input(1,2);
 +		setprop('/autopilot/settings/vertical-speed-fpm', '-2000');
-+		setprop('/autopilot/settings/target-speed-kt', '240');
-+		setprop('/autopilot/settings/target-altitude-ft',
-+			getprop('/autopilot/settings/altitude-pause') - 500);
++		setprop('/autopilot/settings/target-speed-kt', '250');
++		setprop('/autopilot/settings/target-altitude-ft', target_altitude);
 +	}
 +}
 +var descending_manager_mainloop = func() {
 +	descending_manager();
-+	settimer(descending_manager_mainloop, 0.2);
++	settimer(descending_manager_mainloop, 0.1);
 +}
 +descending_manager_mainloop();
-diff -ruN 777-300-orig/Nasal/dialogs.nas 777-300/Nasal/dialogs.nas
---- 777-300-orig/Nasal/dialogs.nas	2012-02-16 21:15:44.000000000 +0800
-+++ 777-300/Nasal/dialogs.nas	2014-08-07 10:01:25.433541400 +0800
+diff -ruN 777-300.orig/Nasal/dialogs.nas 777-300/Nasal/dialogs.nas
+--- 777-300.orig/Nasal/dialogs.nas	2012-02-16 21:15:44.000000000 +0800
++++ 777-300/Nasal/dialogs.nas	2014-10-29 20:42:21.248270792 +0800
 @@ -6,6 +6,8 @@
          "Aircraft/777-300/Systems/autopilot-dlg.xml");
  var tiller_steering = gui.Dialog.new("/sim/gui/dialogs/tiller_steering/dialog",
@@ -567,9 +565,9 @@ diff -ruN 777-300-orig/Nasal/dialogs.nas 777-300/Nasal/dialogs.nas
  
  gui.menuBind("radio", "dialogs.Radio.open()");
  gui.menuBind("autopilot-settings", "dialogs.ap_settings.open()");
-diff -ruN 777-300-orig/Nasal/ground_refuel.nas 777-300/Nasal/ground_refuel.nas
---- 777-300-orig/Nasal/ground_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ 777-300/Nasal/ground_refuel.nas	2014-08-07 10:01:25.440541800 +0800
+diff -ruN 777-300.orig/Nasal/ground_refuel.nas 777-300/Nasal/ground_refuel.nas
+--- 777-300.orig/Nasal/ground_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ 777-300/Nasal/ground_refuel.nas	2014-10-29 20:42:21.248270792 +0800
 @@ -0,0 +1,25 @@
 +setprop('/limits/estimated-range-nm', '8500');
 +var ground_refuel = func() {
@@ -596,10 +594,10 @@ diff -ruN 777-300-orig/Nasal/ground_refuel.nas 777-300/Nasal/ground_refuel.nas
 +	screen.log.write('Airplane refueled.', 0, 1, 0);
 +}
 +
-diff -ruN 777-300-orig/Systems/descending_manager.xml 777-300/Systems/descending_manager.xml
---- 777-300-orig/Systems/descending_manager.xml	1970-01-01 08:00:00.000000000 +0800
-+++ 777-300/Systems/descending_manager.xml	2014-08-07 10:01:25.444542000 +0800
-@@ -0,0 +1,101 @@
+diff -ruN 777-300.orig/Systems/descending_manager.xml 777-300/Systems/descending_manager.xml
+--- 777-300.orig/Systems/descending_manager.xml	1970-01-01 08:00:00.000000000 +0800
++++ 777-300/Systems/descending_manager.xml	2014-10-28 23:40:12.532979014 +0800
+@@ -0,0 +1,77 @@
 +<?xml version="1.0"?>
 +
 +<PropertyList>
@@ -636,52 +634,28 @@ diff -ruN 777-300-orig/Systems/descending_manager.xml 777-300/Systems/descending
 +	</group>
 +
 +	<hrule/>
-+	<text>
-+		<padding>5</padding>
-+		<halign>left</halign>
-+        <label>Start descending when the remaining route is shorter than:</label>
-+	</text>
 +
 +	<group>
 +		<stretch>true</stretch>
-+		<layout>vbox</layout>
++		<layout>hbox</layout>
 +		<halign>left</halign>
 +		<valign>top</valign>
-+		<padding>5</padding>
 +
++		<text>
++			<label>Target altitude:</label>
++		</text>
 +		<input>
-+			<pref-width>70</pref-width>
-+			<pref-height>25</pref-height>
-+            <name>descending_distance</name>
-+            <property>autopilot/settings/descending-distance</property>
++			<pref-width>55</pref-width>
++			<pref-height>20</pref-height>
++            <name>target_altitude</name>
++            <property>/autopilot/descending-manager/target-altitude</property>
 +			<binding>
 +				<command>dialog-apply</command>
 +			</binding>
 +		</input>
-+		<label>nm</label>
-+	</group>
-+	<text>
-+		<padding>5</padding>
-+		<halign>left</halign>
-+        <label>Pause simulation when the altitude is lower than:</label>
-+	</text>
-+	<group>
-+		<stretch>true</stretch>
-+		<layout>vbox</layout>
-+		<halign>left</halign>
-+		<valign>top</valign>
-+		<padding>5</padding>
-+
-+		<input>
-+			<pref-width>70</pref-width>
-+			<pref-height>25</pref-height>
-+            <name>descending_distance</name>
-+            <property>autopilot/settings/altitude-pause</property>
-+			<binding>
-+				<command>dialog-apply</command>
-+			</binding>
-+		</input>
-+		<label>ft</label>
++		<text>
++			<label>ft </label>
++		</text>
 +	</group>
 +	<group>
 +		<stretch>true</stretch>
@@ -692,7 +666,7 @@ diff -ruN 777-300-orig/Systems/descending_manager.xml 777-300/Systems/descending
 +		<checkbox>
 +			<halign>left</halign>
 +			<label>Active</label>
-+			<property>/autopilot/settings/descending-manager-running</property>
++			<property>/autopilot/descending-manager/active</property>
 +			<live>true</live>
 +			<binding>
 +				<command>dialog-apply</command>

@@ -15,7 +15,7 @@ __Usage:__
 
 1. Set property `/sim/signals/fgreport` to "1".
 2. Wait until the value of property `/sim/signals/fgreport` became empty again.
-3. Read the value of property `/sim/fgreport/text`.
+3. Read the value of property `/sim/fgreport/text`, the content of it is the full text of the report, which can be displayed directly.
 
 ---
 
@@ -65,18 +65,37 @@ Pause Manager
 
 Pause the simulation when the remaining distance is shorter than a given value (in nautical miles).
 
-Install: see **install.txt** in the directory **pause_manager**.
+**Install:**
+
+1. Copy `pause-manager.xml` to `$FG_DATA/gui/dialogs`
+2. Copy `pause_manager.nas` to `$FG_DATA/Nasal`
+3. Add the 'pause-manager' menu item to the menu:
+
+
+* Edit `$FG_DATA/gui/menubar.xml` to insert  
+* Adding this menu item after 'route-manager' menu item is recommened
+
+	
+	<item>
+		<name>pause-manager</name>
+		<label>Pause Manager</label>
+		<binding>
+			<command>dialog-show</command>
+			<dialog-name>pause-manager</dialog-name>
+		</binding>
+	</item>
+	
 
 ---
 
 Descending Manager
 ------------------
 
-When the remaining distance is shorter than a given value (in nautical miles).
+When the remaining distance is shorter than 110 nautical miles.
 
 * Set vertical speed to -2000ft/min then switch altitude mode to V/S.
 
-When descend to an altitude lower than a given value (in feets).
+When descend to an altitude near a given value (in feets).
 
 * Switch altitude mode from V/S to FLCH.
 * Switch speed brake mode from off to auto.
@@ -107,7 +126,7 @@ File  | Description
 ----- | -----------
 config.php  | Configuration information
 FGTelnet.php  | Telnet tool to access Property Tree of FlightGear.
-screenshot.php  | Capture screenshot, then download it or show it in browser.
+screenshot.php  | Capture screenshot, then download it or show it within browser.
 
 #### Typical Usage
 
@@ -115,7 +134,6 @@ Capture and download screenshot from command line:
 
 	wget -O screenshot.png localhost/screenshot.php
 
-__PS:  
-Never add `?>` at the end of PHP files, especially those used for configuration information or PHP library.  
-Otherwise, when you're intended to force a file download via PHP, the file to download will be corrupted by unexpected leading empty lines or leading spaces.__
+**PS:** Never add `?>` at the end of PHP files, especially those used for configuration information or PHP library.  
+Otherwise, when you're intended to force a file download via PHP, the file to download will be corrupted by unexpected leading empty lines or leading spaces.
 
