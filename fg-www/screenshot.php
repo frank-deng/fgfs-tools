@@ -55,10 +55,13 @@ try {
 	}
 
 	/*Start downloading*/
-	Header("Content-type: ".$type);
-	$image= file_get_contents($imgpath);
-	echo $image;
+	header('Content-type: '.$type);
+	header('Content-Length: '.filesize($imgpath));
+	ob_clean();
+	flush();
+	readfile($imgpath);
 } catch (Exception $e) {
 	echo $e->getMessage();
 	exit(1);
 }
+

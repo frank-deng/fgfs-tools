@@ -134,6 +134,3 @@ Capture and download screenshot from command line:
 
 	wget -O screenshot.png localhost/screenshot.php
 
-**PS:** Never add `?>` at the end of PHP files, especially those used for configuration information or PHP library.  
-Otherwise, when you're intended to force a file download via PHP, the file to download will be corrupted by unexpected leading empty lines or leading spaces.
-
