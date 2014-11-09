@@ -73,6 +73,7 @@ fgreport_generate = func{
 		report_text = report_text ~ "\nSimulation paused.\n";
 	}
 
+	props.globals.getNode('/sim/fgreport/text').removeAllChildren();
 	setprop('/sim/fgreport/text', report_text);
 }
 
