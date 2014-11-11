@@ -8,7 +8,7 @@ fgreport_generate = func{
 
 	report_text = report_text ~ getprop('/sim/description') ~ "\n\n";
 
-	report_text = report_text ~ sprintf("Real time: %4d-%02d-%02d %02d:%02d:%02d\n",
+	report_text = report_text ~ sprintf("Real-world time: %4d-%02d-%02d %02d:%02d:%02d\n",
 					getprop('/sim/time/real/year'),
 					getprop('/sim/time/real/month'),
 					getprop('/sim/time/real/day'),
@@ -73,7 +73,6 @@ fgreport_generate = func{
 		report_text = report_text ~ "\nSimulation paused.\n";
 	}
 
-	props.globals.getNode('/sim/fgreport/text').removeAllChildren();
 	setprop('/sim/fgreport/text', report_text);
 }
 
