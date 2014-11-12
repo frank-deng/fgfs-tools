@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <departure>
+    <airport type="string">NZCH</airport>
+    <sid type="string">DEFAULT</sid>
+    <runway type="string">20</runway>
+  </departure>
+  <destination>
+    <airport type="string">NZIR</airport>
+    <approach type="string">DEFAULT</approach>
+    <runway type="string">11</runway>
+  </destination>
+  <route>
+    <wp>
+      <type type="string">runway</type>
+      <departure type="bool">true</departure>
+      <ident type="string">20</ident>
+      <icao type="string">NZCH</icao>
+    </wp>
+    <wp n="1">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">3123</altitude-ft>
+      <ident type="string">20-3</ident>
+      <lon type="double">172.4779757</lon>
+      <lat type="double">-43.53594842</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">6123</altitude-ft>
+      <ident type="string">20-6</ident>
+      <lon type="double">172.4337285</lon>
+      <lat type="double">-43.5742262</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">35000</altitude-ft>
+      <ident type="string">AKAMO</ident>
+      <lon type="double">172.299194</lon>
+      <lat type="double">-43.890389</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">navaid</type>
+      <ident type="string">POTOP</ident>
+      <lon type="double">172.406583</lon>
+      <lat type="double">-44.166222</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">navaid</type>
+      <ident type="string">ANOPA</ident>
+      <lon type="double">172.22775</lon>
+      <lat type="double">-45.230944</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">navaid</type>
+      <ident type="string">APORO</ident>
+      <lon type="double">171.333333</lon>
+      <lat type="double">-50</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">navaid</type>
+      <ident type="string">BOSLA</ident>
+      <lon type="double">170.916667</lon>
+      <lat type="double">-55</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">navaid</type>
+      <ident type="string">DALOS</ident>
+      <lon type="double">170.333333</lon>
+      <lat type="double">-60</lat>
+    </wp>
+    <wp n="9">
+      <type type="string">navaid</type>
+      <ident type="string">ELNAK</ident>
+      <lon type="double">169.533333</lon>
+      <lat type="double">-65</lat>
+    </wp>
+    <wp n="10">
+      <type type="string">navaid</type>
+      <ident type="string">GULAN</ident>
+      <lon type="double">168.333333</lon>
+      <lat type="double">-70</lat>
+    </wp>
+    <wp n="11">
+      <type type="string">navaid</type>
+      <ident type="string">ZUKKY</ident>
+      <lon type="double">166.866881</lon>
+      <lat type="double">-74.166831</lat>
+    </wp>
+    <wp n="12">
+      <type type="string">navaid</type>
+      <ident type="string">KALVA</ident>
+      <lon type="double">166.5</lon>
+      <lat type="double">-75</lat>
+    </wp>
+    <wp n="13">
+      <type type="string">navaid</type>
+      <ident type="string">LAVIS</ident>
+      <lon type="double">165.7855</lon>
+      <lat type="double">-76.18</lat>
+    </wp>
+    <wp n="14">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-4</ident>
+      <lon type="double">167.55342</lon>
+      <lat type="double">-77.75189949</lat>
+    </wp>
+    <wp n="15">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4049</altitude-ft>
+      <ident type="string">11-12</ident>
+      <lon type="double">167.4382614</lon>
+      <lat type="double">-77.79527572</lat>
+    </wp>
+    <wp n="16">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2049</altitude-ft>
+      <ident type="string">11-8</ident>
+      <lon type="double">167.1369146</lon>
+      <lat type="double">-77.81393144</lat>
+    </wp>
+    <wp n="17">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2049</altitude-ft>
+      <ident type="string">11-GS</ident>
+      <lon type="double">167.0071106</lon>
+      <lat type="double">-77.82184938</lat>
+    </wp>
+    <wp n="18">
+      <type type="string">runway</type>
+      <approach type="bool">true</approach>
+      <ident type="string">11</ident>
+      <icao type="string">NZIR</icao>
+    </wp>
+  </route>
+</PropertyList>
