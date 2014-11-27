@@ -9,7 +9,7 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 A FlightGear Nasal script used to generate report.
 
-__Install:__ copy `fgreport.nas` to `$FG_DATA/Nasal`
+__Install:__ copy `fgreport.nas` to `$FG_ROOT/Nasal`
 
 __Usage:__
 
@@ -45,7 +45,7 @@ This file contains the FlightGear command line options for:
 * An ideal flight environment.
 * Telnet configuration for accessing the Property Tree.
 
-Copy it to `$FG_DATA` to activate it.
+Copy it to `$FG_ROOT` to activate it.
 
 ---
 
@@ -67,12 +67,12 @@ Pause the simulation when the remaining distance is shorter than a given value (
 
 **Install:**
 
-1. Copy `pause-manager.xml` to `$FG_DATA/gui/dialogs`
-2. Copy `pause_manager.nas` to `$FG_DATA/Nasal`
+1. Copy `pause-manager.xml` to `$FG_ROOT/gui/dialogs`
+2. Copy `pause_manager.nas` to `$FG_ROOT/Nasal`
 3. Add the 'pause-manager' menu item to the menu:
 
 
-* Edit `$FG_DATA/gui/menubar.xml` to insert  
+* Edit `$FG_ROOT/gui/menubar.xml` to insert  
 * Adding this menu item after 'route-manager' menu item is recommened
 
 	

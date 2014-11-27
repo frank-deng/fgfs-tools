@@ -2,14 +2,13 @@
 
 ADDRESS=${FG_TELNET%:*};
 PORT=${FG_TELNET##*:};
-CMD_QUIT='quit\r\n';
 
 function fg_get(){
 	COMMAND='';
 	for PROP in $@; do
 		COMMAND="${COMMAND}get $PROP\\r\\n";
 	done
-	echo -ne "${COMMAND}$CMD_QUIT" |\
+	echo -ne "${COMMAND}" |\
 	netcat -i 1 "${ADDRESS}" "${PORT}" |\
 	grep -o "'.*'" |\
 	awk '{printf("%s\n",substr($0,2,length($0)-2));}'
