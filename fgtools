@@ -20,7 +20,8 @@ function fg_set(){
 function fg_run(){
 	echo -ne "run $1\r\n$CMD_QUIT" |\
 	netcat -i 1 "${ADDRESS}" "${PORT}" |\
-	head -n -1;
+	head -n -1 |\
+	tr -d '\r\n';
 }
 function is_paused(){
 	result=$(fg_get '/sim/freeze/clock' '/sim/freeze/master'|tr '\r\n' ' ');
@@ -42,9 +43,18 @@ function get_report(){
 	echo -ne "set /sim/signals/fgreport 1\r\nget /sim/fgreport/text\r\n$CMD_QUIT" |\
 		netcat -i 1 "${ADDRESS}" "${PORT}" | tail -n +3 | head -n -2
 }
+function fg_screenshot(){
+	if [[ '<completed>' = $(fg_run 'screen-capture') ]]
+	then
+		fg_get '/sim/paths/screenshot-last';
+	else
+		echo 'Failed to take screenshot' >&2;
+		exit 1
+	fi;
+}
 
 if [[ -z $1 ]]; then
-	echo "Usage: $0 report|soundon|soundoff"
+	echo "Usage: $0 report|soundon|soundoff|screenshot"
 	exit 1;
 else
 	case $1 in
@@ -56,6 +66,9 @@ else
 		;;
 		soundoff)
 			set_sound off;
+		;;
+		screenshot)
+			fg_screenshot;
 		;;
 	esac;
 fi;

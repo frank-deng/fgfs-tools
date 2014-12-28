@@ -5,6 +5,27 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 ---
 
+#### fgtools
+
+A shell script used to control FlightGear via telnet.
+
+Synopsis:
+
+	FGTools.sh report|soundon|soundoff|screenshot
+
+* __report__  
+  Print an report of FlightGear.
+* __soundon__  
+  Switch the sound of FlightGear on.
+* __soundoff__  
+  Switch the sound of FlightGear on.
+* __screenshot__  
+  Take screenshot for current FlightGear instance.
+
+`FG_TELNET` environment variable should be defined as the telnet address:port for FlightGear, e.g: `FG_TELNET='localhost:5401'`.
+
+---
+
 #### fgreport.nas
 
 A FlightGear Nasal script used to generate report.
@@ -16,25 +37,6 @@ __Usage:__
 1. Set property `/sim/signals/fgreport` to "1".
 2. Wait until the value of property `/sim/signals/fgreport` became empty again.
 3. Read the value of property `/sim/fgreport/text`, the content of it is the full text of the report, which can be displayed directly.
-
----
-
-#### FGTools.sh
-
-A shell script used to control FlightGear via telnet.
-
-Synopsis:
-
-	FGTools.sh report|soundon|soundoff
-
-* __report__  
-  Print an report of FlightGear.
-* __soundon__  
-  Switch the sound of FlightGear on.
-* __soundoff__  
-  Switch the sound of FlightGear on.
-
-_FG_TELNET_ environment variable should be defined as the telnet address and port of FlightGear, e.g: `FG_TELNET='localhost:5000'`.
 
 ---
 
@@ -102,35 +104,4 @@ When descend to an altitude near a given value (in feets).
 * Pause simulation and waiting for manual operation.
 
 Installation: This was included in the patch file **777-300_frank.patch**.
-
----
-
-PHP Interface for FlightGear
-----------------------------
-
-#### Description
-
-PHP is used to manipulate the Property Tree of FlightGear via telnet.
-
-At present, screenshot capture and download is implemented.
-
-#### Install
-
-	cp fg-www/* /var/www
-
-`/var/www` is the root directory of your apache server.
-
-#### Filelist
-
-File  | Description
------ | -----------
-config.php  | Configuration information
-FGTelnet.php  | Telnet tool to access Property Tree of FlightGear.
-screenshot.php  | Capture screenshot, then download it or show it within browser.
-
-#### Typical Usage
-
-Capture and download screenshot from command line:
-
-	wget -O screenshot.png localhost/screenshot.php
 
