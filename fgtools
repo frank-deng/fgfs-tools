@@ -53,24 +53,23 @@ function fg_screenshot(){
 	fi;
 }
 
-if [[ -z $1 ]]; then
-	echo "Usage: $0 report|soundon|soundoff|screenshot"
-	exit 1;
-else
-	case $1 in
-		report)
-			get_report;
-		;;
-		soundon)
-			set_sound on;
-		;;
-		soundoff)
-			set_sound off;
-		;;
-		screenshot)
-			fg_screenshot;
-		;;
-	esac;
-fi;
+case $1 in
+	report)
+		get_report;
+	;;
+	soundon)
+		set_sound on;
+	;;
+	soundoff)
+		set_sound off;
+	;;
+	screenshot)
+		fg_screenshot;
+	;;
+	*)
+		echo "Usage: $0 report|soundon|soundoff|screenshot"
+		exit 1;
+	;;
+esac;
 exit 0;
 
