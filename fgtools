@@ -1,75 +1,207 @@
-#!/bin/bash
+#!/usr/bin/python
+#encoding=UTF-8
 
-ADDRESS=${FG_TELNET%:*};
-PORT=${FG_TELNET##*:};
+from telnetlib import Telnet
+import sys
+import socket
+import re
+from string import split, join
+import time
+import os
+ 
+__all__ = ["FlightGear"]
+CRLF = '\r\n'
+class FGTelnet(Telnet):
+    def __init__(self,host,port):
+        Telnet.__init__(self,host,port)
+        self.prompt = []
+        self.prompt.append( re.compile('/[^>]*> ') )
+        self.timeout = 5
+        #Telnet.set_debuglevel(self,2)
+ 
+    def help(self):
+        return
+ 
+    def ls(self,dir=None):
+        """
+        Returns a list of properties.
+        """
+        if dir == None:
+            self._putcmd('ls')
+        else:
+            self._putcmd('ls %s' % dir )
+        return self._getresp()
+ 
+    def dump(self):
+        """Dump current state as XML."""
+        self._putcmd('dump')
+        return self._getresp()
+ 
+    def cd(self, dir):
+        """Change directory."""
+        self._putcmd('cd ' + dir)
+        self._getresp()
+        return
+ 
+    def pwd(self):
+        """Display current path."""
+        self._putcmd('pwd')
+        return self._getresp()
+ 
+    def get(self,var):
+        """Retrieve the value of a parameter."""
+        self._putcmd('get %s' % var )
+        return self._getresp()
+ 
+    def set(self,var,value):
+        """Set variable to a new value"""
+        self._putcmd('set %s %s' % (var,value))
+        self._getresp() # Discard response
 
-function fg_get(){
-	COMMAND='';
-	for PROP in $@; do
-		COMMAND="${COMMAND}get $PROP\\r\\n";
-	done
-	echo -ne "${COMMAND}" |\
-	netcat -i 1 "${ADDRESS}" "${PORT}" |\
-	grep -o "'.*'" |\
-	awk '{printf("%s\n",substr($0,2,length($0)-2));}'
-}
-function fg_set(){
-	echo -ne "set $1 $2\r\n$CMD_QUIT" |\
-	netcat -i 1 "${ADDRESS}" "${PORT}" &>/dev/null
-}
-function fg_run(){
-	echo -ne "run $1\r\n$CMD_QUIT" |\
-	netcat -i 1 "${ADDRESS}" "${PORT}" |\
-	head -n -1 |\
-	tr -d '\r\n';
-}
-function is_paused(){
-	result=$(fg_get '/sim/freeze/clock' '/sim/freeze/master'|tr '\r\n' ' ');
-	if [[ $result = 'true true ' ]]; then
-		return 0;
-	else
-		return 1;
-	fi;
-}
+    def run(self,command):
+        """Run fgcommand."""
+        self._putcmd('run %s' % command )
+        return self._getresp()
+ 
+    def quit(self):
+        """Terminate connection"""
+        self._putcmd('quit')
+        self.close()
+        return
+ 
+    # Internal: send one command to FlightGear
+    def _putcmd(self,cmd):
+        cmd = cmd + CRLF;
+        Telnet.write(self, cmd)
+        return
+ 
+    # Internal: get a response from FlightGear
+    def _getresp(self):
+        (i,match,resp) = Telnet.expect(self, self.prompt, self.timeout)
+        # Remove the terminating prompt.
+        # Everything preceding it is the response.
+        return split(resp, '\n')[:-1]
+ 
+class FlightGear:
+    """FlightGear interface class.
+ 
+    An instance of this class represents a connection to a FlightGear telnet
+    server.
+ 
+    Properties are accessed using a dictionary style interface:
+    For example:
+ 
+    # Connect to flightgear telnet server.
+    fg = FlightGear('myhost', 5500)
+    # parking brake on
+    fg['/controls/gear/brake-parking'] = 1
+    # Get current heading
+    heading = fg['/orientation/heading-deg']
+ 
+    Other non-property related methods
+    """
+ 
+    def __init__( self, host = 'localhost', port = 5500 ):
+        try:
+            self.telnet = FGTelnet(host,port)
+        except socket.error, msg:
+            self.telnet = None
+            raise socket.error, msg
+ 
+    def __del__(self):
+        # Ensure telnet connection is closed cleanly.
+        self.quit();
+ 
+    def __getitem__(self,key):
+        """Get a FlightGear property value.
+        Where possible the value is converted to the equivalent Python type.
+        """
+        s = self.telnet.get(key)[0]
+        match = re.compile( '[^=]*=\s*\'([^\']*)\'\s*([^\r]*)\r').match( s )
+        if not match:
+            return None
+        value,type = match.groups()
+        #value = match.group(1)
+        #type = match.group(2)
+        if value == '':
+            return None
+ 
+        if type == '(double)':
+            return float(value)
+        elif type == '(int)':
+            return int(value)
+        elif type == '(bool)':
+            if value == 'true':
+                return 1
+            else:
+                return 0
+        else:
+            return value
+ 
+    def __setitem__(self, key, value):
+        """Set a FlightGear property value."""
+        self.telnet.set( key, value )
+ 
+    def quit(self):
+        """Close the telnet connection to FlightGear."""
+        if self.telnet:
+            self.telnet.quit()
+            self.telnet = None
+ 
+    def view_next(self):
+        #move to next view
+        self.telnet.set( "/command/view/next", "true")
+ 
+    def view_prev(self):
+        #move to next view
+        self.telnet.set( "/command/view/prev", "true")
 
-function set_sound(){
-	if [[ 'on' = $1 ]]; then
-		fg_set '/sim/sound/enabled' 'true';
-	else
-		fg_set '/sim/sound/enabled' 'false';
-	fi;
-}
-function get_report(){
-	echo -ne "set /sim/signals/fgreport 1\r\nget /sim/fgreport/text\r\n$CMD_QUIT" |\
-		netcat -i 1 "${ADDRESS}" "${PORT}" | tail -n +3 | head -n -2
-}
-function fg_screenshot(){
-	if [[ '<completed>' = $(fg_run 'screen-capture') ]]
-	then
-		fg_get '/sim/paths/screenshot-last';
-	else
-		echo 'Failed to take screenshot' >&2;
-		exit 1
-	fi;
-}
+    def run(self,command):
+        """Run fgcommand."""
+        return self.telnet.run(command)[0].replace('\r', '').replace('\n', '');
 
-case $1 in
-	report)
-		get_report;
-	;;
-	soundon)
-		set_sound on;
-	;;
-	soundoff)
-		set_sound off;
-	;;
-	screenshot)
-		fg_screenshot;
-	;;
-	*)
-		echo "Usage: $0 report|soundon|soundoff|screenshot"
-		exit 1;
-	;;
-esac;
-exit 0;
+    def get_report(self):
+        self.telnet.set('/sim/signals/fgreport', 1);
+        s = '\n'.join(self.telnet.get('/sim/fgreport/text')[1:-1]);
+        return s;
+
+if __name__ == '__main__':
+    def get_report(fg):
+        print fg.get_report();
+
+    def sound_on(fg):
+        fg['/sim/sound/enabled'] = 1;
+
+    def sound_off(fg):
+        fg['/sim/sound/enabled'] = 0;
+
+    command_all = {
+        'report': get_report,
+        'soundon': sound_on,
+        'soundoff': sound_off,
+    };
+    
+    def usage():
+        command_name_all = [];
+        for key in command_all:
+            command_name_all.append(key);
+        sys.stderr.write('Usage: %s %s\n' % (sys.argv[0], '|'.join(command_name_all)));
+        exit(1);
+
+    if (len(sys.argv) < 2):
+        usage();
+    command = sys.argv[1];
+    fg = None;
+    try:
+        func = command_all[command];
+        address, port = os.getenv('FG_TELNET').split(':');
+        fg = FlightGear(address, int(port));
+        func(fg);
+        fg.quit();
+    except KeyError:
+        usage();
+    except Exception, e:
+        sys.stderr.write(str(e) + "\n");
+        exit(1);
+    exit(0);
 

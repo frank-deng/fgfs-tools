@@ -7,11 +7,11 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 #### fgtools
 
-A shell script used to control FlightGear via telnet.
+A Python script used to control FlightGear via telnet.
 
 Synopsis:
 
-	FGTools.sh report|soundon|soundoff|screenshot
+	FGTools.sh report|soundon|soundoff
 
 * __report__  
   Print an report of FlightGear.
@@ -19,8 +19,6 @@ Synopsis:
   Switch the sound of FlightGear on.
 * __soundoff__  
   Switch the sound of FlightGear on.
-* __screenshot__  
-  Take screenshot for current FlightGear instance.
 
 `FG_TELNET` environment variable should be defined as the telnet address:port for FlightGear, e.g: `FG_TELNET='localhost:5401'`.
 
