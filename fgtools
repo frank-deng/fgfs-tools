@@ -182,10 +182,7 @@ if __name__ == '__main__':
     };
     
     def usage():
-        command_name_all = [];
-        for key in command_all:
-            command_name_all.append(key);
-        sys.stderr.write('Usage: %s %s\n' % (sys.argv[0], '|'.join(command_name_all)));
+        sys.stderr.write('Usage: %s %s\n' % (sys.argv[0], '|'.join([key for key in command_all])));
         exit(1);
 
     if (len(sys.argv) < 2):
