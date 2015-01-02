@@ -162,23 +162,44 @@ class FlightGear:
 
     def get_report(self):
         self.telnet.set('/sim/signals/fgreport', 1);
+        while self.telnet.get('/sim/signals/fgreport') == 1:
+            time.sleep(0.2);
         s = '\n'.join(self.telnet.get('/sim/fgreport/text')[1:-1]);
         return s;
 
 if __name__ == '__main__':
     def get_report(fg):
         print fg.get_report();
+        return 0;
 
     def sound_on(fg):
         fg['/sim/sound/enabled'] = 1;
+        return 0;
 
     def sound_off(fg):
         fg['/sim/sound/enabled'] = 0;
+        return 0;
+
+    def get_nav_freq(fg):
+        print 'NAV 1 Freq: ' + str(fg['/instrumentation/nav/frequencies/selected-mhz']);
+        print 'NAV 2 Freq: ' + str(fg['/instrumentation/nav[1]/frequencies/selected-mhz']);
+        return 0;
+
+    def set_nav_freq(fg):
+        try:
+            fg['/instrumentation/nav/frequencies/selected-mhz'] = float(sys.argv[1]);
+            fg['/instrumentation/nav[1]/frequencies/selected-mhz'] = float(sys.argv[1]);
+        except IndexError:
+            print 'Frequency value not given.';
+            return 1;
+        return 0;
 
     command_all = {
         'report': get_report,
         'soundon': sound_on,
         'soundoff': sound_off,
+        'getnavfreq': get_nav_freq,
+        'setnavfreq': set_nav_freq,
     };
     
     def usage():
@@ -189,16 +210,20 @@ if __name__ == '__main__':
         usage();
     command = sys.argv[1];
     fg = None;
+    retcode = 0;
     try:
         func = command_all[command];
+        sys.argv = sys.argv[1:];
         address, port = os.getenv('FG_TELNET').split(':');
         fg = FlightGear(address, int(port));
-        func(fg);
+        retcode = func(fg);
         fg.quit();
     except KeyError:
         usage();
     except Exception, e:
         sys.stderr.write(str(e) + "\n");
+        if (None != fg):
+            fg.quit();
         exit(1);
-    exit(0);
+    exit(retcode);
 
