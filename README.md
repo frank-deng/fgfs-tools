@@ -7,20 +7,54 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 #### fgtools
 
-A Python script used to control FlightGear via telnet.
+A useful tool to manipulate FlightGear from command line.
 
-Synopsis:
+Synopsis: `fgtools command`
 
-	FGTools.sh report|soundon|soundoff
+Available Commands:
 
-* __report__  
+* report  
   Print an report of FlightGear.
-* __soundon__  
-  Switch the sound of FlightGear on.
-* __soundoff__  
-  Switch the sound of FlightGear on.
+* soundon  
+  Unmute FlightGear.
+* soundoff  
+  Mute FlightGear.
+* pause  
+  Pause simulation.
+* resume  
+  Resume simulation.
+* pausemgr [distance]  
+  View or setup the state of Pause Manager.  
+  If distance is not given, the state of Pause Manager will be shown.  
+  If distance is a positive number, Pause Manager will be activated with the given distance.  
+  If distance is a negative number, Pause Manager will be deactivated.  
 
 `FG_TELNET` environment variable should be defined as the telnet address:port for FlightGear, e.g: `FG_TELNET='localhost:5401'`.
+
+---
+
+### 777-tools
+
+A useful tool to manipulate 777-300ER from command line.
+
+Synopsis: `777-tools command`
+
+Available Commands:
+
+* getnavfreq  
+  Get ILS frequency.
+* setnavfreq  
+  Set ILS frequency.
+* loadroute ROUTE_FILE  
+  Load flight plan from ROUTE_FILE.
+* refuel [percent]  
+  Refuel 777-300ER.  
+  If percent is given, then the quantity of fuel will be percent% of total fuel capacity. Otherwise, the quantity of fuel is determined by the total distance of the route.
+* descending [altitude]
+  View or setup the state of Descending Manager.  
+  If altitude is not given, the state of Descending Manager will be shown.  
+  If altitude is a positive number, Descending Manager will be activated with the given target altitude.  
+  If altitude is a negative number, Descending Manager will be deactivated.  
 
 ---
 
