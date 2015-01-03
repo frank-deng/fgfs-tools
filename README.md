@@ -62,9 +62,9 @@ Available Commands:
 
 A FlightGear Nasal script used to generate report.
 
-__Install:__ copy `fgreport.nas` to `$FG_ROOT/Nasal`
+Install: copy `fgreport.nas` to `$FG_ROOT/Nasal`
 
-__Usage:__
+Usage:
 
 1. Set property `/sim/signals/fgreport` to "1".
 2. Wait until the value of property `/sim/signals/fgreport` became empty again.
@@ -85,11 +85,11 @@ Copy it to `$FG_ROOT` to activate it.
 
 #### 777-300_frank.patch
 
-Patch for [__777-300__](https://code.google.com/p/b773-flightgear/) and [__777-300ER__](https://code.google.com/p/b773-flightgear/):
+Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](https://code.google.com/p/b773-flightgear/):
 
 * Some new viewports added to 777-300ER
 * Some modifications to both 777-300 and 777-300ER
-* Descending manager for both 777-300 and 777-300ER. For detail, see section __Descending Manager__
+* Descending manager for both 777-300 and 777-300ER. For detail, see section **Descending Manager**.
 * Ground refueling function for 777-300ER, based on the distance of the route.
 
 ---
@@ -99,7 +99,7 @@ Pause Manager
 
 Pause the simulation when the remaining distance is shorter than a given value (in nautical miles).
 
-**Install:**
+Install:
 
 1. Copy `pause-manager.xml` to `$FG_ROOT/gui/dialogs`
 2. Copy `pause_manager.nas` to `$FG_ROOT/Nasal`
