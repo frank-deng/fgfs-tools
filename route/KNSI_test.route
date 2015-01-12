@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <departure>
+    <airport type="string">KNSI</airport>
+    <sid type="string">DEFAULT</sid>
+    <runway type="string">30</runway>
+  </departure>
+  <destination>
+    <airport type="string">KNSI</airport>
+    <approach type="string">DEFAULT</approach>
+    <runway type="string">30</runway>
+  </destination>
+  <route>
+    <wp>
+      <type type="string">runway</type>
+      <departure type="bool">true</departure>
+      <ident type="string">30</ident>
+      <icao type="string">KNSI</icao>
+    </wp>
+    <wp n="1">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">3506</altitude-ft>
+      <ident type="string">30-3</ident>
+      <lon type="double">-119.5140056</lon>
+      <lat type="double">33.2830999</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">6506</altitude-ft>
+      <ident type="string">30-6</ident>
+      <lon type="double">-119.5578605</lon>
+      <lat type="double">33.31705978</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <ident type="string">DEP-3</ident>
+      <lon type="double">-119.5602252</lon>
+      <lat type="double">33.36711487</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">navaid</type>
+      <ident type="string">FOBDA</ident>
+      <lon type="double">-119.396536</lon>
+      <lat type="double">33.428608</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">navaid</type>
+      <ident type="string">LAVAY</ident>
+      <lon type="double">-119.221656</lon>
+      <lat type="double">33.259278</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">navaid</type>
+      <ident type="string">EDADE</ident>
+      <lon type="double">-119.1492</lon>
+      <lat type="double">32.999969</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-4</ident>
+      <lon type="double">-119.268932</lon>
+      <lat type="double">33.04432955</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4506</altitude-ft>
+      <ident type="string">30-12</ident>
+      <lon type="double">-119.271288</lon>
+      <lat type="double">33.09438688</lat>
+    </wp>
+    <wp n="9">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2506</altitude-ft>
+      <ident type="string">30-8</ident>
+      <lon type="double">-119.3295184</lon>
+      <lat type="double">33.13977849</lat>
+    </wp>
+    <wp n="10">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2506</altitude-ft>
+      <ident type="string">30-GS</ident>
+      <lon type="double">-119.3545656</lon>
+      <lat type="double">33.15928044</lat>
+    </wp>
+    <wp n="11">
+      <type type="string">runway</type>
+      <approach type="bool">true</approach>
+      <ident type="string">30</ident>
+      <icao type="string">KNSI</icao>
+    </wp>
+  </route>
+</PropertyList>

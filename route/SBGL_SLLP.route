@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <departure>
+    <airport type="string">SBGL</airport>
+    <sid type="string">DEFAULT</sid>
+    <runway type="string">28</runway>
+  </departure>
+  <destination>
+    <airport type="string">SLLP</airport>
+    <approach type="string">DEFAULT</approach>
+    <runway type="string">10</runway>
+  </destination>
+  <route>
+    <wp>
+      <type type="string">runway</type>
+      <departure type="bool">true</departure>
+      <ident type="string">28</ident>
+      <icao type="string">SBGL</icao>
+    </wp>
+    <wp n="1">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">3028</altitude-ft>
+      <ident type="string">28-3</ident>
+      <lon type="double">-43.3072304</lon>
+      <lat type="double">-22.81545764</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">6028</altitude-ft>
+      <ident type="string">28-6</ident>
+      <lon type="double">-43.35936785</lon>
+      <lat type="double">-22.82892017</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">35000</altitude-ft>
+      <ident type="string">SCR</ident>
+      <lon type="double">-43.727681</lon>
+      <lat type="double">-22.949628</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">navaid</type>
+      <ident type="string">SJC</ident>
+      <lon type="double">-45.854167</lon>
+      <lat type="double">-23.246333</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">navaid</type>
+      <ident type="string">CPN</ident>
+      <lon type="double">-47.129044</lon>
+      <lat type="double">-23.008714</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">navaid</type>
+      <ident type="string">BRU</ident>
+      <lon type="double">-49.107167</lon>
+      <lat type="double">-22.314</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">navaid</type>
+      <ident type="string">BRAVO</ident>
+      <lon type="double">-51.542833</lon>
+      <lat type="double">-21.534667</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">navaid</type>
+      <ident type="string">CGR</ident>
+      <lon type="double">-54.670333</lon>
+      <lat type="double">-20.468833</lat>
+    </wp>
+    <wp n="9">
+      <type type="string">navaid</type>
+      <ident type="string">SIDAK</ident>
+      <lon type="double">-58.209288</lon>
+      <lat type="double">-19.642757</lat>
+    </wp>
+    <wp n="10">
+      <type type="string">navaid</type>
+      <ident type="string">CAMBA</ident>
+      <lon type="double">-61.371876</lon>
+      <lat type="double">-18.396062</lat>
+    </wp>
+    <wp n="11">
+      <type type="string">navaid</type>
+      <ident type="string">VIR</ident>
+      <lon type="double">-63.149897</lon>
+      <lat type="double">-17.628478</lat>
+    </wp>
+    <wp n="12">
+      <type type="string">navaid</type>
+      <ident type="string">ESARU</ident>
+      <lon type="double">-65.83346</lon>
+      <lat type="double">-16.832411</lat>
+    </wp>
+    <wp n="13">
+      <type type="string">navaid</type>
+      <ident type="string">ISAMO</ident>
+      <lon type="double">-67.9095</lon>
+      <lat type="double">-16.788</lat>
+    </wp>
+    <wp n="14">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-6</ident>
+      <lon type="double">-68.42315707</lon>
+      <lat type="double">-16.62715301</lat>
+    </wp>
+    <wp n="15">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-5</ident>
+      <lon type="double">-68.45874457</lon>
+      <lat type="double">-16.59050384</lat>
+    </wp>
+    <wp n="16">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-4</ident>
+      <lon type="double">-68.45702745</lon>
+      <lat type="double">-16.5403254</lat>
+    </wp>
+    <wp n="17">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">17313</altitude-ft>
+      <ident type="string">10-12</ident>
+      <lon type="double">-68.41902818</lon>
+      <lat type="double">-16.50601804</lat>
+    </wp>
+    <wp n="18">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">15313</altitude-ft>
+      <ident type="string">10-8</ident>
+      <lon type="double">-68.34967878</lon>
+      <lat type="double">-16.50828335</lat>
+    </wp>
+    <wp n="19">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">15313</altitude-ft>
+      <ident type="string">10-GS</ident>
+      <lon type="double">-68.31987023</lon>
+      <lat type="double">-16.50924997</lat>
+    </wp>
+    <wp n="20">
+      <type type="string">runway</type>
+      <approach type="bool">true</approach>
+      <ident type="string">10</ident>
+      <icao type="string">SLLP</icao>
+    </wp>
+  </route>
+</PropertyList>
