@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <departure>
+    <airport type="string">YPPH</airport>
+    <sid type="string">DEFAULT</sid>
+    <runway type="string">21</runway>
+  </departure>
+  <destination>
+    <airport type="string">YSSY</airport>
+    <approach type="string">DEFAULT</approach>
+    <runway type="string">34R</runway>
+  </destination>
+  <route>
+    <wp>
+      <type type="string">runway</type>
+      <departure type="bool">true</departure>
+      <ident type="string">21</ident>
+      <icao type="string">YPPH</icao>
+    </wp>
+    <wp n="1">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">3070</altitude-ft>
+      <ident type="string">21-3</ident>
+      <lon type="double">115.9455664</lon>
+      <lat type="double">-32.0075448</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">6070</altitude-ft>
+      <ident type="string">21-6</ident>
+      <lon type="double">115.9314408</lon>
+      <lat type="double">-32.05618331</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <ident type="string">DEP-3</ident>
+      <lon type="double">115.9618622</lon>
+      <lat type="double">-32.09907349</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <ident type="string">DEP-4</ident>
+      <lon type="double">116.0190122</lon>
+      <lat type="double">-32.11108008</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">35000</altitude-ft>
+      <ident type="string">YNTM</ident>
+      <lon type="double">116.683253</lon>
+      <lat type="double">-31.624653</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">navaid</type>
+      <ident type="string">SCR</ident>
+      <lon type="double">119.355833</lon>
+      <lat type="double">-31.232222</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">navaid</type>
+      <ident type="string">KG</ident>
+      <lon type="double">121.452778</lon>
+      <lat type="double">-30.789722</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">navaid</type>
+      <ident type="string">MALLY</ident>
+      <lon type="double">125</lon>
+      <lat type="double">-31.781389</lat>
+    </wp>
+    <wp n="9">
+      <type type="string">navaid</type>
+      <ident type="string">IVPEM</ident>
+      <lon type="double">128</lon>
+      <lat type="double">-32.526667</lat>
+    </wp>
+    <wp n="10">
+      <type type="string">navaid</type>
+      <ident type="string">DANVA</ident>
+      <lon type="double">131.5</lon>
+      <lat type="double">-33.356111</lat>
+    </wp>
+    <wp n="11">
+      <type type="string">navaid</type>
+      <ident type="string">MTP</ident>
+      <lon type="double">135.339722</lon>
+      <lat type="double">-34.135</lat>
+    </wp>
+    <wp n="12">
+      <type type="string">navaid</type>
+      <ident type="string">AD</ident>
+      <lon type="double">138.524444</lon>
+      <lat type="double">-34.946947</lat>
+    </wp>
+    <wp n="13">
+      <type type="string">navaid</type>
+      <ident type="string">NYA</ident>
+      <lon type="double">143.23265</lon>
+      <lat type="double">-34.968936</lat>
+    </wp>
+    <wp n="14">
+      <type type="string">navaid</type>
+      <ident type="string">WG</ident>
+      <lon type="double">147.468872</lon>
+      <lat type="double">-35.165611</lat>
+    </wp>
+    <wp n="15">
+      <type type="string">navaid</type>
+      <ident type="string">CB</ident>
+      <lon type="double">149.195833</lon>
+      <lat type="double">-35.281389</lat>
+    </wp>
+    <wp n="16">
+      <type type="string">navaid</type>
+      <ident type="string">WOL</ident>
+      <lon type="double">150.790992</lon>
+      <lat type="double">-34.557931</lat>
+    </wp>
+    <wp n="17">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-5</ident>
+      <lon type="double">151.1532027</lon>
+      <lat type="double">-34.21957684</lat>
+    </wp>
+    <wp n="18">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-4</ident>
+      <lon type="double">151.2121385</lon>
+      <lat type="double">-34.20901485</lat>
+    </wp>
+    <wp n="19">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4021</altitude-ft>
+      <ident type="string">34R-12</ident>
+      <lon type="double">151.2448058</lon>
+      <lat type="double">-34.16692202</lat>
+    </wp>
+    <wp n="20">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2021</altitude-ft>
+      <ident type="string">34R-8</ident>
+      <lon type="double">151.2278149</lon>
+      <lat type="double">-34.10164969</lat>
+    </wp>
+    <wp n="21">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2021</altitude-ft>
+      <ident type="string">34R-GS</ident>
+      <lon type="double">151.2205197</lon>
+      <lat type="double">-34.07359311</lat>
+    </wp>
+    <wp n="22">
+      <type type="string">runway</type>
+      <approach type="bool">true</approach>
+      <ident type="string">34R</ident>
+      <icao type="string">YSSY</icao>
+    </wp>
+  </route>
+</PropertyList>
