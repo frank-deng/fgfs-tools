@@ -23,11 +23,17 @@ Available Commands:
   Pause simulation.
 * resume  
   Resume simulation.
+* getnavfreq  
+  Get ILS frequency.
+* setnavfreq  
+  Set ILS frequency.
 * pausemgr [distance]  
   View or setup the state of Pause Manager.  
   If distance is not given, the state of Pause Manager will be shown.  
   If distance is a positive number, Pause Manager will be activated with the given distance.  
   If distance is a negative number, Pause Manager will be deactivated.  
+* loadroute ROUTE_FILE  
+  Load flight plan from ROUTE_FILE.
 
 `FG_TELNET` environment variable should be defined as the telnet address:port for FlightGear, e.g: `FG_TELNET='localhost:5401'`.
 
@@ -45,8 +51,6 @@ Available Commands:
   Get ILS frequency.
 * setnavfreq  
   Set ILS frequency.
-* loadroute ROUTE_FILE  
-  Load flight plan from ROUTE_FILE.
 * refuel [percent]  
   Refuel 777-300ER.  
   If percent is given, then the quantity of fuel will be percent% of total fuel capacity. Otherwise, the quantity of fuel is determined by the total distance of the route.

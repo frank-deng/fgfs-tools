@@ -1,0 +1,74 @@
+diff -ruN B-1B/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
+--- B-1B/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml	2015-01-25 15:22:44.185827117 +0800
+@@ -458,11 +458,11 @@
+       <target-pitch-deg type="float">0</target-pitch-deg>
+       <target-vfps type="float">0</target-vfps>
+       <take-off-pitch-deg type="float">2.0</take-off-pitch-deg>
+-      <target-speed-kt type="float">350.0</target-speed-kt>
++      <target-speed-kt type="float">300.0</target-speed-kt>
+       <climb-out-initial-pitch-deg type="float">6.0</climb-out-initial-pitch-deg>
+       <climb-out-final-pitch-deg type="float">3.0</climb-out-final-pitch-deg>
+-      <target-climb-rate-fpm type="float">2000.0</target-climb-rate-fpm>
+-      <target-descent-rate-fpm type="float">2000.0</target-descent-rate-fpm>
++      <target-climb-rate-fpm type="float">1000.0</target-climb-rate-fpm>
++      <target-descent-rate-fpm type="float">1500.0</target-descent-rate-fpm>
+       <ground-roll-heading-deg type="float">-999.9</ground-roll-heading-deg>
+       <target-mach type="float">0.9</target-mach>
+       <target-aoa-deg type="float">1.0</target-aoa-deg>
+@@ -737,6 +737,7 @@
+ 		<file>Aircraft/B-1B/Nasal/guide_to_target.nas</file>
+ 		<file>Aircraft/B-1B/Nasal/wso_mfd.nas</file>
+ 		<file>Aircraft/B-1B/Nasal/fuel_load.nas</file>
++		<file>Aircraft/B-1B/Nasal/ghost_refuel.nas</file>
+ 	</weapons>
+         <fuel>
+ 		<file>Aircraft/Generic/aar.nas</file>
+diff -ruN B-1B/Nasal/ghost_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/ghost_refuel.nas
+--- B-1B/Nasal/ghost_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/ghost_refuel.nas	2015-01-25 18:01:10.278081682 +0800
+@@ -0,0 +1,44 @@
++setprop('/armament/ghost-refuel/signal', '0');
++setprop('/armament/ghost-refuel/amount', '0.95');
++
++var ghost_refuel = func(){
++	var target_amount = getprop('/armament/ghost-refuel/amount');
++
++	#Refuel speed in gal-us/second.
++	var refuel_speed = 10;
++	var refuel_tanks = 0;
++
++	if (!getprop('/armament/ghost-refuel/signal')
++		or getprop('/consumables/fuel/total-fuel-norm') >= target_amount) {
++		screen.log.write('Refuel Complete!!!', 0, 1, 0);
++		setprop('/armament/ghost-refuel/signal', '0');
++		return;
++	}
++
++	for (var i = 0; i < 8; i += 1) {
++		var amount = getprop('/consumables/fuel/tank[' ~ i ~ ']/level-gal_us');
++		var capacity = getprop('/consumables/fuel/tank[' ~ i ~ ']/capacity-gal_us');
++		if (amount < capacity - 0.1) {
++			refuel_tanks += 1;
++		}
++	}
++
++	for (var i = 0; i < 8; i += 1) {
++		var amount = getprop('/consumables/fuel/tank[' ~ i ~ ']/level-gal_us');
++		var capacity = getprop('/consumables/fuel/tank[' ~ i ~ ']/capacity-gal_us');
++		amount = amount + (refuel_speed / refuel_tanks);
++		if (amount >= capacity) {
++			amount = capacity;
++		}
++		setprop('/consumables/fuel/tank[' ~ i ~ ']/level-gal_us', amount);
++	}
++
++	settimer(ghost_refuel, 1);
++}
++
++setlistener('/armament/ghost-refuel/signal', func{
++	if (getprop('/armament/ghost-refuel/signal')){
++		ghost_refuel();
++	}
++});
++

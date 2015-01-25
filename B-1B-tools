@@ -1,0 +1,96 @@
+#!/usr/bin/python
+#encoding=UTF-8
+
+import sys, os, time;
+from FlightGear import FlightGear;
+
+def ground_refuel_max(fg, args):
+    if float(fg['/velocities/groundspeed-kt']) > 0.1:
+        print ('Unable to refuel while the aircraft is moving.');
+        return 1;
+    else:
+        fg['/consumables/fuel/tank[0]/level-norm'] = 1.0;
+        fg['/consumables/fuel/tank[1]/level-norm'] = 1.0;
+        fg['/consumables/fuel/tank[2]/level-norm'] = 1.0;
+        fg['/consumables/fuel/tank[3]/level-norm'] = 1.0;
+        fg['/consumables/fuel/tank[4]/level-norm'] = 1.0;
+        fg['/consumables/fuel/tank[5]/level-norm'] = 1.0;
+        fg['/consumables/fuel/tank[6]/level-norm'] = 1.0;
+        fg['/consumables/fuel/tank[7]/level-norm'] = 1.0;
+        return 0;
+
+def ghost_refuel(fg, args):
+    amount = 1.0;
+    try:
+        amount = float(args[0]);
+        if amount > 1.0:
+            amount = 1.0;
+        elif amount < 0:
+            amount = 0;
+    except:
+        amount = 1.0;
+        pass;
+
+    if '0' == fg['/armament/ghost-refuel/signal']:
+        print 'Refuel started.';
+        fg['/armament/ghost-refuel/amount'] = amount;
+        fg['/armament/ghost-refuel/signal'] = 1;
+    else:
+        print 'Refuel already ongoing.';
+
+def ghost_refuel_daemon(fg, args):
+    fd = None;
+    refuel_points = {};
+    try:
+        fd = open(args[0], 'rU');
+        for r in fd.readlines():
+            wp, amount = r.replace('\n', '').split('\t');
+            refuel_points[wp] = amount;
+        fd.close();
+    except Exception, e:
+        print 'Failed to load refuel points: ' + str(e);
+
+    try:
+        while True:
+            if 0 == fg['/autopilot/route-manager/active']:
+                print 'Sorry, you haven\'t activated your route yet.';
+                return 1;
+            wp = fg['/autopilot/route-manager/wp/id'];
+            amount = refuel_points.get(wp, None);
+            if None != amount and '0' == fg['/armament/ghost-refuel/signal']:
+                fg['/armament/ghost-refuel/amount'] = amount;
+                fg['/armament/ghost-refuel/signal'] = 1;
+            time.sleep(0.1);
+    except KeyboardInterrupt, SystemExit:
+        pass;
+
+if __name__ == '__main__':
+    command_all = {
+        'refuel': ground_refuel_max,
+        'grefuel': ghost_refuel,
+        'grefuel-daemon': ghost_refuel_daemon,
+    };
+
+    if (len(sys.argv) < 2):
+        sys.stderr.write('Command not given.\n');
+        exit(1);
+
+    command = sys.argv[1];
+    fg = None;
+    retcode = 0;
+    try:
+        func = command_all[command];
+        address, port = os.getenv('FG_TELNET').split(':');
+        fg = FlightGear(address, int(port));
+        retcode = func(fg, sys.argv[2:]);
+        fg.quit();
+    except KeyError:
+        sys.stderr.write('Bad command.\n');
+        exit(1);
+    except Exception, e:
+        sys.stderr.write(str(e) + "\n");
+        if (None != fg):
+            fg.quit();
+        exit(1);
+    exit(retcode);
+

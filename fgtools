@@ -4,52 +4,78 @@
 import sys, os;
 from FlightGear import FlightGear;
 
+def get_report(fg, args):
+    print fg.get_report();
+    return 0;
+
+def sound_on(fg, args):
+    fg['/sim/sound/enabled'] = 1;
+    return 0;
+
+def sound_off(fg, args):
+    fg['/sim/sound/enabled'] = 0;
+    return 0;
+
+def pause(fg, args):
+    fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 1;
+
+def get_nav_freq(fg, args):
+    print 'NAV 1 Freq: ' + str(fg['/instrumentation/nav/frequencies/selected-mhz']);
+    return 0;
+
+def set_nav_freq(fg, args):
+    try:
+        fg['/instrumentation/nav/frequencies/selected-mhz'] = float(args[0]);
+    except IndexError:
+        print 'Frequency value not given.';
+        return 1;
+    return 0;
+
+def resume(fg, args):
+    fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 0;
+
+def pause_manager(fg, args):
+    enabled = fg['/autopilot/settings/pause-manager-enabled'];
+    if (1 == fg['/sim/freeze/master'] and 1 == fg['/sim/freeze/clock']):
+        print('Simulation paused.');
+    elif (0 != len(args)):
+        try:
+            distance = int(args[0]);
+            if (distance <= 0):
+                fg['/autopilot/settings/pause-manager-enabled'] = 0;
+                print('Pause Manager deactivated.');
+            else:
+                fg['/autopilot/settings/pause-manager-distance'] = distance;
+                fg['/autopilot/settings/pause-manager-enabled'] = 1;
+                print("Pause Manager activated, \
+simulation will be paused when the remaining route is \
+shorter than %d nmi." % int(fg['/autopilot/settings/pause-manager-distance']));
+        except ValueError:
+            sys.stderr.write('Invalid number given');
+            return 1;
+    elif ('1' == enabled):
+        print("Pause Manager enabled, \
+simulation will be paused when the remaining route is \
+shorter than %d nmi." % int(fg['/autopilot/settings/pause-manager-distance']));
+    else:
+        print('Pause Manager is inactive.');
+    return 0;
+
+def load_route(fg, args):
+    try:
+        fg['/autopilot/route-manager/file-path'] = os.path.abspath(args[0]);
+        fg['/autopilot/route-manager/input'] = '@LOAD';
+        fg['/autopilot/route-manager/departure/sid'] = 'DEFAULT';
+        fg['/autopilot/route-manager/destination/approach'] = 'DEFAULT';
+        fg['/autopilot/route-manager/input'] = '@ACTIVATE';
+        fg['/autopilot/route-manager/input'] = '@JUMP0';
+    except IndexError:
+        print 'File path not given.';
+        return 1;
+    return 0;
+
+
 if __name__ == '__main__':
-    def get_report(fg, args):
-        print fg.get_report();
-        return 0;
-
-    def sound_on(fg, args):
-        fg['/sim/sound/enabled'] = 1;
-        return 0;
-
-    def sound_off(fg, args):
-        fg['/sim/sound/enabled'] = 0;
-        return 0;
-
-    def pause(fg, args):
-        fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 1;
-
-    def resume(fg, args):
-        fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 0;
-
-    def pause_manager(fg, args):
-        enabled = fg['/autopilot/settings/pause-manager-enabled'];
-        if (1 == fg['/sim/freeze/master'] and 1 == fg['/sim/freeze/clock']):
-            print('Simulation paused.');
-        elif (0 != len(args)):
-            try:
-                distance = int(args[0]);
-                if (distance <= 0):
-                    fg['/autopilot/settings/pause-manager-enabled'] = 0;
-                    print('Pause Manager deactivated.');
-                else:
-                    fg['/autopilot/settings/pause-manager-distance'] = distance;
-                    fg['/autopilot/settings/pause-manager-enabled'] = 1;
-                    print("Pause Manager activated, \
-simulation will be paused when the remaining route is \
-shorter than %d nmi." % int(fg['/autopilot/settings/pause-manager-distance']));
-            except ValueError:
-                sys.stderr.write('Invalid number given');
-                return 1;
-        elif ('1' == enabled):
-            print("Pause Manager enabled, \
-simulation will be paused when the remaining route is \
-shorter than %d nmi." % int(fg['/autopilot/settings/pause-manager-distance']));
-        else:
-            print('Pause Manager is inactive.');
-        return 0;
-
     command_all = {
         'report': get_report,
         'soundon': sound_on,
@@ -57,6 +83,9 @@ shorter than %d nmi." % int(fg['/autopilot/settings/pause-manager-distance']));
         'pausemgr': pause_manager,
         'pause': pause,
         'resume': resume,
+        'getnavfreq': get_nav_freq,
+        'setnavfreq': set_nav_freq,
+        'loadroute': load_route,
     };
 
     if (len(sys.argv) < 2):
