@@ -78,11 +78,17 @@ if __name__ == '__main__':
     command = sys.argv[1];
     fg = None;
     retcode = 0;
+    running = True;
     try:
         func = command_all[command];
         address, port = os.getenv('FG_TELNET').split(':');
-        fg = FlightGear(address, int(port));
-        retcode = func(fg, sys.argv[2:]);
+        while running:
+            try:
+                fg = FlightGear(address, int(port));
+                retcode = func(fg, sys.argv[2:]);
+                running = False;
+            except IndexError:
+                pass;
         fg.quit();
     except KeyError:
         sys.stderr.write('Bad command.\n');
