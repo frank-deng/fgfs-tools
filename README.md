@@ -62,6 +62,23 @@ Available Commands:
 
 ---
 
+### B-1B-tools
+
+A useful tool to manipulate B-1B from command line.
+
+Synopsis: `B-1B-tools command`
+
+Available Commands:
+
+* refuel  
+  Refuel B-1B with full fuel on the ground.
+* magic-refuel [amount]
+  See section Magic Refuel for detail.
+* magic-refuel-daemon FILE  
+  See section Magic Refuel for detail.
+
+---
+
 #### fgreport.nas
 
 A FlightGear Nasal script used to generate report.
@@ -95,6 +112,15 @@ Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](
 * Some modifications to both 777-300 and 777-300ER
 * Descending manager for both 777-300 and 777-300ER. For detail, see section **Descending Manager**.
 * Ground refueling function for 777-300ER, based on the distance of the route.
+
+---
+
+#### B-1B_frank.patch
+
+Patch for [Rockwell B-1B Lancer](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.2/B-1B_20130823.zip):
+
+* Changed the default target speed from 350 to 300.
+* Add the feature of Magic Refuel, see section Magic Refuel for detail.
 
 ---
 
@@ -140,4 +166,9 @@ When descend to an altitude near a given value (in feets).
 * Pause simulation and waiting for manual operation.
 
 Installation: This was included in the patch file **777-300_frank.patch**.
+
+Magic Refuel
+------------
+
+Perform an aerial refuel for B-1B Lancer, but without the presense of tanker, and the aircraft's speed and altitude will not changed. Which will make you free from all the difficulties of performing a real aeiral refueling.
 

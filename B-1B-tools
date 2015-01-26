@@ -20,16 +20,15 @@ def ground_refuel_max(fg, args):
         return 0;
 
 def magic_refuel(fg, args):
-    amount = 1.0;
+    amount = 0.95;
     try:
         amount = float(args[0]);
-        if amount > 1.0:
-            amount = 1.0;
+        if amount > 0.95:
+            amount = 0.95;
         elif amount < 0:
             amount = 0;
     except:
-        amount = 1.0;
-        pass;
+        amount = 0.95;
 
     if '0' == fg['/armament/magic-refuel/signal']:
         print 'Refuel started.';
@@ -62,7 +61,7 @@ def magic_refuel_daemon(fg, args):
                 fg['/armament/magic-refuel/signal'] = 1;
             time.sleep(5);
     except KeyboardInterrupt, SystemExit:
-        pass;
+        return 0;
 
 if __name__ == '__main__':
     command_all = {
