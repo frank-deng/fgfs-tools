@@ -72,10 +72,16 @@ Available Commands:
 
 * refuel  
   Refuel B-1B with full fuel on the ground.
-* magic-refuel [amount]
-  See section Magic Refuel for detail.
+* magic-refuel [amount]  
+  See section *Magic Refuel* for detail.
 * magic-refuel-daemon FILE  
-  See section Magic Refuel for detail.
+  Perform Magic Refuel when the aircraft reaches a specified waypoint.  
+  File format: `WAYPOINT\tAMOUNT` ("\t" is tab character), e.g:
+
+
+	YSSY	0.95
+	KEDW	0.95
+
 
 ---
 
@@ -120,7 +126,7 @@ Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](
 Patch for [Rockwell B-1B Lancer](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.2/B-1B_20130823.zip):
 
 * Changed the default target speed from 350 to 300.
-* Add the feature of Magic Refuel, see section Magic Refuel for detail.
+* Add the feature of *Magic Refuel*, see section *Magic Refuel* for detail.
 
 ---
 
@@ -167,8 +173,16 @@ When descend to an altitude near a given value (in feets).
 
 Installation: This was included in the patch file **777-300_frank.patch**.
 
+---
+
 Magic Refuel
 ------------
 
 Perform an aerial refuel for B-1B Lancer, but without the presense of tanker, and the aircraft's speed and altitude will not changed. Which will make you free from all the difficulties of performing a real aeiral refueling.
+
+Usage:
+
+1. Set property `/armament/magic-refuel/amount` to the amount you'd like to refuel to.
+2. Set property `/armament/magic-refuel/signal` to `1` to start refueling.
+3. You can set `/armament/magic-refuel/signal` to `0` to stop refueling.
 
