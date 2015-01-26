@@ -1,6 +1,6 @@
 diff -ruN B-1B/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
 --- B-1B/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml	2015-01-26 10:34:43.311030282 +0800
++++ /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml	2015-01-26 19:19:29.863873466 +0800
 @@ -458,7 +458,7 @@
        <target-pitch-deg type="float">0</target-pitch-deg>
        <target-vfps type="float">0</target-vfps>
@@ -14,28 +14,28 @@ diff -ruN B-1B/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
  		<file>Aircraft/B-1B/Nasal/guide_to_target.nas</file>
  		<file>Aircraft/B-1B/Nasal/wso_mfd.nas</file>
  		<file>Aircraft/B-1B/Nasal/fuel_load.nas</file>
-+		<file>Aircraft/B-1B/Nasal/ghost_refuel.nas</file>
++		<file>Aircraft/B-1B/Nasal/magic_refuel.nas</file>
  	</weapons>
          <fuel>
  		<file>Aircraft/Generic/aar.nas</file>
-diff -ruN B-1B/Nasal/ghost_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/ghost_refuel.nas
---- B-1B/Nasal/ghost_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/ghost_refuel.nas	2015-01-26 10:33:35.903028477 +0800
+diff -ruN B-1B/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas
+--- B-1B/Nasal/magic_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas	2015-01-26 19:19:13.955873040 +0800
 @@ -0,0 +1,47 @@
-+setprop('/armament/ghost-refuel/signal', '0');
-+setprop('/armament/ghost-refuel/amount', '0.95');
++setprop('/armament/magic-refuel/signal', '0');
++setprop('/armament/magic-refuel/amount', '0.95');
 +
-+var ghost_refuel = func(){
-+	var target_amount = getprop('/armament/ghost-refuel/amount');
++var magic_refuel = func(){
++	var target_amount = getprop('/armament/magic-refuel/amount');
 +
 +	#Refuel speed in gal-us/second.
 +	var refuel_speed = 27;
 +	var refuel_tanks = 0;
 +
-+	if (!getprop('/armament/ghost-refuel/signal')
++	if (!getprop('/armament/magic-refuel/signal')
 +		or getprop('/consumables/fuel/total-fuel-norm') >= target_amount) {
 +		screen.log.write('Refuel Complete!!!', 0, 1, 0);
-+		setprop('/armament/ghost-refuel/signal', '0');
++		setprop('/armament/magic-refuel/signal', '0');
 +		return;
 +	}
 +
@@ -60,12 +60,12 @@ diff -ruN B-1B/Nasal/ghost_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/gh
 +		}
 +	}
 +
-+	settimer(ghost_refuel, 1);
++	settimer(magic_refuel, 1);
 +}
 +
-+setlistener('/armament/ghost-refuel/signal', func{
-+	if (getprop('/armament/ghost-refuel/signal')){
-+		ghost_refuel();
++setlistener('/armament/magic-refuel/signal', func{
++	if (getprop('/armament/magic-refuel/signal')){
++		magic_refuel();
 +	}
 +});
 +

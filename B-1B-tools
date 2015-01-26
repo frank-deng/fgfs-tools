@@ -19,7 +19,7 @@ def ground_refuel_max(fg, args):
         fg['/consumables/fuel/tank[7]/level-norm'] = 1.0;
         return 0;
 
-def ghost_refuel(fg, args):
+def magic_refuel(fg, args):
     amount = 1.0;
     try:
         amount = float(args[0]);
@@ -31,14 +31,14 @@ def ghost_refuel(fg, args):
         amount = 1.0;
         pass;
 
-    if '0' == fg['/armament/ghost-refuel/signal']:
+    if '0' == fg['/armament/magic-refuel/signal']:
         print 'Refuel started.';
-        fg['/armament/ghost-refuel/amount'] = amount;
-        fg['/armament/ghost-refuel/signal'] = 1;
+        fg['/armament/magic-refuel/amount'] = amount;
+        fg['/armament/magic-refuel/signal'] = 1;
     else:
         print 'Refuel already ongoing.';
 
-def ghost_refuel_daemon(fg, args):
+def magic_refuel_daemon(fg, args):
     fd = None;
     refuel_points = {};
     try:
@@ -57,18 +57,18 @@ def ghost_refuel_daemon(fg, args):
                 return 1;
             wp = fg['/autopilot/route-manager/wp/id'];
             amount = refuel_points.get(wp, None);
-            if None != amount and '0' == fg['/armament/ghost-refuel/signal']:
-                fg['/armament/ghost-refuel/amount'] = amount;
-                fg['/armament/ghost-refuel/signal'] = 1;
-            time.sleep(0.1);
+            if None != amount and '0' == fg['/armament/magic-refuel/signal']:
+                fg['/armament/magic-refuel/amount'] = amount;
+                fg['/armament/magic-refuel/signal'] = 1;
+            time.sleep(5);
     except KeyboardInterrupt, SystemExit:
         pass;
 
 if __name__ == '__main__':
     command_all = {
         'refuel': ground_refuel_max,
-        'grefuel': ghost_refuel,
-        'grefuel-daemon': ghost_refuel_daemon,
+        'magic-refuel': magic_refuel,
+        'magic-refuel-daemon': magic_refuel_daemon,
     };
 
     if (len(sys.argv) < 2):
