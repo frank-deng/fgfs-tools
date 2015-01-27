@@ -1,8 +1,8 @@
 --enable-fullscreen
---disable-clouds
 --callsign='Frank'
 --enable-horizon-effect
 --enable-specular-highlight
---disable-real-weather-fetch
+#--disable-real-weather-fetch
 --telnet=medium,dir,100,localhost,5401,style
-
+--time-match-real
+--nmea=socket,out,5,localhost,5500,udp
