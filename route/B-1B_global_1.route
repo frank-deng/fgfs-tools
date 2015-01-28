@@ -791,14 +791,14 @@
     </wp>
     <wp n="127">
       <type type="string">navaid</type>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">6300</altitude-ft>
       <ident type="string">ZELMA</ident>
       <lon type="double">-115.329864</lon>
       <lat type="double">34.783331</lat>
     </wp>
     <wp n="128">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">6300</altitude-ft>
       <ident type="string">HEC</ident>
       <lon type="double">-116.4629167</lon>
       <lat type="double">34.79702778</lat>
