@@ -5,4 +5,7 @@
 #--disable-real-weather-fetch
 --telnet=medium,dir,100,localhost,5401,style
 --time-match-real
+
+#For Marble map use
 --nmea=socket,out,5,localhost,5500,udp
+
