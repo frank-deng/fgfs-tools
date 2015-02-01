@@ -38,30 +38,22 @@ def magic_refuel(fg, args):
         print 'Refuel already ongoing.';
 
 def magic_refuel_daemon(fg, args):
-    fd = None;
-    refuel_points = {};
     try:
-        fd = open(args[0], 'rU');
-        for r in fd.readlines():
-            wp, amount = r.replace('\n', '').split('\t');
-            refuel_points[wp] = amount;
-        fd.close();
-    except Exception, e:
-        print 'Failed to load refuel points: ' + str(e);
-
-    try:
-        while True:
-            if 0 == fg['/autopilot/route-manager/active']:
-                print 'Sorry, you haven\'t activated your route yet.';
-                return 1;
-            wp = fg['/autopilot/route-manager/wp/id'];
-            amount = refuel_points.get(wp, None);
-            if None != amount and '0' == fg['/armament/magic-refuel/signal']:
-                fg['/armament/magic-refuel/amount'] = amount;
-                fg['/armament/magic-refuel/signal'] = 1;
-            time.sleep(5);
-    except KeyboardInterrupt, SystemExit:
+        refuel_points = args[0];
+    except:
+        if 1 == fg['/armament/magic-refuel/daemon']:
+            print 'Magic Refuel Daemon is running.';
+            print 'Refuel Points: ';
+            print fg['/armament/magic-refuel/refuel-points'];
+        else:
+            print 'Magic Refuel Daemon is not running.';
         return 0;
+
+    if refuel_points == 'off':
+        fg['/armament/magic-refuel/daemon'] = 0;
+    else:
+        fg['/armament/magic-refuel/daemon'] = 1;
+        fg['/armament/magic-refuel/refuel-points'] = refuel_points;
 
 if __name__ == '__main__':
     command_all = {
