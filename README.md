@@ -74,14 +74,8 @@ Available Commands:
   Refuel B-1B with full fuel on the ground.
 * magic-refuel [amount]  
   See section *Magic Refuel* for detail.
-* magic-refuel-daemon FILE  
-  Perform Magic Refuel when the aircraft reaches a specified waypoint.  
-  File format: `WAYPOINT\tAMOUNT` ("\t" is tab character), e.g:
-
-
-	YSSY	0.95
-	KEDW	0.95
-
+* magic-refuel-daemon [off|REFUEL_POINTS]  
+  See section *Magic Refuel Daemon* for detail.
 
 ---
 
@@ -185,4 +179,19 @@ Usage:
 1. Set property `/armament/magic-refuel/amount` to the amount you'd like to refuel to.
 2. Set property `/armament/magic-refuel/signal` to `1` to start refueling.
 3. You can set `/armament/magic-refuel/signal` to `0` to stop refueling.
+
+---
+
+Magic Refuel Daemon
+-------------------
+
+Automatically activate _Magic Refuel_ for B-1B Lancer when it is going to reach a specific waypoint, which is called Refuel Point.
+
+Usage:
+
+1. Set property `/armament/magic-refuel/refuel-points` to specify the Refuel Points.  
+   Format: `WP1:AMOUNT1,WP2:AMOUNT2,...`, e.g: `YSSY:0.97,KEDW:0.85`  
+   Argument REFUEL_POINTS shares the same format as mentioned here.
+2. Set property `/armament/magic-refuel/daemon` to `1` to activate Magic Refuel Daemon.
+3. You can set `/armament/magic-refuel/daemon` to `0` to deactivate Magic Refuel Daemon.
 
