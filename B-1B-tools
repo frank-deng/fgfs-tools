@@ -30,7 +30,7 @@ def magic_refuel(fg, args):
     except:
         amount = 0.95;
 
-    if '0' == fg['/armament/magic-refuel/signal']:
+    if 0 == fg['/armament/magic-refuel/signal']:
         print 'Refuel started.';
         fg['/armament/magic-refuel/amount'] = amount;
         fg['/armament/magic-refuel/signal'] = 1;
