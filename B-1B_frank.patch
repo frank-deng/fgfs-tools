@@ -1,6 +1,6 @@
-diff -ruN B-1B/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
---- B-1B/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml	2015-01-26 19:19:29.863873466 +0800
+diff -ruN /home/frank/devel/B-1B/B-1B-set.xml B-1B/B-1B-set.xml
+--- /home/frank/devel/B-1B/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
++++ B-1B/B-1B-set.xml	2015-01-26 19:19:29.863873466 +0800
 @@ -458,7 +458,7 @@
        <target-pitch-deg type="float">0</target-pitch-deg>
        <target-vfps type="float">0</target-vfps>
@@ -18,12 +18,14 @@ diff -ruN B-1B/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
  	</weapons>
          <fuel>
  		<file>Aircraft/Generic/aar.nas</file>
-diff -ruN B-1B/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas
---- B-1B/Nasal/magic_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas	2015-01-26 19:19:13.955873040 +0800
-@@ -0,0 +1,47 @@
-+setprop('/armament/magic-refuel/signal', '0');
+diff -ruN /home/frank/devel/B-1B/Nasal/magic_refuel.nas B-1B/Nasal/magic_refuel.nas
+--- /home/frank/devel/B-1B/Nasal/magic_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ B-1B/Nasal/magic_refuel.nas	2015-02-01 17:44:30.686903343 +0800
+@@ -0,0 +1,80 @@
++setprop('/armament/magic-refuel/signal', 0);
 +setprop('/armament/magic-refuel/amount', '0.95');
++setprop('/armament/magic-refuel/daemon', 0);
++setprop('/armament/magic-refuel/refuel-points', 'LANDO:0.95');
 +
 +var magic_refuel = func(){
 +	var target_amount = getprop('/armament/magic-refuel/amount');
@@ -62,10 +64,41 @@ diff -ruN B-1B/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/ma
 +
 +	settimer(magic_refuel, 1);
 +}
-+
 +setlistener('/armament/magic-refuel/signal', func{
 +	if (getprop('/armament/magic-refuel/signal')){
 +		magic_refuel();
 +	}
 +});
++
++var magic_refuel_daemon = func {
++	if (!getprop('/armament/magic-refuel/daemon')) {
++		return;
++	}
++
++	if (!getprop('/autopilot/route-manager/active')) {
++		setprop('/armament/magic-refuel/daemon', 0);
++		screen.log.write('Sorry, you haven\'t activated your route yet.', 1, 0, 0);
++		return;
++	}
++		
++	wp_cur = getprop('/autopilot/route-manager/wp/id');
++	records_all = split(",", getprop('/armament/magic-refuel/refuel-points'));
++	foreach(var record; records_all) {
++		wp = split(':', record)[0];
++		amount = split(':', record)[1];
++		if (wp == wp_cur) {
++			setprop('/armament/magic-refuel/amount', amount);
++			if (getprop('/consumables/fuel/total-fuel-norm') < amount
++				and !getprop('/armament/magic-refuel/signal')) {
++				setprop('/armament/magic-refuel/signal', 1);
++			}
++			break;
++		}
++	}
++}
++var magic_refuel_daemon_mainloop = func() {
++	magic_refuel_daemon();
++	settimer(magic_refuel_daemon_mainloop, 1);
++}
++magic_refuel_daemon_mainloop();
 +
