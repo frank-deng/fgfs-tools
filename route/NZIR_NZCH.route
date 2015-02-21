@@ -119,12 +119,16 @@
     </wp>
     <wp n="15">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">18000</altitude-ft>
       <ident type="string">ANOPA</ident>
       <lon type="double">172.22775</lon>
       <lat type="double">-45.230944</lat>
     </wp>
     <wp n="16">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4100</altitude-ft>
       <ident type="string">OKAPO</ident>
       <lon type="double">172.914028</lon>
       <lat type="double">-43.749278</lat>

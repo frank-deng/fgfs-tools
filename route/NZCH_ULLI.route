@@ -305,6 +305,8 @@
     </wp>
     <wp n="46">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4100</altitude-ft>
       <ident type="string">VIDLA</ident>
       <lon type="double">32.3975</lon>
       <lat type="double">61.2</lat>

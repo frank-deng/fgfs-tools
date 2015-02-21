@@ -251,6 +251,8 @@
     </wp>
     <wp n="37">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">MASEK</ident>
       <lon type="double">9.598333</lon>
       <lat type="double">50.729167</lat>

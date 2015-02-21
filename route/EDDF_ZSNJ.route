@@ -225,12 +225,16 @@
     </wp>
     <wp n="33">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">28000</altitude-ft>
       <ident type="string">PIX</ident>
       <lon type="double">117.98</lon>
       <lat type="double">34.315</lat>
     </wp>
     <wp n="34">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">OF</ident>
       <lon type="double">118.581667</lon>
       <lat type="double">32.66</lat>

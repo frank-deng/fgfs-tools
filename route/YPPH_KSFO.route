@@ -311,12 +311,16 @@
     </wp>
     <wp n="47">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">25000</altitude-ft>
       <ident type="string">RBL</ident>
       <lon type="double">-122.23635</lon>
       <lat type="double">40.09891111</lat>
     </wp>
     <wp n="48">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">OAK</ident>
       <lon type="double">-122.2235889</lon>
       <lat type="double">37.72591944</lat>

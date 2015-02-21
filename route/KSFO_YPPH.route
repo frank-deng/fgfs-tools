@@ -325,6 +325,8 @@
     </wp>
     <wp n="50">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4100</altitude-ft>
       <ident type="string">MODYN</ident>
       <lon type="double">116.196111</lon>
       <lat type="double">-31.559722</lat>
