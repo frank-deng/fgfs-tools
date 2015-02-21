@@ -46,20 +46,6 @@ diff -ruN 747-8i/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.n
 --- 747-8i/Nasal/AFDS.nas	2015-01-20 03:42:28.000000000 +0800
 +++ /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.nas	2015-02-21 09:54:48.733676125 +0800
 @@ -61,19 +61,19 @@
-         m.vs_setting = m.AP_settings.initNode("vertical-speed-fpm",0); # -8000 to +6000 #
-         m.hdg_setting = m.AP_settings.initNode("heading-bug-deg",360,"INT");
-         m.fpa_setting = m.AP_settings.initNode("flight-path-angle",0); # -9.9 to 9.9 #
--        m.alt_setting = m.AP_settings.initNode("altitude-setting-ft",10000,"DOUBLE");
--        m.FMS_alt = m.AP_settings.initNode("target-altitude-ft",10000,"DOUBLE");
-+        m.alt_setting = m.AP_settings.initNode("altitude-setting-ft",35000,"DOUBLE");
-+        m.FMS_alt = m.AP_settings.initNode("target-altitude-ft",35000,"DOUBLE");
-         m.auto_brake_setting = m.AP_settings.initNode("autobrake",0.000,"DOUBLE");
- 
-         m.trk_setting = m.AFDS_settings.initNode("trk",0,"INT");
-         m.vs_display = m.AFDS_settings.initNode("vs-display",0);
-         m.fpa_display = m.AFDS_settings.initNode("fpa-display",0);
--	m.alt_display = props.globals.initNode("autopilot/settings/alt-display-ft",10000);
-+	m.alt_display = props.globals.initNode("autopilot/settings/alt-display-ft",35000);
  	m.flch_mode = m.AFDS_settings.initNode("flch-mode",0,"BOOL");
          m.bank_min = m.AFDS_settings.initNode("bank-min",-25);
          m.bank_max = m.AFDS_settings.initNode("bank-max",25);
