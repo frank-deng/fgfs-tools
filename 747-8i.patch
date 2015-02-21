@@ -44,8 +44,8 @@ diff -ruN 747-8i/Dialogs/control-panel.xml /home/frank/.fgdata/Aircraft/747-8i/D
  	<halign>center</halign>
 diff -ruN 747-8i/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.nas
 --- 747-8i/Nasal/AFDS.nas	2015-01-20 03:42:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.nas	2015-02-21 09:54:48.733676125 +0800
-@@ -61,19 +61,19 @@
++++ /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.nas	2015-02-21 13:56:59.005911684 +0800
+@@ -72,8 +72,8 @@
  	m.flch_mode = m.AFDS_settings.initNode("flch-mode",0,"BOOL");
          m.bank_min = m.AFDS_settings.initNode("bank-min",-25);
          m.bank_max = m.AFDS_settings.initNode("bank-max",25);
