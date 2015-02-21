@@ -66,7 +66,7 @@ diff -ruN 747-8i/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.n
 -        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-10);
 -        m.pitch_max = m.AFDS_settings.initNode("pitch-max",15);
 +        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-20);
-+        m.pitch_max = m.AFDS_settings.initNode("pitch-max",30);
++        m.pitch_max = m.AFDS_settings.initNode("pitch-max",20);
          m.vnav_alt = m.AFDS_settings.initNode("vnav-alt",35000);
  	m.alarm = m.AFDS_settings.initNode("alarm",0,"BOOL");
  

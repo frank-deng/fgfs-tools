@@ -193,39 +193,6 @@ diff -ruN 777-300/777-300-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300-s
              <max-lb>500</max-lb>
              <min-lb>350</min-lb>
          </weight>
-diff -ruN 777-300/Models/flightdeck.ac /home/frank/.fgdata/Aircraft/777-300/Models/flightdeck.ac
---- 777-300/Models/flightdeck.ac	2012-02-16 21:15:30.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/Models/flightdeck.ac	2014-12-21 11:14:53.352893912 +0800
-@@ -250727,7 +250727,7 @@
- name "tiller_left_2"
- data 8
- Cone.001
--texture "wood.PNG"
-+texture "wood.png"
- texrep 1 1
- crease 30.000000
- numvert 323
-@@ -254479,7 +254479,7 @@
- name "tiller_right_2"
- data 4
- Cone
--texture "wood.PNG"
-+texture "wood.png"
- texrep 1 1
- crease 30.000000
- numvert 323
-diff -ruN 777-300/Models/gear-ctl.ac /home/frank/.fgdata/Aircraft/777-300/Models/gear-ctl.ac
---- 777-300/Models/gear-ctl.ac	2012-02-16 21:15:30.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/Models/gear-ctl.ac	2014-12-21 11:14:53.516893914 +0800
-@@ -20,7 +20,7 @@
- name "GearLever_0"
- data 8
- Mesh.015
--texture "wood.PNG"
-+texture "wood.png"
- texrep 1 1
- crease 45.000000
- numvert 247
 diff -ruN 777-300/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS.nas
 --- 777-300/Nasal/AFDS.nas	2012-02-16 21:15:44.000000000 +0800
 +++ /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS.nas	2015-02-21 09:39:47.569661516 +0800
@@ -236,7 +203,7 @@ diff -ruN 777-300/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS
 -        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-10);
 -        m.pitch_max = m.AFDS_settings.initNode("pitch-max",15);
 +        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-20);
-+        m.pitch_max = m.AFDS_settings.initNode("pitch-max",30);
++        m.pitch_max = m.AFDS_settings.initNode("pitch-max",20);
          m.vnav_alt = m.AFDS_settings.initNode("vnav-alt",35000);
  
          m.AP_roll_mode = m.AFDS_apmodes.initNode("roll-mode","TO/GA");
@@ -281,7 +248,7 @@ diff -ruN 777-300/Systems/777-autopilot.xml /home/frank/.fgdata/Aircraft/777-300
        </u_min>
        <u_max>
 -        <value>15</value>
-+        <value>30</value>
++        <value>20</value>
        </u_max>
      </config>
    </pi-simple-controller>
