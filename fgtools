@@ -19,10 +19,6 @@ def sound_off(fg, args):
 def pause(fg, args):
     fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 1;
 
-def get_nav_freq(fg, args):
-    print 'NAV 1 Freq: ' + str(fg['/instrumentation/nav/frequencies/selected-mhz']);
-    return 0;
-
 def set_nav_freq(fg, args):
     try:
         fg['/instrumentation/nav/frequencies/selected-mhz'] = float(args[0]);
@@ -70,11 +66,10 @@ def load_route(fg, args):
         fg['/autopilot/route-manager/destination/approach'] = 'DEFAULT';
         fg['/autopilot/route-manager/input'] = '@ACTIVATE';
         fg['/autopilot/route-manager/input'] = '@JUMP0';
-    except IndexError:
-        print 'File path not given.';
+    except Exception, e:
+        print 'Failed to load route.';
         return 1;
     return 0;
-
 
 if __name__ == '__main__':
     command_all = {

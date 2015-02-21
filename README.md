@@ -123,7 +123,7 @@ Patch for 747-8i
 
 ---
 
-#### B-1B_frank.patch
+#### B-1B.patch
 
 Patch for [Rockwell B-1B Lancer](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.2/B-1B_20130823.zip):
 

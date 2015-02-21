@@ -1,6 +1,6 @@
 diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300ER-set.xml
 --- 777-300/777-300ER-set.xml	2012-02-16 21:15:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/777-300ER-set.xml	2015-02-20 22:49:07.997028623 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/777-300ER-set.xml	2015-02-21 10:14:07.865694917 +0800
 @@ -7,7 +7,7 @@
          <aircraft-version>20111211</aircraft-version>
          <flight-model>yasim</flight-model>
@@ -87,7 +87,7 @@ diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300
  	
      <airport>
          <runways>
-@@ -338,6 +384,17 @@
+@@ -338,6 +408,17 @@
         					</script>
        					</binding>
       				</item>										
@@ -105,7 +105,7 @@ diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300
                      <item>
                          <label>Select Livery</label>
                          <binding>
-@@ -359,13 +416,20 @@
+@@ -359,13 +440,20 @@
                              <script>dialogs.tiller_steering.open()</script>
                          </binding>
                      </item>
@@ -127,7 +127,7 @@ diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300
              <max-lb>500</max-lb>
              <min-lb>350</min-lb>
          </weight>
-@@ -373,7 +437,7 @@
+@@ -373,7 +461,7 @@
          <weight n="1">
          <!--  328 pax max @ 180 lbs -->
              <name>Pax</name>
@@ -136,7 +136,7 @@ diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300
              <max-lb>59000</max-lb>
              <min-lb>0</min-lb>
          </weight>
-@@ -868,7 +832,7 @@
+@@ -868,7 +956,7 @@
              <maingear-steering-cmd-norm type="double">0</maingear-steering-cmd-norm>
          </gear>
          <flight>
@@ -145,7 +145,7 @@ diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300
          </flight>
      </controls>
  
-@@ -900,6 +864,8 @@
+@@ -900,6 +988,8 @@
  			<file>Aircraft/777-300/Nasal/failures.nas</file>
              <file>Aircraft/777-300/Nasal/ground_steering.nas</file>
              <file>Aircraft/Generic/limits.nas</file>
@@ -156,7 +156,7 @@ diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300
              <file>Aircraft/777-300/Nasal/dialogs.nas</file>
 diff -ruN 777-300/777-300-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300-set.xml
 --- 777-300/777-300-set.xml	2012-02-16 21:15:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/777-300-set.xml	2015-02-20 22:49:08.029028624 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/777-300-set.xml	2015-02-21 10:14:07.865694917 +0800
 @@ -188,7 +188,7 @@
  	<view n="106">
  	    <name>Passenger 1</name>
@@ -184,7 +184,7 @@ diff -ruN 777-300/777-300-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300-s
  		<config>
              <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
  			<from-model type="bool">true</from-model>
-@@ -561,7 +541,7 @@
+@@ -561,7 +561,7 @@
  
          <weight n="0">
              <name>Crew</name>
@@ -195,7 +195,7 @@ diff -ruN 777-300/777-300-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300-s
          </weight>
 diff -ruN 777-300/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS.nas
 --- 777-300/Nasal/AFDS.nas	2012-02-16 21:15:44.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS.nas	2015-02-21 09:39:47.569661516 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS.nas	2015-02-21 13:35:49.737891107 +0800
 @@ -67,8 +67,8 @@
          m.fpa_display = m.AFDS_settings.initNode("fpa-display",0);
          m.bank_min = m.AFDS_settings.initNode("bank-min",-25);
@@ -209,7 +209,7 @@ diff -ruN 777-300/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS
          m.AP_roll_mode = m.AFDS_apmodes.initNode("roll-mode","TO/GA");
 diff -ruN 777-300/Nasal/ground_refuel.nas /home/frank/.fgdata/Aircraft/777-300/Nasal/ground_refuel.nas
 --- 777-300/Nasal/ground_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/Nasal/ground_refuel.nas	2014-11-26 22:15:59.615084324 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/Nasal/ground_refuel.nas	2015-02-21 10:14:07.889694917 +0800
 @@ -0,0 +1,25 @@
 +setprop('/limits/estimated-range-nm', '8500');
 +var ground_refuel = func() {
@@ -238,7 +238,7 @@ diff -ruN 777-300/Nasal/ground_refuel.nas /home/frank/.fgdata/Aircraft/777-300/N
 +
 diff -ruN 777-300/Systems/777-autopilot.xml /home/frank/.fgdata/Aircraft/777-300/Systems/777-autopilot.xml
 --- 777-300/Systems/777-autopilot.xml	2012-02-16 21:15:46.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/Systems/777-autopilot.xml	2015-02-21 09:36:42.537658516 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/Systems/777-autopilot.xml	2015-02-21 13:35:37.309890905 +0800
 @@ -329,10 +329,10 @@
        <Kp>0.3</Kp>
        <Ki>0.0</Ki>
