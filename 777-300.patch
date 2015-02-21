@@ -1,0 +1,287 @@
+diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300ER-set.xml
+--- 777-300/777-300ER-set.xml	2012-02-16 21:15:28.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/777-300ER-set.xml	2015-02-20 22:49:07.997028623 +0800
+@@ -7,7 +7,7 @@
+         <aircraft-version>20111211</aircraft-version>
+         <flight-model>yasim</flight-model>
+         <aero>777-300ER</aero>
+-        <fuel-fraction>0.75</fuel-fraction>
++        <fuel-fraction>0.10</fuel-fraction>
+         <startup>
+             <splash-texture>Aircraft/777-300/splash_ER.png</splash-texture>
+         </startup>
+@@ -155,6 +155,76 @@
+             <z-offset-m type="double">-21.5</z-offset-m>
+ 		</config>
+ 	</view>		
++
++	<view n="104">
++	    <name>Visitor 1 view</name>
++		<type>lookfrom</type>
++		<internal type="bool">true</internal>
++		<config>
++            <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
++			<from-model type="bool">true</from-model>
++			<from-model-idx type="int">0</from-model-idx>
++            <x-offset-m type="double">0.015</x-offset-m>
++            <y-offset-m type="double">0.8</y-offset-m>
++            <z-offset-m type="double">-27.15</z-offset-m>
++		</config>
++	</view>	
++	
++	<view n="105">
++	    <name>Visitor 2 view</name>
++		<type>lookfrom</type>
++		<internal type="bool">true</internal>
++		<config>
++            <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
++			<from-model type="bool">true</from-model>
++			<from-model-idx type="int">0</from-model-idx>
++            <x-offset-m type="double">0.85</x-offset-m>
++            <y-offset-m type="double">0.8</y-offset-m>
++            <z-offset-m type="double">-27.15</z-offset-m>
++		</config>
++	</view>		
++	
++	<view n="106">
++	    <name>Passenger 1</name>
++		<type>lookfrom</type>
++		<internal type="bool">true</internal>
++		<config>
++            <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
++			<from-model type="bool">true</from-model>
++			<from-model-idx type="int">0</from-model-idx>
++            <x-offset-m type="double">2.52</x-offset-m>
++            <y-offset-m type="double">0.35</y-offset-m>
++            <z-offset-m type="double">-8.38</z-offset-m>
++		</config>
++	</view>		
++
++	<view n="107">
++	    <name>Passenger 2</name>
++		<type>lookfrom</type>
++		<internal type="bool">true</internal>
++		<config>
++            <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
++			<from-model type="bool">true</from-model>
++			<from-model-idx type="int">0</from-model-idx>
++            <x-offset-m type="double">-2.58</x-offset-m>
++            <y-offset-m type="double">0.33</y-offset-m>
++            <z-offset-m type="double">19.03</z-offset-m>
++		</config>
++	</view>		
++	
++	<view n="108">
++	    <name>Passenger 3</name>
++		<type>lookfrom</type>
++		<internal type="bool">true</internal>
++		<config>
++            <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
++			<from-model type="bool">true</from-model>
++			<from-model-idx type="int">0</from-model-idx>
++            <x-offset-m type="double">2.52</x-offset-m>
++            <y-offset-m type="double">0.35</y-offset-m>
++            <z-offset-m type="double">-0.6</z-offset-m>
++		</config>
++	</view>		
+ 	
+     <airport>
+         <runways>
+@@ -338,6 +384,17 @@
+        					</script>
+       					</binding>
+      				</item>										
++					<item>
++      					<label>Ground services</label>
++      					<binding>
++       					<command>nasal</command>
++       					<script>
++						var mal = gui.Dialog.new("/sim/gui/dialogs/services/menu/dialog", 
++                                                              "Aircraft/777-300/Systems/services.xml");
++        				mal.open();
++       					</script>
++      					</binding>
++     				</item>						
+                     <item>
+                         <label>Select Livery</label>
+                         <binding>
+@@ -359,13 +416,20 @@
+                             <script>dialogs.tiller_steering.open()</script>
+                         </binding>
+                     </item>
++					<item>
++						<label>Refuel</label>
++						<binding>
++							<command>nasal</command>
++							<script>b777.ground_refuel();</script>
++						</binding>
++					</item>
+                 </menu>
+             </default>
+         </menubar>
+ 
+         <weight n="0">
+             <name>Crew</name>
+-            <weight-lb>350</weight-lb>
++            <weight-lb>500</weight-lb>
+             <max-lb>500</max-lb>
+             <min-lb>350</min-lb>
+         </weight>
+@@ -373,7 +437,7 @@
+         <weight n="1">
+         <!--  328 pax max @ 180 lbs -->
+             <name>Pax</name>
+-            <weight-lb>50000</weight-lb>
++            <weight-lb>59000</weight-lb>
+             <max-lb>59000</max-lb>
+             <min-lb>0</min-lb>
+         </weight>
+@@ -868,7 +832,7 @@
+             <maingear-steering-cmd-norm type="double">0</maingear-steering-cmd-norm>
+         </gear>
+         <flight>
+-            <speedbrake-lever type="int">1</speedbrake-lever>
++            <speedbrake-lever type="int">0</speedbrake-lever>
+         </flight>
+     </controls>
+ 
+@@ -900,6 +864,8 @@
+ 			<file>Aircraft/777-300/Nasal/failures.nas</file>
+             <file>Aircraft/777-300/Nasal/ground_steering.nas</file>
+             <file>Aircraft/Generic/limits.nas</file>
++			<file>Aircraft/777-300/Nasal/doors.nas</file>
++			<file>Aircraft/777-300/Nasal/ground_refuel.nas</file>
+         </b777>
+         <dialogs>
+             <file>Aircraft/777-300/Nasal/dialogs.nas</file>
+diff -ruN 777-300/777-300-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300-set.xml
+--- 777-300/777-300-set.xml	2012-02-16 21:15:28.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/777-300-set.xml	2015-02-20 22:49:08.029028624 +0800
+@@ -188,7 +188,7 @@
+ 	<view n="106">
+ 	    <name>Passenger 1</name>
+ 		<type>lookfrom</type>
+-		<internal type="bool">false</internal>
++		<internal type="bool">true</internal>
+ 		<config>
+             <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
+ 			<from-model type="bool">true</from-model>
+@@ -202,7 +202,7 @@
+ 	<view n="107">
+ 	    <name>Passenger 2</name>
+ 		<type>lookfrom</type>
+-		<internal type="bool">false</internal>
++		<internal type="bool">true</internal>
+ 		<config>
+             <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
+ 			<from-model type="bool">true</from-model>
+@@ -216,7 +216,7 @@
+ 	<view n="108">
+ 	    <name>Passenger 3</name>
+ 		<type>lookfrom</type>
+-		<internal type="bool">false</internal>
++		<internal type="bool">true</internal>
+ 		<config>
+             <default-field-of-view-deg type="double">70.0</default-field-of-view-deg>		
+ 			<from-model type="bool">true</from-model>
+@@ -561,7 +541,7 @@
+ 
+         <weight n="0">
+             <name>Crew</name>
+-            <weight-lb>350</weight-lb>
++            <weight-lb>500</weight-lb>
+             <max-lb>500</max-lb>
+             <min-lb>350</min-lb>
+         </weight>
+diff -ruN 777-300/Models/flightdeck.ac /home/frank/.fgdata/Aircraft/777-300/Models/flightdeck.ac
+--- 777-300/Models/flightdeck.ac	2012-02-16 21:15:30.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/Models/flightdeck.ac	2014-12-21 11:14:53.352893912 +0800
+@@ -250727,7 +250727,7 @@
+ name "tiller_left_2"
+ data 8
+ Cone.001
+-texture "wood.PNG"
++texture "wood.png"
+ texrep 1 1
+ crease 30.000000
+ numvert 323
+@@ -254479,7 +254479,7 @@
+ name "tiller_right_2"
+ data 4
+ Cone
+-texture "wood.PNG"
++texture "wood.png"
+ texrep 1 1
+ crease 30.000000
+ numvert 323
+diff -ruN 777-300/Models/gear-ctl.ac /home/frank/.fgdata/Aircraft/777-300/Models/gear-ctl.ac
+--- 777-300/Models/gear-ctl.ac	2012-02-16 21:15:30.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/Models/gear-ctl.ac	2014-12-21 11:14:53.516893914 +0800
+@@ -20,7 +20,7 @@
+ name "GearLever_0"
+ data 8
+ Mesh.015
+-texture "wood.PNG"
++texture "wood.png"
+ texrep 1 1
+ crease 45.000000
+ numvert 247
+diff -ruN 777-300/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS.nas
+--- 777-300/Nasal/AFDS.nas	2012-02-16 21:15:44.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS.nas	2015-02-21 09:39:47.569661516 +0800
+@@ -67,8 +67,8 @@
+         m.fpa_display = m.AFDS_settings.initNode("fpa-display",0);
+         m.bank_min = m.AFDS_settings.initNode("bank-min",-25);
+         m.bank_max = m.AFDS_settings.initNode("bank-max",25);
+-        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-10);
+-        m.pitch_max = m.AFDS_settings.initNode("pitch-max",15);
++        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-20);
++        m.pitch_max = m.AFDS_settings.initNode("pitch-max",30);
+         m.vnav_alt = m.AFDS_settings.initNode("vnav-alt",35000);
+ 
+         m.AP_roll_mode = m.AFDS_apmodes.initNode("roll-mode","TO/GA");
+diff -ruN 777-300/Nasal/ground_refuel.nas /home/frank/.fgdata/Aircraft/777-300/Nasal/ground_refuel.nas
+--- 777-300/Nasal/ground_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/Nasal/ground_refuel.nas	2014-11-26 22:15:59.615084324 +0800
+@@ -0,0 +1,25 @@
++setprop('/limits/estimated-range-nm', '8500');
++var ground_refuel = func() {
++	if (!getprop('/autopilot/route-manager/active')){
++		screen.log.write('Sorry, you haven\'t activated your route yet.', 1, 0, 0);
++		screen.log.write('And I cannot determine how much fuel needed.', 1, 0, 0);
++		return;
++	} else if (getprop('/velocities/groundspeed-kt') > 0.1) {
++		screen.log.write('Unable to refuel while the aircraft is moving.', 1, 0, 0);
++		return;
++	}
++
++	var range = getprop('/limits/estimated-range-nm');
++	var route_len = getprop('/autopilot/route-manager/total-distance');
++	var fuel_norm = route_len / range;
++	if (fuel_norm > 1.0) {
++		fuel_norm = 1.0;
++	} else if (fuel_norm < 0.1) {
++		fuel_norm = 0.1;
++	}
++	setprop('/consumables/fuel/tank/level-norm', fuel_norm);
++	setprop('/consumables/fuel/tank[1]/level-norm', fuel_norm);
++	setprop('/consumables/fuel/tank[2]/level-norm', fuel_norm);
++	screen.log.write('Airplane refueled.', 0, 1, 0);
++}
++
+diff -ruN 777-300/Systems/777-autopilot.xml /home/frank/.fgdata/Aircraft/777-300/Systems/777-autopilot.xml
+--- 777-300/Systems/777-autopilot.xml	2012-02-16 21:15:46.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/777-300/Systems/777-autopilot.xml	2015-02-21 09:36:42.537658516 +0800
+@@ -329,10 +329,10 @@
+       <Kp>0.3</Kp>
+       <Ki>0.0</Ki>
+       <u_min>
+-        <value>-10</value>
++        <value>-20</value>
+       </u_min>
+       <u_max>
+-        <value>15</value>
++        <value>30</value>
+       </u_max>
+     </config>
+   </pi-simple-controller>

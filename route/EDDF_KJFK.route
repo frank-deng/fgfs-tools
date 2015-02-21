@@ -215,9 +215,11 @@
     </wp>
     <wp n="31">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">BOS</ident>
-      <lon type="double">-70.98954722</lon>
-      <lat type="double">42.35745</lat>
+      <lon type="double">-70.98955556</lon>
+      <lat type="double">42.35744444</lat>
     </wp>
     <wp n="32">
       <type type="string">navaid</type>

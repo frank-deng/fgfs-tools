@@ -1,0 +1,85 @@
+diff -ruN 747-8i/Dialogs/control-panel.xml /home/frank/.fgdata/Aircraft/747-8i/Dialogs/control-panel.xml
+--- 747-8i/Dialogs/control-panel.xml	2015-01-20 03:42:12.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/747-8i/Dialogs/control-panel.xml	2015-02-20 21:30:58.528952600 +0800
+@@ -175,6 +175,40 @@
+       <layout>hbox</layout>
+       <halign>center</halign>
+       <button>
++	<pref-width>200</pref-width>
++	<pref-height>30</pref-height>
++	<halign>center</halign>
++	<legend>Fuel Amount For Current Route</legend>
++	<enable>
++	    <and>
++		<property>gear/gear/wow</property>
++		<property>controls/gear/brake-parking</property>
++	    </and>
++	</enable>
++	<binding>
++	    <command>nasal</command>
++		<script>
++if (getprop('/autopilot/route-manager/active')) {
++	var total_fuel = 431153;
++	var route_len = getprop('/autopilot/route-manager/total-distance');
++	var max_range = 8000;
++	var target_lbs = total_fuel * route_len / max_range;
++	if (target_lbs > total_fuel) {
++		target_lbs = total_fuel;
++	}
++	setprop('controls/groundservice/fueling/target-lbs', target_lbs);
++} else {
++	screen.log.write('Sorry, you haven\'t activated your route yet.', 1, 0, 0);
++}
++		</script>
++	</binding>
++      </button>
++    </group>
++
++    <group>
++      <layout>hbox</layout>
++      <halign>center</halign>
++      <button>
+ 	<pref-width>120</pref-width>
+ 	<pref-height>30</pref-height>
+ 	<halign>center</halign>
+diff -ruN 747-8i/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.nas
+--- 747-8i/Nasal/AFDS.nas	2015-01-20 03:42:28.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.nas	2015-02-21 09:54:48.733676125 +0800
+@@ -61,19 +61,19 @@
+         m.vs_setting = m.AP_settings.initNode("vertical-speed-fpm",0); # -8000 to +6000 #
+         m.hdg_setting = m.AP_settings.initNode("heading-bug-deg",360,"INT");
+         m.fpa_setting = m.AP_settings.initNode("flight-path-angle",0); # -9.9 to 9.9 #
+-        m.alt_setting = m.AP_settings.initNode("altitude-setting-ft",10000,"DOUBLE");
+-        m.FMS_alt = m.AP_settings.initNode("target-altitude-ft",10000,"DOUBLE");
++        m.alt_setting = m.AP_settings.initNode("altitude-setting-ft",35000,"DOUBLE");
++        m.FMS_alt = m.AP_settings.initNode("target-altitude-ft",35000,"DOUBLE");
+         m.auto_brake_setting = m.AP_settings.initNode("autobrake",0.000,"DOUBLE");
+ 
+         m.trk_setting = m.AFDS_settings.initNode("trk",0,"INT");
+         m.vs_display = m.AFDS_settings.initNode("vs-display",0);
+         m.fpa_display = m.AFDS_settings.initNode("fpa-display",0);
+-	m.alt_display = props.globals.initNode("autopilot/settings/alt-display-ft",10000);
++	m.alt_display = props.globals.initNode("autopilot/settings/alt-display-ft",35000);
+ 	m.flch_mode = m.AFDS_settings.initNode("flch-mode",0,"BOOL");
+         m.bank_min = m.AFDS_settings.initNode("bank-min",-25);
+         m.bank_max = m.AFDS_settings.initNode("bank-max",25);
+-        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-10);
+-        m.pitch_max = m.AFDS_settings.initNode("pitch-max",15);
++        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-20);
++        m.pitch_max = m.AFDS_settings.initNode("pitch-max",30);
+         m.vnav_alt = m.AFDS_settings.initNode("vnav-alt",35000);
+ 	m.alarm = m.AFDS_settings.initNode("alarm",0,"BOOL");
+ 
+diff -ruN 747-8i/Nasal/fuel_system.nas /home/frank/.fgdata/Aircraft/747-8i/Nasal/fuel_system.nas
+--- 747-8i/Nasal/fuel_system.nas	2015-01-20 03:42:28.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/747-8i/Nasal/fuel_system.nas	2015-02-20 21:02:26.848924851 +0800
+@@ -743,7 +743,8 @@
+ 			if (getprop("engines/apu/running")) active.setBoolValue(0);
+ 		    }
+ 		}
+-		settimer(func {fuel_up(stage)},0.5);
++		#settimer(func {fuel_up(stage)},0.5);
++		settimer(func {fuel_up(stage)},0);
+ 
+ 
+ 	    } elsif (active.getBoolValue() and (tot_level.getValue() > (target_lev.getValue() + (0.8*rate)))) {

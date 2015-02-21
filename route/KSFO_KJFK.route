@@ -131,15 +131,19 @@
     </wp>
     <wp n="17">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">22000</altitude-ft>
       <ident type="string">RAV</ident>
-      <lon type="double">-76.59938889</lon>
-      <lat type="double">40.55338889</lat>
+      <lon type="double">-76.59938056</lon>
+      <lat type="double">40.55339444</lat>
     </wp>
     <wp n="18">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">RBV</ident>
-      <lon type="double">-74.49502778</lon>
-      <lat type="double">40.20238889</lat>
+      <lon type="double">-74.495025</lon>
+      <lat type="double">40.20240278</lat>
     </wp>
     <wp n="19">
       <type type="string">basic</type>

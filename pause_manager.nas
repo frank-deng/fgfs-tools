@@ -1,4 +1,4 @@
-setprop('/autopilot/settings/pause-manager-distance', '1');
+setprop('/autopilot/settings/pause-manager-distance', '20');
 setprop('/autopilot/settings/pause-manager-enabled', '0');
 
 var pause_manager = func{

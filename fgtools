@@ -26,6 +26,7 @@ def get_nav_freq(fg, args):
 def set_nav_freq(fg, args):
     try:
         fg['/instrumentation/nav/frequencies/selected-mhz'] = float(args[0]);
+        fg['/instrumentation/nav[1]/frequencies/selected-mhz'] = float(args[0]);
     except IndexError:
         print 'Frequency value not given.';
         return 1;

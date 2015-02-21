@@ -104,14 +104,22 @@ Copy it to `$FG_ROOT` to activate it.
 
 ---
 
-#### 777-300_frank.patch
+#### 777-300.patch
 
 Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](https://code.google.com/p/b773-flightgear/):
 
 * Some new viewports added to 777-300ER
 * Some modifications to both 777-300 and 777-300ER
-* Descending manager for both 777-300 and 777-300ER. For detail, see section **Descending Manager**.
 * Ground refueling function for 777-300ER, based on the distance of the route.
+
+---
+
+#### 747-8i.patch
+
+Patch for 747-8i
+
+* Some modifications to 747-8i.
+* Calculate the amount of fuel based on the total distance of the route.
 
 ---
 
@@ -149,23 +157,6 @@ Install:
 		</binding>
 	</item>
 	
-
----
-
-Descending Manager
-------------------
-
-When the remaining distance is shorter than 110 nautical miles.
-
-* Set vertical speed to -2000ft/min then switch altitude mode to V/S.
-
-When descend to an altitude near a given value (in feets).
-
-* Switch altitude mode from V/S to FLCH.
-* Switch speed brake mode from off to auto.
-* Pause simulation and waiting for manual operation.
-
-Installation: This was included in the patch file **777-300_frank.patch**.
 
 ---
 

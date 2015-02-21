@@ -215,6 +215,8 @@
     </wp>
     <wp n="31">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">LNO</ident>
       <lon type="double">5.710278</lon>
       <lat type="double">50.585833</lat>
