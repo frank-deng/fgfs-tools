@@ -103,6 +103,8 @@
     </wp>
     <wp n="13">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">17300</altitude-ft>
       <ident type="string">ISAMO</ident>
       <lon type="double">-67.9095</lon>
       <lat type="double">-16.788</lat>

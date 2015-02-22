@@ -361,17 +361,25 @@
     </wp>
     <wp n="55">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4100</altitude-ft>
+      <ident type="string">GTC40</ident>
+      <lon type="double">138.570685</lon>
+      <lat type="double">38.469228</lat>
+    </wp>
+    <wp n="56">
+      <type type="string">navaid</type>
       <ident type="string">GTC</ident>
       <lon type="double">139.114886</lon>
       <lat type="double">37.958294</lat>
     </wp>
-    <wp n="56">
+    <wp n="57">
       <type type="string">navaid</type>
       <ident type="string">MI</ident>
       <lon type="double">139.614136</lon>
       <lat type="double">35.918386</lat>
     </wp>
-    <wp n="57">
+    <wp n="58">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -379,7 +387,7 @@
       <lon type="double">140.1154765</lon>
       <lat type="double">35.88595297</lat>
     </wp>
-    <wp n="58">
+    <wp n="59">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -387,7 +395,7 @@
       <lon type="double">140.1310078</lon>
       <lat type="double">35.93440596</lat>
     </wp>
-    <wp n="59">
+    <wp n="60">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -395,7 +403,7 @@
       <lon type="double">140.1841239</lon>
       <lat type="double">35.95974126</lat>
     </wp>
-    <wp n="60">
+    <wp n="61">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -405,7 +413,7 @@
       <lon type="double">140.2437197</lon>
       <lat type="double">35.94711729</lat>
     </wp>
-    <wp n="61">
+    <wp n="62">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -415,7 +423,7 @@
       <lon type="double">140.2853038</lon>
       <lat type="double">35.88955622</lat>
     </wp>
-    <wp n="62">
+    <wp n="63">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -425,7 +433,7 @@
       <lon type="double">140.3031592</lon>
       <lat type="double">35.86481047</lat>
     </wp>
-    <wp n="63">
+    <wp n="64">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
       <ident type="string">16R</ident>

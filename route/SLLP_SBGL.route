@@ -127,6 +127,8 @@
     </wp>
     <wp n="16">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">SJC</ident>
       <lon type="double">-45.854167</lon>
       <lat type="double">-23.246333</lat>

@@ -367,11 +367,19 @@
     </wp>
     <wp n="57">
       <type type="string">navaid</type>
-      <ident type="string">NEUMA</ident>
-      <lon type="double">-36.030833</lon>
-      <lat type="double">-7.717833</lat>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
+      <ident type="string">UBRUT</ident>
+      <lon type="double">-33.319</lon>
+      <lat type="double">-5.3985</lat>
     </wp>
     <wp n="58">
+      <type type="string">navaid</type>
+      <ident type="string">REC</ident>
+      <lon type="double">-34.927297</lon>
+      <lat type="double">-8.136586</lat>
+    </wp>
+    <wp n="59">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -379,7 +387,7 @@
       <lon type="double">-35.10551757</lon>
       <lat type="double">-7.96051606</lat>
     </wp>
-    <wp n="59">
+    <wp n="60">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -387,7 +395,7 @@
       <lon type="double">-35.08271028</lon>
       <lat type="double">-7.91571929</lat>
     </wp>
-    <wp n="60">
+    <wp n="61">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -395,7 +403,7 @@
       <lon type="double">-35.0348136</lon>
       <lat type="double">-7.90012285</lat>
     </wp>
-    <wp n="61">
+    <wp n="62">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -405,7 +413,7 @@
       <lon type="double">-34.98988397</lon>
       <lat type="double">-7.922862143</lat>
     </wp>
-    <wp n="62">
+    <wp n="63">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -415,7 +423,7 @@
       <lon type="double">-34.96902907</lon>
       <lat type="double">-7.986536631</lat>
     </wp>
-    <wp n="63">
+    <wp n="64">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -425,7 +433,7 @@
       <lon type="double">-34.96006314</lon>
       <lat type="double">-8.013905095</lat>
     </wp>
-    <wp n="64">
+    <wp n="65">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
       <ident type="string">18</ident>
