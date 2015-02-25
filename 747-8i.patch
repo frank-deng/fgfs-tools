@@ -1,6 +1,6 @@
-diff -ruN 747-8i/Dialogs/control-panel.xml /home/frank/.fgdata/Aircraft/747-8i/Dialogs/control-panel.xml
---- 747-8i/Dialogs/control-panel.xml	2015-01-20 03:42:12.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/747-8i/Dialogs/control-panel.xml	2015-02-20 21:30:58.528952600 +0800
+diff -ruN -i 747-8i.orig/Dialogs/control-panel.xml 747-8i/Dialogs/control-panel.xml
+--- 747-8i.orig/Dialogs/control-panel.xml	2015-01-20 03:42:12.000000000 +0800
++++ 747-8i/Dialogs/control-panel.xml	2015-02-20 21:30:58.528952600 +0800
 @@ -175,6 +175,40 @@
        <layout>hbox</layout>
        <halign>center</halign>
@@ -42,9 +42,9 @@ diff -ruN 747-8i/Dialogs/control-panel.xml /home/frank/.fgdata/Aircraft/747-8i/D
  	<pref-width>120</pref-width>
  	<pref-height>30</pref-height>
  	<halign>center</halign>
-diff -ruN 747-8i/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.nas
---- 747-8i/Nasal/AFDS.nas	2015-01-20 03:42:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.nas	2015-02-21 13:56:59.005911684 +0800
+diff -ruN -i 747-8i.orig/Nasal/AFDS.nas 747-8i/Nasal/AFDS.nas
+--- 747-8i.orig/Nasal/AFDS.nas	2015-01-20 03:42:28.000000000 +0800
++++ 747-8i/Nasal/AFDS.nas	2015-02-21 13:56:59.005911684 +0800
 @@ -72,8 +72,8 @@
  	m.flch_mode = m.AFDS_settings.initNode("flch-mode",0,"BOOL");
          m.bank_min = m.AFDS_settings.initNode("bank-min",-25);
@@ -56,9 +56,9 @@ diff -ruN 747-8i/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/747-8i/Nasal/AFDS.n
          m.vnav_alt = m.AFDS_settings.initNode("vnav-alt",35000);
  	m.alarm = m.AFDS_settings.initNode("alarm",0,"BOOL");
  
-diff -ruN 747-8i/Nasal/fuel_system.nas /home/frank/.fgdata/Aircraft/747-8i/Nasal/fuel_system.nas
---- 747-8i/Nasal/fuel_system.nas	2015-01-20 03:42:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/747-8i/Nasal/fuel_system.nas	2015-02-20 21:02:26.848924851 +0800
+diff -ruN -i 747-8i.orig/Nasal/fuel_system.nas 747-8i/Nasal/fuel_system.nas
+--- 747-8i.orig/Nasal/fuel_system.nas	2015-01-20 03:42:28.000000000 +0800
++++ 747-8i/Nasal/fuel_system.nas	2015-02-20 21:02:26.848924851 +0800
 @@ -743,7 +743,8 @@
  			if (getprop("engines/apu/running")) active.setBoolValue(0);
  		    }
@@ -69,3 +69,33 @@ diff -ruN 747-8i/Nasal/fuel_system.nas /home/frank/.fgdata/Aircraft/747-8i/Nasal
  
  
  	    } elsif (active.getBoolValue() and (tot_level.getValue() > (target_lev.getValue() + (0.8*rate)))) {
+diff -ruN -i 747-8i.orig/Systems/747-8-autopilot.xml 747-8i/Systems/747-8-autopilot.xml
+--- 747-8i.orig/Systems/747-8-autopilot.xml	2015-01-20 03:42:29.000000000 +0800
++++ 747-8i/Systems/747-8-autopilot.xml	2015-02-25 19:07:06.738303054 +0800
+@@ -480,7 +480,7 @@
+         <value>-16.67</value>
+       </u_min>
+       <u_max>
+-        <value>33.33</value>
++        <value>16.67</value>
+       </u_max>
+     </config>
+    </pi-simple-controller>
+@@ -552,7 +552,7 @@
+         <value>-16.67</value>
+       </u_min>
+       <u_max>
+-        <value>33.33</value>
++        <value>16.67</value>
+       </u_max>
+     </config>
+   </pi-simple-controller>
+@@ -622,7 +622,7 @@
+         <value>-16.67</value>
+       </u_min>
+       <u_max>
+-        <value>33.33</value>
++        <value>16.67</value>
+       </u_max>
+     </config>
+   </pi-simple-controller>
