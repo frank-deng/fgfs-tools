@@ -69,6 +69,10 @@ fgreport_generate = func{
 		);
 	}
 
+	if (getprop('/sim/crashed')) {
+		report_text = report_text ~ "\nAircraft Crashed!!!\n";
+	}
+
 	if (getprop('/sim/freeze/clock') and getprop('/sim/freeze/master')) {
 		report_text = report_text ~ "\nSimulation paused.\n";
 	}

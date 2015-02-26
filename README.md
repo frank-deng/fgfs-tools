@@ -23,8 +23,6 @@ Available Commands:
   Pause simulation.
 * resume  
   Resume simulation.
-* getnavfreq  
-  Get ILS frequency.
 * setnavfreq  
   Set ILS frequency.
 * pausemgr [distance]  
@@ -36,29 +34,6 @@ Available Commands:
   Load flight plan from ROUTE_FILE.
 
 `FG_TELNET` environment variable should be defined as the telnet address:port for FlightGear, e.g: `FG_TELNET='localhost:5401'`.
-
----
-
-### 777-tools
-
-A useful tool to manipulate 777-300ER from command line.
-
-Synopsis: `777-tools command`
-
-Available Commands:
-
-* getnavfreq  
-  Get ILS frequency.
-* setnavfreq  
-  Set ILS frequency.
-* refuel [percent]  
-  Refuel 777-300ER.  
-  If percent is given, then the quantity of fuel will be percent% of total fuel capacity. Otherwise, the quantity of fuel is determined by the total distance of the route.
-* descending [altitude]
-  View or setup the state of Descending Manager.  
-  If altitude is not given, the state of Descending Manager will be shown.  
-  If altitude is a positive number, Descending Manager will be activated with the given target altitude.  
-  If altitude is a negative number, Descending Manager will be deactivated.  
 
 ---
 
@@ -109,16 +84,16 @@ Copy it to `$FG_ROOT` to activate it.
 Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](https://code.google.com/p/b773-flightgear/):
 
 * Some new viewports added to 777-300ER
-* Some modifications to both 777-300 and 777-300ER
+* Adjusted the vertical speed in FLCH mode.
 * Ground refueling function for 777-300ER, based on the distance of the route.
 
 ---
 
 #### 747-8i.patch
 
-Patch for 747-8i
+Patch for [747-8i](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraft-3.4/747-8i_20150111.zip)
 
-* Some modifications to 747-8i.
+* Adjusted the vertical speed in FLCH mode.
 * Calculate the amount of fuel based on the total distance of the route.
 
 ---
@@ -184,5 +159,5 @@ Usage:
    Format: `WP1:AMOUNT1,WP2:AMOUNT2,...`, e.g: `YSSY:0.97,KEDW:0.85`  
    Argument REFUEL_POINTS shares the same format as mentioned here.
 2. Set property `/armament/magic-refuel/daemon` to `1` to activate Magic Refuel Daemon.
-3. You can set `/armament/magic-refuel/daemon` to `0` to deactivate Magic Refuel Daemon.
+3. Set property `/armament/magic-refuel/daemon` to `0` to deactivate Magic Refuel Daemon.
 

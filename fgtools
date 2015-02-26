@@ -79,7 +79,6 @@ if __name__ == '__main__':
         'pausemgr': pause_manager,
         'pause': pause,
         'resume': resume,
-        'getnavfreq': get_nav_freq,
         'setnavfreq': set_nav_freq,
         'loadroute': load_route,
     };
