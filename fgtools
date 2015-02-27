@@ -1,7 +1,8 @@
 #!/usr/bin/python
 #encoding=UTF-8
 
-import sys, os;
+import sys, os, subprocess, time;
+import xml.etree.ElementTree as ET;
 from FlightGear import FlightGear;
 
 def get_report(fg, args):
@@ -18,15 +19,6 @@ def sound_off(fg, args):
 
 def pause(fg, args):
     fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 1;
-
-def set_nav_freq(fg, args):
-    try:
-        fg['/instrumentation/nav/frequencies/selected-mhz'] = float(args[0]);
-        fg['/instrumentation/nav[1]/frequencies/selected-mhz'] = float(args[0]);
-    except IndexError:
-        print 'Frequency value not given.';
-        return 1;
-    return 0;
 
 def resume(fg, args):
     fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 0;
@@ -67,8 +59,68 @@ def load_route(fg, args):
         fg['/autopilot/route-manager/input'] = '@ACTIVATE';
         fg['/autopilot/route-manager/input'] = '@JUMP0';
     except Exception, e:
-        print 'Failed to load route.';
+        print 'Failed to load route: ' + str(e);
         return 1;
+
+    return 0;
+
+def fglaunch(args):
+    fgfs_possible_exec = [
+        '/usr/bin/fgfs',
+        '/usr/local/bin/fgfs',
+        os.getenv('FGFS_EXEC'),
+    ];
+
+    try:
+        aircraft = args[0];
+        flight_plan = os.path.abspath(args[1]);
+    except IndexError:
+        print 'Usage: launch AIRCRAFT FLIGHT_PLAN';
+        exit(1);
+
+    #Get runway to takeoff
+    try:
+        fp_tree = ET.parse(flight_plan);
+        fp_root = fp_tree.getroot();
+        airport = fp_root.findall('departure/airport')[0].text;
+        runway = fp_root.findall('departure/runway')[0].text;
+    except Exception, e:
+        print 'Failed to parse flight plan: ' + str(e);
+        return 1;
+
+    #Launch FlightGear
+    fgfs_exec = None;
+    for i in fgfs_possible_exec:
+        if os.path.isfile(i):
+            fgfs_exec = i;
+            break;
+    if (fgfs_exec == None):
+        print 'Executable of fgfs not found.';
+        return 1;
+    subprocess.Popen([fgfs_exec, '--aircraft='+aircraft, '--airport='+airport, '--runway='+runway]);
+
+    #Wait for FlightGear initialized
+    address, port = os.getenv('FG_TELNET').split(':');
+    initialized = False;
+    while not initialized:
+        fg = None;
+        try:
+            fg = FlightGear(address, int(port));
+            if (fg['/sim/signals/fdm-initialized']):
+                initialized = True;
+        except Exception, e:
+            sys.stderr.write('Error: '+ str(e) + "\n");
+            initialized = False;
+        if (None != fg):
+            fg.quit();
+        time.sleep(0.5);
+
+    #Load route
+    fg = FlightGear(address, int(port));
+    load_route(fg, [flight_plan]);
+    fg.quit();
+
+    #Finished
     return 0;
 
 if __name__ == '__main__':
@@ -79,7 +131,6 @@ if __name__ == '__main__':
         'pausemgr': pause_manager,
         'pause': pause,
         'resume': resume,
-        'setnavfreq': set_nav_freq,
         'loadroute': load_route,
     };
 
@@ -88,6 +139,9 @@ if __name__ == '__main__':
         exit(1);
 
     command = sys.argv[1];
+    if ('launch' == command):
+        exit(fglaunch(sys.argv[2:]));
+
     fg = None;
     retcode = 0;
     try:

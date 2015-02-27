@@ -23,15 +23,15 @@ Available Commands:
   Pause simulation.
 * resume  
   Resume simulation.
-* setnavfreq  
-  Set ILS frequency.
 * pausemgr [distance]  
   View or setup the state of Pause Manager.  
   If distance is not given, the state of Pause Manager will be shown.  
   If distance is a positive number, Pause Manager will be activated with the given distance.  
   If distance is a negative number, Pause Manager will be deactivated.  
-* loadroute ROUTE_FILE  
-  Load flight plan from ROUTE_FILE.
+* loadroute FLIGHT_PLAN  
+  Load flight plan from file.
+* launch AIRCRAFT FLIGHT_PLAN  
+  Start FlightGear with aircraft specified, start at airport & runway provided by the departure info of flight plan.
 
 `FG_TELNET` environment variable should be defined as the telnet address:port for FlightGear, e.g: `FG_TELNET='localhost:5401'`.
 
@@ -65,6 +65,12 @@ Usage:
 1. Set property `/sim/signals/fgreport` to "1".
 2. Wait until the value of property `/sim/signals/fgreport` became empty again.
 3. Read the value of property `/sim/fgreport/text`, the content of it is the full text of the report, which can be displayed directly.
+
+---
+
+#### setILSFreq.nas
+
+Setup ILS Frequency for the destination airport and runway automatically when a flight plan was activated.
 
 ---
 
