@@ -1,6 +1,3 @@
-setprop('/autopilot/settings/pause-manager-distance', '20');
-setprop('/autopilot/settings/pause-manager-enabled', '0');
-
 var pause_manager = func{
 	if (!getprop('/autopilot/settings/pause-manager-enabled')) {
 		return;
@@ -23,5 +20,9 @@ var pause_manager_mainloop = func() {
 	pause_manager();
 	settimer(pause_manager_mainloop, 0);
 }
-_setlistener("/sim/signals/nasal-dir-initialized", pause_manager_mainloop);
+_setlistener("/sim/signals/nasal-dir-initialized", func() {
+	setprop('/autopilot/settings/pause-manager-distance', '20');
+	setprop('/autopilot/settings/pause-manager-enabled', '0');
+	pause_manager_mainloop();
+});
 

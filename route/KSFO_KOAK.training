@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <version type="int">2</version>
+  <departure>
+    <airport type="string">KSFO</airport>
+    <sid type="string">DEFAULT</sid>
+    <runway type="string">28R</runway>
+  </departure>
+  <destination>
+    <airport type="string">KOAK</airport>
+    <approach type="string">DEFAULT</approach>
+    <runway type="string">11</runway>
+  </destination>
+  <route>
+    <wp>
+      <type type="string">runway</type>
+      <departure type="bool">true</departure>
+      <ident type="string">28R</ident>
+      <icao type="string">KSFO</icao>
+    </wp>
+    <wp n="1">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">3013</altitude-ft>
+      <ident type="string">28R-3</ident>
+      <lon type="double">-122.4490174</lon>
+      <lat type="double">37.65217325</lat>
+    </wp>
+    <wp n="2">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">6013</altitude-ft>
+      <ident type="string">28R-6</ident>
+      <lon type="double">-122.504706</lon>
+      <lat type="double">37.67554065</lat>
+    </wp>
+    <wp n="3">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <ident type="string">DEP-3</ident>
+      <lon type="double">-122.5232367</lon>
+      <lat type="double">37.72338447</lat>
+    </wp>
+    <wp n="4">
+      <type type="string">basic</type>
+      <departure type="bool">true</departure>
+      <generated type="bool">true</generated>
+      <ident type="string">DEP-4</ident>
+      <lon type="double">-122.4937298</lon>
+      <lat type="double">37.76762015</lat>
+    </wp>
+    <wp n="5">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-4</ident>
+      <lon type="double">-122.4967197</lon>
+      <lat type="double">37.84373473</lat>
+    </wp>
+    <wp n="6">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4009</altitude-ft>
+      <ident type="string">11-12</ident>
+      <lon type="double">-122.4338254</lon>
+      <lat type="double">37.84800983</lat>
+    </wp>
+    <wp n="7">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2009</altitude-ft>
+      <ident type="string">11-8</ident>
+      <lon type="double">-122.3693872</lon>
+      <lat type="double">37.80508921</lat>
+    </wp>
+    <wp n="8">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2009</altitude-ft>
+      <ident type="string">11-GS</ident>
+      <lon type="double">-122.341713</lon>
+      <lat type="double">37.78662997</lat>
+    </wp>
+    <wp n="9">
+      <type type="string">runway</type>
+      <approach type="bool">true</approach>
+      <ident type="string">11</ident>
+      <icao type="string">KOAK</icao>
+    </wp>
+  </route>
+</PropertyList>

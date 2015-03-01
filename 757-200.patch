@@ -1,0 +1,42 @@
+diff -ruN 757-200.orig/Nasal/reversethrust.nas /home/frank/.fgdata/Aircraft/757-200/Nasal/reversethrust.nas
+--- 757-200.orig/Nasal/reversethrust.nas	2015-01-20 03:41:13.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/757-200/Nasal/reversethrust.nas	2015-03-01 17:39:47.785881921 +0800
+@@ -9,7 +9,7 @@
+   props.globals.getNode("controls/engines/engine[0]/reverser").setBoolValue(0);
+   props.globals.getNode("controls/engines/engine[1]/reverser").setBoolValue(0);
+   }
+- elsif (getprop("controls/engines/engine[0]/throttle") == 0 and getprop("controls/engines/engine[1]/throttle") == 0  and props.globals.getNode("systems/hydraulic/equipment/enable-threv").getBoolValue())
++  elsif (props.globals.getNode("systems/hydraulic/equipment/enable-threv").getBoolValue())
+   {
+   props.globals.getNode("controls/engines/engine[0]/reverser").setBoolValue(1);
+   props.globals.getNode("controls/engines/engine[1]/reverser").setBoolValue(1);
+diff -ruN 757-200.orig/Systems/757-autopilot.xml /home/frank/.fgdata/Aircraft/757-200/Systems/757-autopilot.xml
+--- 757-200.orig/Systems/757-autopilot.xml	2015-01-20 03:41:13.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/757-200/Systems/757-autopilot.xml	2015-03-01 16:58:55.379302115 +0800
+@@ -467,7 +467,7 @@
+         <value>-16.67</value>
+       </u_min>
+       <u_max>
+-        <value>33.33</value>
++        <value>16.67</value>
+       </u_max>
+     </config>
+    </pi-simple-controller>
+@@ -539,7 +539,7 @@
+         <value>-16.67</value>
+       </u_min>
+       <u_max>
+-        <value>33.33</value>
++        <value>16.67</value>
+       </u_max>
+     </config>
+   </pi-simple-controller>
+@@ -609,7 +609,7 @@
+         <value>-16.67</value>
+       </u_min>
+       <u_max>
+-        <value>33.33</value>
++        <value>16.67</value>
+       </u_max>
+     </config>
+   </pi-simple-controller>

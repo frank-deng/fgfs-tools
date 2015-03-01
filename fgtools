@@ -97,7 +97,7 @@ def fglaunch(args):
     if (fgfs_exec == None):
         print 'Executable of fgfs not found.';
         return 1;
-    subprocess.Popen([fgfs_exec, '--aircraft='+aircraft, '--airport='+airport, '--runway='+runway]);
+    subprocess.Popen([fgfs_exec, '--aircraft='+aircraft, '--airport='+airport, '--runway='+runway] + args[2:]);
 
     #Wait for FlightGear initialized
     address, port = os.getenv('FG_TELNET').split(':');
