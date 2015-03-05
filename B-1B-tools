@@ -58,8 +58,8 @@ def magic_refuel_daemon(fg, args):
 if __name__ == '__main__':
     command_all = {
         'refuel': ground_refuel_max,
-        'magic-refuel': magic_refuel,
-        'magic-refuel-daemon': magic_refuel_daemon,
+        'mrefuel': magic_refuel,
+        'mrefueld': magic_refuel_daemon,
     };
 
     if (len(sys.argv) < 2):

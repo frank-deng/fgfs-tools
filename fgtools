@@ -86,7 +86,7 @@ def fglaunch(args):
         runway = fp_root.findall('departure/runway')[0].text;
     except Exception, e:
         print 'Failed to parse flight plan: ' + str(e);
-        return 1;
+		flight_plan = '';
 
     #Launch FlightGear
     fgfs_exec = None;
@@ -97,28 +97,7 @@ def fglaunch(args):
     if (fgfs_exec == None):
         print 'Executable of fgfs not found.';
         return 1;
-    subprocess.Popen([fgfs_exec, '--aircraft='+aircraft, '--airport='+airport, '--runway='+runway] + args[2:]);
-
-    #Wait for FlightGear initialized
-    address, port = os.getenv('FG_TELNET').split(':');
-    initialized = False;
-    while not initialized:
-        fg = None;
-        try:
-            fg = FlightGear(address, int(port));
-            if (fg['/sim/signals/fdm-initialized']):
-                initialized = True;
-        except Exception, e:
-            sys.stderr.write('Error: '+ str(e) + "\n");
-            initialized = False;
-        if (None != fg):
-            fg.quit();
-        time.sleep(0.5);
-
-    #Load route
-    fg = FlightGear(address, int(port));
-    load_route(fg, [flight_plan]);
-    fg.quit();
+    subprocess.Popen([fgfs_exec, '--aircraft='+aircraft, '--airport='+airport, '--runway='+runway, '--flight-plan='+flight_plan] + args[2:]);
 
     #Finished
     return 0;

@@ -47,9 +47,9 @@ Available Commands:
 
 * refuel  
   Refuel B-1B with full fuel on the ground.
-* magic-refuel [amount]  
+* mrefuel [amount]  
   See section *Magic Refuel* for detail.
-* magic-refuel-daemon [off|REFUEL_POINTS]  
+* mrefueld [off|REFUEL_POINTS]  
   See section *Magic Refuel Daemon* for detail.
 
 ---
@@ -71,6 +71,8 @@ Usage:
 #### setILSFreq.nas
 
 Setup ILS Frequency for the destination airport and runway automatically when a flight plan was activated.
+
+If `--flight-plan=file` argument is specified on the `fgfs` command line, the flight plan will be automatically activated and ILS frequency will also prepared for the destination airport and runway.
 
 ---
 

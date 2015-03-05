@@ -21,5 +21,16 @@ _setlistener("/sim/signals/nasal-dir-initialized", func {
 		setprop('/instrumentation/nav/frequencies/selected-mhz', ils_freq);
 		setprop('/instrumentation/nav[1]/frequencies/selected-mhz', ils_freq);
 	});
+
+	var l_set_route = setlistener('/sim/signals/fdm-initialized', func {
+		if (getprop('/autopilot/route-manager/file-path')) {
+			setprop('/autopilot/route-manager/input', '@LOAD');
+			setprop('/autopilot/route-manager/departure/sid', 'DEFAULT');
+			setprop('/autopilot/route-manager/destination/approach', 'DEFAULT');
+			setprop('/autopilot/route-manager/input', '@ACTIVATE');
+			setprop('/autopilot/route-manager/input', '@JUMP0');
+		}
+		removelistener(l_set_route);
+	});
 }, 0, 0);
 
