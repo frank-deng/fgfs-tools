@@ -97,7 +97,9 @@ def fglaunch(args):
     if (fgfs_exec == None):
         print 'Executable of fgfs not found.';
         return 1;
-    return subprocess.call([fgfs_exec, '--aircraft='+aircraft, '--airport='+airport, '--runway='+runway, '--flight-plan='+flight_plan] + args[2:]);
+
+    address, port = os.getenv('FG_TELNET2').split(':');
+    return subprocess.call([fgfs_exec, '--telnet=medium,dir,100,%s,%s,style' % (address, port), '--aircraft='+aircraft, '--airport='+airport, '--runway='+runway, '--flight-plan='+flight_plan] + args[2:]);
 
 if __name__ == '__main__':
     command_all = {
@@ -122,7 +124,7 @@ if __name__ == '__main__':
     retcode = 0;
     try:
         func = command_all[command];
-        address, port = os.getenv('FG_TELNET').split(':');
+        address, port = os.getenv('FG_TELNET2').split(':');
         fg = FlightGear(address, int(port));
         retcode = func(fg, sys.argv[2:]);
         fg.quit();

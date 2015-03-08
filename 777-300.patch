@@ -1,6 +1,6 @@
-diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300ER-set.xml
---- 777-300/777-300ER-set.xml	2012-02-16 21:15:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/777-300ER-set.xml	2015-02-21 10:14:07.865694917 +0800
+diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
+--- 777-300.orig/777-300ER-set.xml	2012-02-16 21:15:28.000000000 +0800
++++ 777-300/777-300ER-set.xml	2015-03-08 12:19:36.446971962 +0800
 @@ -7,7 +7,7 @@
          <aircraft-version>20111211</aircraft-version>
          <flight-model>yasim</flight-model>
@@ -136,6 +136,34 @@ diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300
              <max-lb>59000</max-lb>
              <min-lb>0</min-lb>
          </weight>
+@@ -493,8 +581,8 @@
+                     <property>instrumentation/afds/inputs/hdg-hold</property>
+                 </binding>
+             </key>
+-            <key n="9">
+-                <name>Ctrl-I</name>
++            <key n="2">
++                <name>Ctrl-B</name>
+                 <desc>toggle auto spoilers</desc>
+                 <binding>
+                     <command>nasal</command>
+@@ -617,14 +705,14 @@
+    </binding>
+   </mod-up>
+  </key> 
+-  <key n="2">
++  <!--key n="2">
+   <name>Ctrl-B</name>
+   <desc>FUBAR 3</desc>
+   <binding>
+    <command>property-toggle</command>
+    <property>/foo/bar</property>
+   </binding>
+- </key>
++ </key-->
+  
+   <key n="71">
+   <name>G</name>
 @@ -868,7 +956,7 @@
              <maingear-steering-cmd-norm type="double">0</maingear-steering-cmd-norm>
          </gear>
@@ -154,9 +182,9 @@ diff -ruN 777-300/777-300ER-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300
          </b777>
          <dialogs>
              <file>Aircraft/777-300/Nasal/dialogs.nas</file>
-diff -ruN 777-300/777-300-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300-set.xml
---- 777-300/777-300-set.xml	2012-02-16 21:15:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/777-300-set.xml	2015-02-21 10:14:07.865694917 +0800
+diff -ruN 777-300.orig/777-300-set.xml 777-300/777-300-set.xml
+--- 777-300.orig/777-300-set.xml	2012-02-16 21:15:28.000000000 +0800
++++ 777-300/777-300-set.xml	2015-03-08 12:20:04.682972718 +0800
 @@ -188,7 +188,7 @@
  	<view n="106">
  	    <name>Passenger 1</name>
@@ -193,11 +221,108 @@ diff -ruN 777-300/777-300-set.xml /home/frank/.fgdata/Aircraft/777-300/777-300-s
              <max-lb>500</max-lb>
              <min-lb>350</min-lb>
          </weight>
-diff -ruN 777-300/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS.nas
---- 777-300/Nasal/AFDS.nas	2012-02-16 21:15:44.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS.nas	2015-02-21 13:35:49.737891107 +0800
-@@ -67,8 +67,8 @@
+@@ -692,8 +692,8 @@
+                     <property>instrumentation/afds/inputs/hdg-hold</property>
+                 </binding>
+             </key>
+-            <key n="9">
+-                <name>Ctrl-I</name>
++            <key n="2">
++                <name>Ctrl-B</name>
+                 <desc>toggle auto spoilers</desc>
+                 <binding>
+                     <command>nasal</command>
+@@ -816,14 +816,14 @@
+    </binding>
+   </mod-up>
+  </key> 
+-  <key n="2">
++  <!--key n="2">
+   <name>Ctrl-B</name>
+   <desc>FUBAR 3</desc>
+   <binding>
+    <command>property-toggle</command>
+    <property>/foo/bar</property>
+   </binding>
+- </key>
++ </key-->
+  
+   <key n="71">
+   <name>G</name>
+diff -ruN 777-300.orig/Models/OHpanel.xml 777-300/Models/OHpanel.xml
+--- 777-300.orig/Models/OHpanel.xml	2012-05-20 10:05:46.000000000 +0800
++++ 777-300/Models/OHpanel.xml	2015-03-08 12:31:16.314990704 +0800
+@@ -2704,7 +2704,7 @@
+ 			}
+ 			}
+ 			if (getprop("/controls/electric/APU-button")==1)
+-			settimer(aputurnon, 40);
++			settimer(aputurnon, 10);
+ 			controls.click(2);
+ 			</script>
+ 			</binding>		
+@@ -2731,7 +2731,7 @@
+ 			setprop("/controls/electric/APU-generator", 0);
+ 			}
+ 			if (getprop("/controls/electric/APU-button")==-1 and getprop("/controls/electric/APU-generator")==1)
+-			settimer(apushutdown, 21);
++			settimer(apushutdown, 5);
+ 			controls.click(2);
+ 			</script>
+ 			</binding>		
+@@ -11612,4 +11612,4 @@
+         </action>
+     </animation>	
+ 	
+-</PropertyList>
+\ No newline at end of file
++</PropertyList>
+diff -ruN 777-300.orig/Nasal/AFDS.nas 777-300/Nasal/AFDS.nas
+--- 777-300.orig/Nasal/AFDS.nas	2012-02-16 21:15:44.000000000 +0800
++++ 777-300/Nasal/AFDS.nas	2015-03-08 12:49:39.151020237 +0800
+@@ -23,10 +23,11 @@
+         "TRK SEL","TRK HOLD","ATT","TO/GA"];
+ 
+         m.pitch_list=["","ALT","V/S","VNAV PTH","VNAV SPD",
+-        "VNAV ALT","G/S","FLARE","FLCH SPD","FPA","TO/GA","CLB CON"];
++        "VNAV ALT","G/S","FLARE","FLCH SPD","FPA","TO/GA","CLB CON","FLCH SPD"];
+ 
+         m.step=0;
+-
++	m.heading_change_rate = 0;
++	
+         m.AFDS_node = props.globals.getNode("instrumentation/afds",1);
+         m.AFDS_inputs = m.AFDS_node.getNode("inputs",1);
+         m.AFDS_apmodes = m.AFDS_node.getNode("ap-modes",1);
+@@ -39,6 +40,7 @@
+         m.AP_pitch_engaged = props.globals.initNode("autopilot/locks/pitch-engaged",1,"BOOL");
+         m.AP_roll_engaged = props.globals.initNode("autopilot/locks/roll-engaged",1,"BOOL");
+ 
++	m.reset = m.AFDS_inputs.initNode("reset",0,"BOOL");
+         m.FD = m.AFDS_inputs.initNode("FD",0,"BOOL");
+         m.at1 = m.AFDS_inputs.initNode("at-armed[0]",0,"BOOL");
+         m.at2 = m.AFDS_inputs.initNode("at-armed[1]",0,"BOOL");
+@@ -54,22 +56,26 @@
+         m.vs_fpa_selected = m.AFDS_inputs.initNode("vs-fpa-selected",0,"BOOL");
+         m.bank_switch = m.AFDS_inputs.initNode("bank-limit-switch",0,"INT");
+ 
+-        m.ias_setting = m.AP_settings.initNode("target-speed-kt",250);# 100 - 399 #
+-        m.mach_setting = m.AP_settings.initNode("target-speed-mach",0.40);# 0.40 - 0.95 #
++        m.ias_setting = m.AP_settings.initNode("target-speed-kt",250); # 100 - 399 #
++        m.mach_setting = m.AP_settings.initNode("target-speed-mach",0.40); # 0.40 - 0.95 #
+         m.vs_setting = m.AP_settings.initNode("vertical-speed-fpm",0); # -8000 to +6000 #
+         m.hdg_setting = m.AP_settings.initNode("heading-bug-deg",360,"INT");
+         m.fpa_setting = m.AP_settings.initNode("flight-path-angle",0); # -9.9 to 9.9 #
+-        m.alt_setting = m.AP_settings.initNode("target-altitude-ft",10000,"DOUBLE");
++        m.alt_setting = m.AP_settings.initNode("altitude-setting-ft",10000,"DOUBLE");
++        m.FMS_alt = m.AP_settings.initNode("target-altitude-ft",10000,"DOUBLE");
+         m.auto_brake_setting = m.AP_settings.initNode("autobrake",0.000,"DOUBLE");
+ 
+         m.trk_setting = m.AFDS_settings.initNode("trk",0,"INT");
+         m.vs_display = m.AFDS_settings.initNode("vs-display",0);
          m.fpa_display = m.AFDS_settings.initNode("fpa-display",0);
++	m.alt_display = props.globals.initNode("autopilot/settings/alt-display-ft",10000);
++	m.flch_mode = m.AFDS_settings.initNode("flch-mode",0,"BOOL");
          m.bank_min = m.AFDS_settings.initNode("bank-min",-25);
          m.bank_max = m.AFDS_settings.initNode("bank-max",25);
 -        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-10);
@@ -205,11 +330,482 @@ diff -ruN 777-300/Nasal/AFDS.nas /home/frank/.fgdata/Aircraft/777-300/Nasal/AFDS
 +        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-20);
 +        m.pitch_max = m.AFDS_settings.initNode("pitch-max",20);
          m.vnav_alt = m.AFDS_settings.initNode("vnav-alt",35000);
++	m.alarm = m.AFDS_settings.initNode("alarm",0,"BOOL");
  
          m.AP_roll_mode = m.AFDS_apmodes.initNode("roll-mode","TO/GA");
-diff -ruN 777-300/Nasal/ground_refuel.nas /home/frank/.fgdata/Aircraft/777-300/Nasal/ground_refuel.nas
---- 777-300/Nasal/ground_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/Nasal/ground_refuel.nas	2015-02-21 10:14:07.889694917 +0800
+         m.AP_roll_arm = m.AFDS_apmodes.initNode("roll-mode-arm"," ");
+@@ -78,55 +84,121 @@
+         m.AP_speed_mode = m.AFDS_apmodes.initNode("speed-mode","");
+         m.AP_annun = m.AFDS_apmodes.initNode("mode-annunciator"," ");
+ 
+-        m.FMS = props.globals.initNode("instrumentation/nav/slaved-to-gps");
+-        m.FMS.setValue(0);
++#        m.FMS = props.globals.initNode("instrumentation/nav/slaved-to-gps");
++#        m.FMS.setValue(0);
++
++	m.remaining_distance = m.AFDS_inputs.initNode("remaining-distance",0,"DOUBLE");
+ 
+-        m.APl = setlistener(m.AP, func m.setAP(),0,0);
++	m.arm_alarm = 0;
++        m.APl = setlistener(m.AP, func {
++	    m.setAP();
++	    if (!m.AP.getBoolValue() and m.arm_alarm) {
++	    	m.alarm.setBoolValue(1);
++	    	settimer(func m.alarm.setBoolValue(0), 3);
++	    }
++	},0,0);
+         m.APdisl = setlistener(m.AP_disengaged, func m.setAP(),0,0);
+         m.Lbank = setlistener(m.bank_switch, func m.setbank(),0,0);
+         m.LTMode = setlistener(m.autothrottle_mode, func m.updateATMode(),0,0);
++	m.Lreset = setlistener(m.reset, func m.afds_reset(),0,0);
++	m.Lrefsw = setlistener("instrumentation/efis/mfd/true-north", func m.hdg_ref_sw(),0,0);
++
++	m.e_time = 0;
++	m.status_light = m.AFDS_inputs.initNode("status-light",0,"BOOL");
++
+         return m;
+     },
+ 
+ ####    Inputs    ####
+ ###################
+     input : func(mode,btn){
+-        var fms = 0;
++#        var fms = 0;
+         if(mode==0){
+             # horizontal AP controls
+             if(me.lateral_mode.getValue() ==btn) btn=0;
+-            if(btn==3)fms=1;
++	    if (btn == 2) {
++		if (getprop("instrumentation/efis/mfd/true-north")) {
++		    var hdg_now = int(getprop("orientation/heading-deg")+0.5);
++		} else {
++		    var hdg_now = int(getprop("orientation/heading-magnetic-deg")+0.5);
++		}
++                me.hdg_setting.setValue(hdg_now);
++            }
+             me.lateral_mode.setValue(btn);
+-            me.FMS.setValue(fms);
+         }elsif(mode==1){
+             # vertical AP controls
+             if(me.vertical_mode.getValue() ==btn) btn=0;
++            var vs_now = int(getprop("/velocities/vertical-speed-fps")*0.6)*100;
++            var alt = int((getprop("instrumentation/altimeter/indicated-altitude-ft")+50)/100)*100;
+             if (btn==1){
+                 # hold current altitude
+                 if (me.AP.getValue())
+                 {
+-                    var alt = int((getprop("instrumentation/altimeter/indicated-altitude-ft")+50)/100)*100;
++		    me.alt_display.setValue(alt);
+                     me.alt_setting.setValue(alt);
+                 } else
+                     btn = 0;
+             }
++	    if (btn==2) {
++		settimer(func {
++		    if (me.vertical_mode.getValue() == 2 or me.vertical_mode.getValue() == 9)
++			me.flch_mode.setBoolValue(1);
++		},3);
++		if (vs_now > 6000) {
++		    me.vs_setting.setValue(6000);
++		} elsif (vs_now < -8000) {
++		    me.vs_setting.setValue(-8000);
++		} else {
++		    me.vs_setting.setValue(vs_now);
++	 	}
++	    }
++            if (btn==5) {
++                # VNAV
++                if (vs_now >= -100)
++                {
++                    if (me.FMS_alt.getValue() < alt) me.FMS_alt.setValue(alt);
++                } else {
++                    if (me.FMS_alt.getValue() > alt) me.FMS_alt.setValue(alt);
++                }
++		me.alt_display.setValue(me.FMS_alt.getValue());
++#               me.vnav_alt.setValue(me.FMS_alt.getValue());   
++            }
++	    if (btn==8) {
++	#	if (me.vertical_mode.getValue() == 2) {
++	#	    btn = 2;
++	#	    if (me.flch_mode.getBoolValue()) {
++	#		me.flch_mode.setBoolValue(0);
++	#	    } else {
++	#		me.flch_mode.setBoolValue(1);
++	#	    }
++	#	}else {
++		    me.alt_setting.setValue(me.alt_display.getValue());
++#		    btn = 1;
++	#	}
++	    }
+             if (btn==11)
+             {
+-                    var vs_now = int(getprop("/velocities/vertical-speed-fps")*0.6)*100;
+-					if (vs_now>0 and vs_now<6000)
+-                    me.vs_setting.setValue(vs_now);
++		if (vs_now>0 and vs_now<6000)
++                me.vs_setting.setValue(vs_now);
+             }
++	    if (btn != 2) me.flch_mode.setBoolValue(0);
+             me.vertical_mode.setValue(btn);
+         }elsif(mode==2){
+             # throttle AP controls
+             if(me.autothrottle_mode.getValue() ==btn) btn=0;
+-            if(getprop("position/altitude-agl-ft")<200) btn=0;
++            if(getprop("position/altitude-agl-ft")<300) btn=0;
++	    if(!me.at1.getBoolValue()) btn=0;
+             me.autothrottle_mode.setValue(btn);
+         }elsif(mode==3){
+             var arm = 1-((me.loc_armed.getValue() or (4==me.lateral_mode.getValue())));
+             if (btn==1){
+                 # toggle G/S and LOC arm
+-                var arm = arm or (1-(me.gs_armed.getValue() or (6==me.vertical_mode.getValue())));
++		if (me.vertical_mode.getValue() == 8 or me.vertical_mode.getValue() == 12) {
++		    me.input(1,2);
++		    me.flch_mode.setBoolValue(0);
++		} elsif (me.vertical_mode.getValue() == 5)
++		    me.vertical_mode.setValue(1);
++                arm = arm or (1-(me.gs_armed.getValue() or (6==me.vertical_mode.getValue())));
+                 me.gs_armed.setValue(arm);
+                 if ((arm==0)and(6==me.vertical_mode.getValue())) me.vertical_mode.setValue(0);
+             }
+@@ -138,9 +210,9 @@
+     setAP : func{
+         var output=1-me.AP.getValue();
+         var disabled = me.AP_disengaged.getValue();
+-        if(getprop("position/altitude-agl-ft")<200)disabled = 1;
++        if(getprop("position/altitude-agl-ft")<300)disabled = 1;
+         if((disabled)and(output==0)){output = 1;me.AP.setValue(0);}
+-        setprop("autopilot/internal/target-pitch-deg",0);
++        setprop("autopilot/internal/target-pitch-deg",getprop("orientation/pitch-deg"));
+         setprop("autopilot/internal/target-roll-deg",0);
+         me.AP_passive.setValue(output);
+     },
+@@ -157,9 +229,26 @@
+     updateATMode : func()
+     {
+         var idx=me.autothrottle_mode.getValue();
++	if (me.AP_disengaged.getBoolValue()) idx = 0;
+         me.AP_speed_mode.setValue(me.spd_list[idx]);
+     },
+-#################
++###################
++    afds_reset : func {
++	if (me.reset.getBoolValue()) {
++	    settimer( func {
++		me.reset.setBoolValue(0);
++		update_afds();
++	    },5);
++	}
++    },
++###################
++    hdg_ref_sw : func {
++        if (me.lateral_mode.getValue() == 2) {
++            me.input(0,2);
++            me.input(0,2);
++        }
++    },
++###################
+ 
+     ap_update : func{
+         var VS =getprop("velocities/vertical-speed-fps");
+@@ -185,40 +274,52 @@
+         if(hdgoffset < -180) hdgoffset +=360;
+         if(hdgoffset > 180) hdgoffset +=-360;
+         setprop("autopilot/internal/fdm-heading-bug-error-deg",hdgoffset);
+-        if(getprop("position/altitude-agl-ft")<200){
+-            me.AP.setValue(0);
++        if(getprop("position/altitude-agl-ft")<300){
++            me.AP.setBoolValue(0);
+             me.autothrottle_mode.setValue(0);
+         }
++	me.arm_alarm = me.AP.getBoolValue();
++#	if (getprop("instrumentation/airspeed-indicator/indicated-speed-kt") < 0.9 * getprop("instrumentation/fmc/vspeeds/stall-speed"))
++#	    me.AP.setBoolValue(0);
+ 
+         if(me.step==0){ ### glideslope armed ?###
+-            msg="";
+-            if(me.gs_armed.getValue()){
+-                msg="G/S";
++#            msg="";
++            if(me.gs_armed.getBoolValue()){
++#                msg="G/S";
+                 var gsdefl = getprop("instrumentation/nav/gs-needle-deflection");
+                 var gsrange = getprop("instrumentation/nav/gs-in-range");
+                 if(gsdefl< 0.5 and gsdefl>-0.5){
+                     if(gsrange){
+                         me.vertical_mode.setValue(6);
+-                        me.gs_armed.setValue(0);
++                        me.gs_armed.setBoolValue(0);
+                     }
+                 }
+             }
+-            me.AP_pitch_arm.setValue(msg);
++#            me.AP_pitch_arm.setValue(msg);
+ 
+         }elsif(me.step==1){ ### localizer armed ? ###
+-            msg="";
+-            if(me.loc_armed.getValue()){
+-                msg="LOC";
++#            msg="";
++            if(me.loc_armed.getBoolValue()){
++#                msg="LOC";
+                 var hddefl = getprop("instrumentation/nav/heading-needle-deflection");
+                 if(hddefl< 8 and hddefl>-8){
+                     me.lateral_mode.setValue(4);
+-                    me.loc_armed.setValue(0);
++                    me.loc_armed.setBoolValue(0);
+                 }
+             }
+-            me.AP_roll_arm.setValue(msg);
++#            me.AP_roll_arm.setValue(msg);
+ 
+         }elsif(me.step==2){ ### check lateral modes  ###
+             var idx=me.lateral_mode.getValue();
++	    msg = "";
++	    if (idx == 1) {
++		msg = "HDG HOLD";
++		if (abs(me.hdg_setting.getValue() - getprop("orientation/heading-magnetic-deg")) < 5) {
++		    me.lateral_mode.setValue(2);
++		}
++	    }
++	    if (me.loc_armed.getBoolValue()) msg = "LOC";
++	    me.AP_roll_arm.setValue(msg);
+             me.AP_roll_mode.setValue(me.roll_list[idx]);
+             me.AP_roll_engaged.setBoolValue(idx>0);
+ 
+@@ -227,59 +328,187 @@
+             var test_fpa=me.vs_fpa_selected.getValue();
+             if(idx==2 and test_fpa)idx=9;
+             if(idx==9 and !test_fpa)idx=2;
+-            if ((idx==8)or(idx==1))
++	    msg = "";
++
++	    if (((idx==2) or (idx==9)) and me.flch_mode.getBoolValue())
++	    {
++		# VS or FPA mode
++		me.alt_setting.setValue(me.alt_display.getValue());
++		if ((idx==2 and me.vs_setting.getValue()>0) or (idx==9 and me.fpa_setting.getValue()>0)) var climb = 1;
++		if ((idx==2 and me.vs_setting.getValue()<=0) or (idx==9 and me.fpa_setting.getValue()<=0)) var climb = 0;
++		if ((climb == 1) and (me.alt_setting.getValue() > getprop("instrumentation/altimeter/indicated-altitude-ft")))
++		{
++		    if (abs(getprop("instrumentation/altimeter/indicated-altitude-ft")-me.alt_setting.getValue())<50) idx=1;
++		}
++		if ((climb == 0) and (me.alt_setting.getValue() < getprop("instrumentation/altimeter/indicated-altitude-ft"))) 
++                {
++		    if (abs(getprop("instrumentation/altimeter/indicated-altitude-ft")-me.alt_setting.getValue())<50) idx=1;
++		}
++		if (idx != 2) me.flch_mode.setBoolValue(0);
++		me.vertical_mode.setValue(idx);
++	    }
++
++            if ((idx==1)or(idx==8))
+             {
+                 # flight level change mode
+-                if (abs(getprop("instrumentation/altimeter/indicated-altitude-ft")-me.alt_setting.getValue())<50)
++                if (abs(getprop("instrumentation/altimeter/indicated-altitude-ft")-me.alt_setting.getValue())<50) {
+                     # within target altitude: switch to ALT HOLD mode
+                     idx=1;
+-                else
++                } else {
+                     # outside target altitude: change flight level
++		    me.alt_setting.setValue(me.alt_display.getValue());
+                     idx=8;
++		}
++                me.vertical_mode.setValue(idx);
++            }
++
++            if ((idx==5)or(idx==12))
++            {
++                me.vnav_alt.setValue(me.FMS_alt.getValue());
++                me.alt_setting.setValue(me.FMS_alt.getValue());
++                # flight level change mode (VNAV)
++                if (abs(getprop("instrumentation/altimeter/indicated-altitude-ft")-me.vnav_alt.getValue())<50) {
++                    # within target altitude: switch to VNAV ALT mode
++                    idx=5;
++                } else {
++                    # outside target altitude: change flight level
++		    me.alt_display.setValue(me.FMS_alt.getValue());
++                    idx=12;
++		}
+                 me.vertical_mode.setValue(idx);
+             }
+             me.AP_pitch_mode.setValue(me.pitch_list[idx]);
+             me.AP_pitch_engaged.setBoolValue(idx>0);
++	    if (me.flch_mode.getBoolValue() or idx == 8)
++		msg = "ALT";
++	    if (me.gs_armed.getBoolValue())
++		msg = "G/S";
++            me.AP_pitch_arm.setValue(msg);
+ 
+         }elsif(me.step==4){             ### check speed modes  ###
++	    if (me.ias_mach_selected.getBoolValue()) {
++                var target = int(getprop("instrumentation/airspeed-indicator/indicated-speed-kt")+0.5);
++		if (target >= 100 and target <= 399)
++                    me.ias_setting.setValue(target);
++            } else {
++                var target = (int(1000 * getprop("instrumentation/airspeed-indicator/indicated-mach"))) * 0.001;
++		if (target >= 0.4 and target <= 0.95)
++                    me.mach_setting.setValue(target);
++            }
+             if (getprop("controls/engines/engine/reverser")) {
+                 # auto-throttle disables when reverser is enabled
+                 me.autothrottle_mode.setValue(0);
+             }
+-        }elsif(me.step==5){				
+-			if (getprop("/autopilot/route-manager/active")){
+-				max_wpt=getprop("/autopilot/route-manager/route/num");
+-				atm_wpt=getprop("/autopilot/route-manager/current-wp");
+-				max_wpt-=1;
+-				if (getprop("/autopilot/route-manager/wp/eta")=="0:37" and getprop("/autopilot/route-manager/wp/dist")<20){
+-					if (getprop("/autopilot/route-manager/current-wp")<=max_wpt){
+-						atm_wpt+=1;
+-						props.globals.getNode("/autopilot/route-manager/current-wp").setValue(atm_wpt);
+-					}
+-				}				
+-			}
+-		}elsif(me.step==6){
++	    if (!me.at1.getBoolValue()) me.autothrottle_mode.setValue(0);
++        }elsif(me.step==5){
++	    max_wpt=getprop("/autopilot/route-manager/route/num");
++	    atm_wpt=getprop("/autopilot/route-manager/current-wp");
++	    if ((atm_wpt < 0 or atm_wpt >= max_wpt) and getprop("autopilot/route-manager/active"))
++		setprop("autopilot/route-manager/active",0);
++
++	    if (getprop("/autopilot/route-manager/active") and getprop("/autopilot/route-manager/route/num") >= 2) {
++
++	    	if(atm_wpt < (max_wpt - 1)) {
++		    me.remaining_distance.setValue(getprop("/autopilot/route-manager/wp/remaining-distance-nm") + getprop("autopilot/route-manager/wp/dist"));
++#		    var next_course = getprop("/autopilot/route-manager/wp[1]/bearing-deg");
++	    	} else {
++		    me.remaining_distance.setValue(getprop("autopilot/route-manager/wp/dist"));
++	    	}
++
++		var groundspeed = getprop("/velocities/groundspeed-kt");
++		var f = flightplan();
++		var targetCourse = f.pathGeod(-1, -me.remaining_distance.getValue());
++		var leg = f.currentWP();
++		var enroute = leg.courseAndDistanceFrom(targetCourse);
++		setprop("autopilot/internal/course-deg", enroute[0]);
++
++		var courseCoord = geo.Coord.new().set_latlon(targetCourse.lat, targetCourse.lon);
++		var geocoord = geo.aircraft_position();
++		var CourseError = (geocoord.course_to(courseCoord) - getprop("orientation/heading-deg"));
++		if(CourseError < -180) CourseError += 360;
++		elsif(CourseError > 180) CourseError -= 360;
++		if(CourseError > 0) {
++		    CourseError = geocoord.distance_to(courseCoord);
++		} else {
++		    CourseError = (geocoord.distance_to(courseCoord) * -1);
++		}
++		var cCourseError = CourseError * 0.01;
++		if(cCourseError > 8.0) cCourseError = 8.0;
++		elsif(cCourseError < -8.0) cCourseError = -8.0;
++		setprop("autopilot/internal/course-error", cCourseError);
++
++		if(enroute[1] != nil)   # Course deg
++		{
++		    var wpt_eta = (enroute[1] / groundspeed * 3600);
++		    var brg_err = getprop("/autopilot/route-manager/wp/true-bearing-deg") - getprop("/orientation/heading-deg");
++		    if (brg_err < 0) {
++			brg_err = brg_err + 360;
++		    }
++		    var wp_lead = 30;
++		    if (getprop("instrumentation/airspeed-indicator/indicated-speed-kt") < 240 or getprop("position/altitude-ft") < 10000) {
++			wp_lead = 8;
++			brg_err = 0;
++		    }
++		    brg_err = math.pi * (brg_err / 180);
++		    if (enroute[1] < 16) {
++			wpt_eta = abs(wpt_eta * math.cos(brg_err));
++		    }
++
++		    if((getprop("gear/gear[1]/wow") == 0) and (getprop("gear/gear[2]/wow") == 0)) {
++			var change_wp = abs(getprop("/autopilot/route-manager/wp[1]/bearing-deg") - getprop("orientation/heading-magnetic-deg"));
++		    	if(change_wp > 180) change_wp = (360 - change_wp);
++		    	if (((me.heading_change_rate * change_wp) > wpt_eta) or (wpt_eta < wp_lead)) {
++			    if(atm_wpt < (max_wpt - 1)) {
++			    	atm_wpt += 1;
++			    	props.globals.getNode("/autopilot/route-manager/current-wp").setValue(atm_wpt);
++			    }
++		    	}
++		    }
++		}
++	    }
++
++	}elsif(me.step==6){
+ 			ma_spd=getprop("/velocities/mach");
+ 			banklimit=getprop("/instrumentation/afds/inputs/bank-limit-switch");
+-			if (banklimit==0 and ma_spd>0.85)
+-			lim=0;
+-			if (banklimit==0 and ma_spd<=0.85 and ma_spd>0.6666)
+-			lim=10;
+-			if (banklimit==0 and ma_spd<=0.6666 and ma_spd>0.5)
+-			lim=20;	
+-			if (banklimit==0 and ma_spd<=0.5 and ma_spd>0.3333)
+-			lim=30;
+-			if (banklimit==0 and ma_spd<=0.333)
+-			lim=35;
++			if (banklimit==0 and ma_spd>0.86) {
++			    lim=0;
++			    me.heading_change_rate = 0.0;
++			}
++			if (banklimit==0 and ma_spd<=0.86 and ma_spd>0.6666) {
++			    lim=10;
++			    me.heading_change_rate = 2.45 * 0.7;
++			}
++			if (banklimit==0 and ma_spd<=0.6666 and ma_spd>0.5) {
++			    lim=20;	
++			    me.heading_change_rate = 1.125 * 0.7;
++			}
++			if (banklimit==0 and ma_spd<=0.5 and ma_spd>0.3333) {
++			    lim=25;
++			    me.heading_change_rate = 0.625 * 0.7;
++			}
++			if (banklimit==0 and ma_spd<=0.333) {
++			    lim=30;
++			    me.heading_change_rate = 0.55 * 0.7;
++			}
+ 			if (banklimit==0){
+ 	        props.globals.getNode("/instrumentation/afds/settings/bank-max").setValue(lim);
+ 			lim = -1 * lim;
+ 			props.globals.getNode("/instrumentation/afds/settings/bank-min").setValue(lim);
+ 			}
+-		}
++	}
+ 
+         me.step+=1;
+         if(me.step>6)me.step =0;
++
++# Debugging status 'light'
++	if (!me.status_light.getBoolValue() and (getprop("sim/time/elapsed-sec") - me.e_time > 2)) {
++	    me.status_light.setBoolValue(1);
++	    settimer( func {
++		me.status_light.setBoolValue(0);
++		me.e_time = getprop("sim/time/elapsed-sec");
++	    },0.2);
++	}
++
+     },
+ };
+ #####################
+@@ -295,9 +524,10 @@
+ var lim=30;
+ var max_wpt=1;
+ var atm_wpt=1;
+-setprop("/aaa/jettison", 0);
+-var update_afds = func {
+-    afds.ap_update();
+ 
+-settimer(update_afds, 0);
++var update_afds = func {
++    if (!getprop("instrumentation/afds/inputs/reset")) {
++	afds.ap_update();
++	settimer(update_afds, 0);
++    }
+ }
+diff -ruN 777-300.orig/Nasal/ground_refuel.nas 777-300/Nasal/ground_refuel.nas
+--- 777-300.orig/Nasal/ground_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ 777-300/Nasal/ground_refuel.nas	2015-02-21 10:14:07.889694917 +0800
 @@ -0,0 +1,25 @@
 +setprop('/limits/estimated-range-nm', '8500');
 +var ground_refuel = func() {
@@ -236,19 +832,509 @@ diff -ruN 777-300/Nasal/ground_refuel.nas /home/frank/.fgdata/Aircraft/777-300/N
 +	screen.log.write('Airplane refueled.', 0, 1, 0);
 +}
 +
-diff -ruN 777-300/Systems/777-autopilot.xml /home/frank/.fgdata/Aircraft/777-300/Systems/777-autopilot.xml
---- 777-300/Systems/777-autopilot.xml	2012-02-16 21:15:46.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/777-300/Systems/777-autopilot.xml	2015-02-21 13:35:37.309890905 +0800
-@@ -329,10 +329,10 @@
-       <Kp>0.3</Kp>
+diff -ruN 777-300.orig/Systems/777-autopilot.xml 777-300/Systems/777-autopilot.xml
+--- 777-300.orig/Systems/777-autopilot.xml	2012-02-16 21:15:46.000000000 +0800
++++ 777-300/Systems/777-autopilot.xml	2015-02-25 19:07:06.738303054 +0800
+@@ -1,8 +1,21 @@
+ <?xml version="1.0"?>
+ 
+-
+ <PropertyList>
+ 
++    <logic>
++        <name>Aircraft On Ground Logic</name>
++        <update-interval-secs type="double">0.1</update-interval-secs>
++        <input>
++            <and>
++                <property>/gear/gear[2]/wow</property>
++                <property>/gear/gear[3]/wow</property>
++            </and>
++        </input>
++        <output>
++            <property>/gear/on-ground</property>
++        </output>
++    </logic>
++
+   <!-- =============================================================== -->
+   <!--                        Lateral Modes                            -->
+   <!-- =============================================================== -->
+@@ -48,15 +61,87 @@
+     </config>
+   </pid-controller>
+ 
++	<!--filter>
++                <name>Heading bug error computer/normalizer</name>
++                <type>gain</type>
++                <debug type="bool">false</debug>
++                <gain>1</gain>
++                <input-->
++                        <!--property>autopilot/settings/heading-bug-deg</property>
++                        <offset>
++                                <property>instrumentation/heading-indicator[0]/indicated-heading-deg</property>
++                                <scale>-1</scale>
++                        </offset-->
++			<!--property>autopilot/internal/fdm-heading-bug-error-deg</property>
++			<scale>1</scale>
++                </input>
++                <output>autopilot/internal/heading-bug-error-deg</output>
++                <period>
++                        <min>-180</min>
++                        <max>180</max>
++                </period>
++        </filter-->
++
++  <filter>
++    <name>true heading error computer/normalizer</name>
++    <debug>false</debug>
++    <type>gain</type>
++    <enable>
++	<condition>
++		<property>instrumentation/efis/mfd/true-north</property>
++	</condition>
++    </enable>
++    <input>
++      <property>autopilot/settings/heading-bug-deg</property>
++      <offset>
++        <property>orientation/heading-deg</property>
++        <scale>-1.0</scale>
++      </offset>
++    </input>
++    <output>autopilot/internal/hdg-hold-error-deg</output>
++    <period>
++      <min>-180</min>
++      <max>180</max>
++    </period>
++    <gain>1.0</gain>
++  </filter>
++
++  <filter>
++    <name>Mag Hdg</name>
++    <type>gain</type>
++    <debug>false</debug>
++    <gain>1</gain>
++    <enable>
++	<condition>
++	    <not>
++		<property>instrumentation/efis/mfd/true-north</property>
++	    </not>
++	</condition>
++    </enable>
++    <input>autopilot/internal/fdm-heading-bug-error-deg</input>
++    <output>autopilot/internal/hdg-hold-error-deg</output>
++  </filter>
++
+   <pi-simple-controller>
+     <name>HDG HOLD</name>
+     <debug>false</debug>
+     <enable>
+-      <prop>instrumentation/afds/ap-modes/roll-mode</prop>
+-      <value>HDG SEL</value>
++      <condition>
++	<or>
++	  <equals>
++      	    <property>instrumentation/afds/ap-modes/roll-mode</property>
++      	    <value>HDG SEL</value>
++	  </equals>
++	  <equals>
++      	    <property>instrumentation/afds/ap-modes/roll-mode</property>
++      	    <value>HDG HOLD</value>
++	  </equals>
++	</or>
++      </condition>
+     </enable>
+     <input>
+-      <prop>autopilot/internal/fdm-heading-bug-error-deg</prop>
++      <!--prop>autopilot/internal/fdm-heading-bug-error-deg</prop-->
++      <prop>autopilot/internal/hdg-hold-error-deg</prop>
+     </input>
+     <reference>
+       <value>0</value>
+@@ -76,7 +161,7 @@
+     </config>
+    </pi-simple-controller>
+ 
+-<!--filter>
++ <!--filter>
+     <name>LNAV waypoint error computer/normalizer</name>
+     <debug>false</debug>
+     <enable>
+@@ -97,8 +182,70 @@
+       <max>180</max>
+     </period>
+     <gain>1.0</gain>
+-  </filter-->   
+-   
++  </filter-->
++
++	<filter>
++                <name>LNAV course error filter</name>
++                <debug>false</debug>
++                <type>noise-spike</type>
++                <enable>
++                        <property>instrumentation/afds/ap-modes/roll-mode</property>
++                        <value>LNAV</value>
++                </enable>
++                <max-rate-of-change>0.2</max-rate-of-change>
++                <initialize-to>output</initialize-to>
++                <input>
++                        <property>autopilot/internal/course-error</property>
++                </input>
++                <output>autopilot/internal/course-error-filtered</output>
++        </filter>
++
++        <filter>
++                <name>LNAV waypoint error computer/normalizer</name>
++                <debug>false</debug>
++                <enable>
++                        <property>instrumentation/afds/ap-modes/roll-mode</property>
++                        <value>LNAV</value>
++                </enable>
++                <type>gain</type>
++                <input>
++                        <property>autopilot/internal/course-deg</property>
++                        <offset>
++                                <property>/orientation/heading-deg</property>
++                                <scale>-1.0</scale>
++                        </offset>
++                </input>
++                <output>autopilot/internal/waypoint-bearing-error-deg</output>
++                <period>
++                        <min>-180</min>
++                        <max>180</max>
++                </period>
++                <gain>1.0</gain>
++        </filter>
++
++        <filter>
++                <name>LNAV course error to waypoint error computer/normalizer </name>
++                <debug>false</debug>
++                <enable>
++                        <property>instrumentation/afds/ap-modes/roll-mode</property>
++                        <value>LNAV</value>
++                </enable>
++                <type>gain</type>
++                <input>
++                        <property>autopilot/internal/waypoint-bearing-error-deg</property>
++                        <offset>
++                                <property>autopilot/internal/course-error-filtered</property>
++                                <scale>1.0</scale>
++                        </offset>
++                </input>
++                <output>autopilot/internal/course-error-deg</output>
++                <period>
++                        <min>-180</min>
++                        <max>180</max>
++                </period>
++                <gain>1.0</gain>
++        </filter>
++
+   <pi-simple-controller>
+     <name>LNAV1</name>
+     <debug>false</debug>
+@@ -107,7 +254,8 @@
+       <value>LNAV</value>
+     </enable>
+     <input>
+-      <prop>/autopilot/internal/nav1-heading-error-deg</prop>
++      <!--prop>/autopilot/internal/waypoint-bearing-error-deg</prop-->
++      <prop>/autopilot/internal/course-error-deg</prop>
+     </input>
+     <reference>
+       <value>0</value>
+@@ -127,6 +275,25 @@
+     </config>
+    </pi-simple-controller>
+ 
++	<!--filter>
++                <name>LOC heading error computer/normalizer</name>
++                <type>gain</type>
++                <debug type="bool">false</debug>
++                <gain>1</gain>
++                <input>
++                        <property>instrumentation/nav[0]/radials/target-auto-hdg-deg</property>
++                        <offset>
++                                <property>orientation/heading-deg</property>
++                                <scale>-1</scale>
++                        </offset>
++                </input>
++                <output>autopilot/internal/nav1-heading-error-deg</output>
++                <period>
++                        <min>-180</min>
++                        <max>180</max>
++                </period>
++        </filter-->
++
+   <pi-simple-controller>
+     <name>LOC1</name>
+     <debug>false</debug>
+@@ -144,7 +311,7 @@
+       <prop>/autopilot/internal/target-roll-deg</prop>
+     </output>
+     <config>
+-      <Kp>-2.0</Kp>
++      <Kp>-0.6</Kp>
+       <Ki>0.0</Ki>
+         <u_min>
+             <prop>instrumentation/afds/settings/bank-min</prop>
+@@ -194,15 +361,15 @@
+       <prop>/autopilot/internal/target-roll-deg</prop>
+     </reference>
+     <output>
+-      <!-- prop>/controls/flight/aileron-trim-filter</prop -->
+-      <prop>/controls/flight/aileron-trim</prop>
++      <prop>/controls/flight/aileron-filter</prop>
++      <!--prop>/controls/flight/aileron-trim</prop-->
+     </output>
+     <config>
+-       <Kp>0.1</Kp>
+-      <beta>1.0</beta>
++       <Kp>0.08</Kp>
++      <!--beta>1.0</beta>
+       <alpha>0.1</alpha>
+-      <gamma>0.0</gamma>
+-      <Ti>10</Ti>
++      <gamma>0.0</gamma-->
++      <Ti>5</Ti>
+       <Td>0.0</Td>
+       <u_min>
+         <value>-0.5</value>
+@@ -213,6 +380,58 @@
+     </config>
+   </pid-controller>
+ 
++	<filter>
++                <name>Aileron control filter</name>
++                <debug>false</debug>
++                <type>noise-spike</type>
++                <max-rate-of-change>
++                        <condition>
++                                <greater-than>
++                                        <property>/instrumentation/airspeed-indicator/indicated-mach</property>
++                                        <value>0.88</value>
++                                </greater-than>
++                        </condition>
++                        <value>0.6</value>
++                </max-rate-of-change>
++                <max-rate-of-change>
++                        <condition>
++                                <greater-than>
++                                        <property>/instrumentation/airspeed-indicator/indicated-mach</property>
++                                        <value>0.666</value>
++                                </greater-than>
++                        </condition>
++                        <value>0.7</value>
++                </max-rate-of-change>
++                <max-rate-of-change>
++                        <condition>
++                                <greater-than>
++                                        <property>/instrumentation/airspeed-indicator/indicated-mach</property>
++                                        <value>0.5</value>
++                                </greater-than>
++                        </condition>
++                        <value>0.8</value>
++                </max-rate-of-change>
++                <max-rate-of-change>
++                        <condition>
++                                <greater-than>
++                                        <property>/instrumentation/airspeed-indicator/indicated-mach</property>
++                                        <value>0.333</value>
++                                </greater-than>
++                        </condition>
++                        <value>0.9</value>
++                </max-rate-of-change>
++                <max-rate-of-change>1</max-rate-of-change>
++                <feedback-if-disabled>true</feedback-if-disabled>
++                <initialize-to>output</initialize-to>
++                <enable>
++                        <honor-passive>true</honor-passive>
++                </enable>
++                <input>
++                        <property>/controls/flight/aileron-filter</property>
++                </input>
++                <output>/controls/flight/aileron</output>
++        </filter>
++
+     <!-- filter>
+         <name>Aileron control filter</name>
+         <debug>false</debug>
+@@ -261,7 +480,7 @@
+         <value>-16.67</value>
+       </u_min>
+       <u_max>
+-        <value>33.33</value>
++        <value>16.67</value>
+       </u_max>
+     </config>
+    </pi-simple-controller>
+@@ -320,19 +539,20 @@
+       <prop>instrumentation/altimeter/indicated-altitude-ft</prop>
+     </input>
+     <reference>
+-      <prop>/autopilot/settings/target-altitude-ft</prop>
++      <!--prop>/autopilot/settings/target-altitude-ft</prop-->
++      <prop>/autopilot/settings/altitude-setting-ft</prop>
+     </reference>
+     <output>
+       <prop>/autopilot/internal/target-climb-rate-fps</prop>
+     </output>
+     <config>
+-      <Kp>0.3</Kp>
++      <Kp>0.15</Kp>
        <Ki>0.0</Ki>
        <u_min>
 -        <value>-10</value>
-+        <value>-20</value>
++        <value>-16.67</value>
        </u_min>
        <u_max>
 -        <value>15</value>
-+        <value>20</value>
++        <value>16.67</value>
        </u_max>
      </config>
    </pi-simple-controller>
+@@ -402,7 +622,7 @@
+         <value>-16.67</value>
+       </u_min>
+       <u_max>
+-        <value>33.33</value>
++        <value>16.67</value>
+       </u_max>
+     </config>
+   </pi-simple-controller>
+@@ -440,7 +660,7 @@
+   </pid-controller>
+ 
+   <pid-controller>
+-    <name>Glideslop Hold</name>
++    <name>Glideslope Hold</name>
+     <debug>false</debug>
+     <enable>
+       <prop>instrumentation/afds/ap-modes/pitch-mode</prop>
+@@ -481,6 +701,7 @@
+     </enable>
+     <input>
+       <prop>/velocities/vertical-speed-fps</prop>
++      <!--prop>autopilot/internal/vert-speed-fpm</prop-->
+     </input>
+     <reference>
+       <prop>/autopilot/settings/vertical-speed-fpm</prop>
+@@ -488,14 +709,16 @@
+     </reference>
+     <output>
+       <prop>/autopilot/internal/target-pitch-deg</prop>
++      <!--prop>/autopilot/internal/target-pitch-filter</prop-->
+     </output>
+     <config>
+-      <Ts>0.1</Ts> 
+-      <Kp>0.1</Kp>
++      <!--Ts>0.05</Ts--> 
++      <Kp>0.01</Kp>
++      <!--Kp>-0.01</Kp-->
+       <beta>1.0</beta>
+       <alpha>0.1</alpha>
+       <gamma>0.0</gamma>
+-      <Ti>10.0</Ti>
++      <Ti>1.0</Ti>
+       <Td>0.00001</Td>
+         <u_min>
+             <prop>instrumentation/afds/settings/pitch-min</prop>
+@@ -505,6 +728,22 @@
+         </u_max>
+     </config>
+   </pid-controller>
++
++  <!--filter>
++    <name>VS Filter</name>
++    <debug>false</debug>
++    <enable>
++      <prop>instrumentation/afds/ap-modes/pitch-mode</prop>
++      <value>V/S</value>
++    </enable>
++    <initialize-to>output</initialize-to>
++    <type>gain</type>
++    <gain>1.0</gain>
++    <input>
++      <property>/autopilot/internal/target-pitch-filter</property>
++    </input>
++    <output>/autopilot/internal/target-pitch-deg</output>
++  </filter-->
+   
+ <!--CLB CON-->
+ 
+@@ -609,6 +848,25 @@
+     </config>
+   </pid-controller>
+ 
++  <filter>
++    <name>Vert Initialization filter</name>
++    <debug>false</debug>
++    <enable>
++	<condition>
++	   <equals>
++		<property>autopilot/locks/passive-mode</property>
++		<value>true</value>
++	   </equals>
++	</condition>
++    </enable>
++    <type>gain</type>
++    <gain>1.0</gain>
++    <input>
++	<property>/orientation/pitch-deg</property>
++    </input>
++    <output>/autopilot/internal/target-pitch-deg</output>
++  </filter>
++
+   <pid-controller>
+     <name>Elevator Control</name>
+     <debug>false</debug>
+@@ -624,26 +882,26 @@
+       <prop>/autopilot/internal/target-pitch-deg</prop>
+     </reference>
+     <output>
+-      <!-- prop>/controls/flight/elevator-trim-filter</prop -->
+-      <prop>/controls/flight/elevator-trim</prop>
++      <prop>/controls/flight/elevator-trim-filter</prop>
++      <!--prop>/controls/flight/elevator-trim</prop-->
+     </output>
+     <config>
+-      <Kp>-0.025</Kp>
++      <Kp>-0.015</Kp>
+       <beta>1.0</beta>
+       <alpha>0.1</alpha>
+       <gamma>0.0</gamma>
+       <Ti>1.0</Ti>
+-      <Td>0.0</Td>
++      <Td>0.00001</Td>
+       <u_min>
+-        <value>-0.6</value>
++        <value>-0.8</value>
+       </u_min>
+       <u_max>
+-        <value>0.6</value>
++        <value>0.8</value>
+       </u_max>
+     </config>
+   </pid-controller>
+ 
+-    <!-- filter>
++    <filter>
+         <name>Elevator control filter</name>
+         <debug>false</debug>
+         <feedback-if-disabled>true</feedback-if-disabled>
+@@ -653,6 +911,8 @@
+                 <equals>
+                     <property>autopilot/locks/passive-mode</property>
+                     <value>false</value>
++                    <!--property>autopilot/locks/pitch-engaged</property>
++                    <value>true</value-->
+                 </equals>
+             </condition>
+         </enable>
+@@ -662,7 +922,7 @@
+         <output>/controls/flight/elevator-trim</output>
+         <type>noise-spike</type>
+         <max-rate-of-change>0.2</max-rate-of-change>
+-    </filter -->
++    </filter>
+ 
+ 
+ </PropertyList>

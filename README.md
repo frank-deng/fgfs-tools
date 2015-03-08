@@ -37,6 +37,14 @@ Available Commands:
 
 ---
 
+#### fgtools2
+
+The same as fgtools, which is used for operating the second instance of FlightGear.
+
+`FG_TELNET2` environment variable should be defined as the telnet address:port for the second instance of FlightGear, e.g: `FG_TELNET2='localhost:5401'`.
+
+---
+
 ### B-1B-tools
 
 A useful tool to manipulate B-1B from command line.
@@ -94,6 +102,16 @@ Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](
 * Some new viewports added to 777-300ER
 * Adjusted the vertical speed in FLCH mode.
 * Ground refueling function for 777-300ER, based on the distance of the route.
+* Replaced Autopilot System with the one from 747-8i which is capable of flying polar route.
+* Reduced the time of manual startup.
+
+---
+
+#### 757-200.patch
+
+Patch for 757-200.
+
+* Adjusted the vertical speed in FLCH mode.
 
 ---
 
