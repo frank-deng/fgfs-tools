@@ -44,27 +44,91 @@ diff -ruN 747-8i.orig/Dialogs/control-panel.xml 747-8i/Dialogs/control-panel.xml
  	<halign>center</halign>
 diff -ruN 747-8i.orig/Nasal/AFDS.nas 747-8i/Nasal/AFDS.nas
 --- 747-8i.orig/Nasal/AFDS.nas	2015-01-20 03:42:28.000000000 +0800
-+++ 747-8i/Nasal/AFDS.nas	2015-02-27 19:28:30.791740246 +0800
-@@ -72,8 +72,8 @@
- 	m.flch_mode = m.AFDS_settings.initNode("flch-mode",0,"BOOL");
-         m.bank_min = m.AFDS_settings.initNode("bank-min",-25);
-         m.bank_max = m.AFDS_settings.initNode("bank-max",25);
--        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-10);
--        m.pitch_max = m.AFDS_settings.initNode("pitch-max",15);
-+        m.pitch_min = m.AFDS_settings.initNode("pitch-min",-20);
-+        m.pitch_max = m.AFDS_settings.initNode("pitch-max",20);
-         m.vnav_alt = m.AFDS_settings.initNode("vnav-alt",35000);
- 	m.alarm = m.AFDS_settings.initNode("alarm",0,"BOOL");
- 
-@@ -445,7 +445,7 @@
- 			brg_err = brg_err + 360;
- 		    }
- 		    var wp_lead = 30;
++++ 747-8i/Nasal/AFDS.nas	2015-03-08 20:31:10.995761802 +0800
+@@ -401,72 +401,17 @@
+             }
+ 	    if (!me.at1.getBoolValue()) me.autothrottle_mode.setValue(0);
+         }elsif(me.step==5){
+-	    max_wpt=getprop("/autopilot/route-manager/route/num");
+-	    atm_wpt=getprop("/autopilot/route-manager/current-wp");
+-	    if ((atm_wpt < 0 or atm_wpt >= max_wpt) and getprop("autopilot/route-manager/active"))
+-		setprop("autopilot/route-manager/active",0);
+-
+-	    if (getprop("/autopilot/route-manager/active") and getprop("/autopilot/route-manager/route/num") >= 2) {
+-
+-	    	if(atm_wpt < (max_wpt - 1)) {
+-		    me.remaining_distance.setValue(getprop("/autopilot/route-manager/wp/remaining-distance-nm") + getprop("autopilot/route-manager/wp/dist"));
+-#		    var next_course = getprop("/autopilot/route-manager/wp[1]/bearing-deg");
+-	    	} else {
+-		    me.remaining_distance.setValue(getprop("autopilot/route-manager/wp/dist"));
+-	    	}
+-
+-		var groundspeed = getprop("/velocities/groundspeed-kt");
+-		var f = flightplan();
+-		var targetCourse = f.pathGeod(-1, -me.remaining_distance.getValue());
+-		var leg = f.currentWP();
+-		var enroute = leg.courseAndDistanceFrom(targetCourse);
+-		setprop("autopilot/internal/course-deg", enroute[0]);
+-
+-		var courseCoord = geo.Coord.new().set_latlon(targetCourse.lat, targetCourse.lon);
+-		var geocoord = geo.aircraft_position();
+-		var CourseError = (geocoord.course_to(courseCoord) - getprop("orientation/heading-deg"));
+-		if(CourseError < -180) CourseError += 360;
+-		elsif(CourseError > 180) CourseError -= 360;
+-		if(CourseError > 0) {
+-		    CourseError = geocoord.distance_to(courseCoord);
+-		} else {
+-		    CourseError = (geocoord.distance_to(courseCoord) * -1);
+-		}
+-		var cCourseError = CourseError * 0.01;
+-		if(cCourseError > 8.0) cCourseError = 8.0;
+-		elsif(cCourseError < -8.0) cCourseError = -8.0;
+-		setprop("autopilot/internal/course-error", cCourseError);
+-
+-		if(enroute[1] != nil)   # Course deg
+-		{
+-		    var wpt_eta = (enroute[1] / groundspeed * 3600);
+-		    var brg_err = getprop("/autopilot/route-manager/wp/true-bearing-deg") - getprop("/orientation/heading-deg");
+-		    if (brg_err < 0) {
+-			brg_err = brg_err + 360;
+-		    }
+-		    var wp_lead = 30;
 -		    if (getprop("instrumentation/airspeed-indicator/indicated-speed-kt") < 240 and getprop("position/altitude-ft") < 10000) {
-+		    if (getprop("instrumentation/airspeed-indicator/indicated-speed-kt") < 240 or getprop("position/altitude-ft") < 10000) {
- 			wp_lead = 8;
- 			brg_err = 0;
- 		    }
+-			wp_lead = 8;
+-			brg_err = 0;
+-		    }
+-		    brg_err = math.pi * (brg_err / 180);
+-		    if (enroute[1] < 16) {
+-			wpt_eta = abs(wpt_eta * math.cos(brg_err));
+-		    }
+-
+-		    if((getprop("gear/gear[1]/wow") == 0) and (getprop("gear/gear[2]/wow") == 0)) {
+-			var change_wp = abs(getprop("/autopilot/route-manager/wp[1]/bearing-deg") - getprop("orientation/heading-magnetic-deg"));
+-		    	if(change_wp > 180) change_wp = (360 - change_wp);
+-		    	if (((me.heading_change_rate * change_wp) > wpt_eta) or (wpt_eta < wp_lead)) {
+-			    if(atm_wpt < (max_wpt - 1)) {
+-			    	atm_wpt += 1;
+-			    	props.globals.getNode("/autopilot/route-manager/current-wp").setValue(atm_wpt);
+-			    }
+-		    	}
+-		    }
+-		}
+-	    }
+-
++			if (getprop("/autopilot/route-manager/active")){
++				max_wpt=getprop("/autopilot/route-manager/route/num");
++				atm_wpt=getprop("/autopilot/route-manager/current-wp");
++				max_wpt-=1;
++				if (getprop("/autopilot/route-manager/wp/eta")=="0:37" and getprop("/autopilot/route-manager/wp/dist")<20){
++					if (getprop("/autopilot/route-manager/current-wp")<=max_wpt){
++						atm_wpt+=1;
++						props.globals.getNode("/autopilot/route-manager/current-wp").setValue(atm_wpt);
++					}
++				}				
++			}
+ 	}elsif(me.step==6){
+ 			ma_spd=getprop("/velocities/mach");
+ 			banklimit=getprop("/instrumentation/afds/inputs/bank-limit-switch");
 diff -ruN 747-8i.orig/Nasal/fuel_system.nas 747-8i/Nasal/fuel_system.nas
 --- 747-8i.orig/Nasal/fuel_system.nas	2015-01-20 03:42:28.000000000 +0800
 +++ 747-8i/Nasal/fuel_system.nas	2015-02-27 20:23:39.246461077 +0800
@@ -79,8 +143,18 @@ diff -ruN 747-8i.orig/Nasal/fuel_system.nas 747-8i/Nasal/fuel_system.nas
  	    } elsif (active.getBoolValue() and (tot_level.getValue() > (target_lev.getValue() + (0.8*rate)))) {
 diff -ruN 747-8i.orig/Systems/747-8-autopilot.xml 747-8i/Systems/747-8-autopilot.xml
 --- 747-8i.orig/Systems/747-8-autopilot.xml	2015-01-20 03:42:29.000000000 +0800
-+++ 747-8i/Systems/747-8-autopilot.xml	2015-02-25 19:07:06.738303054 +0800
-@@ -480,7 +480,7 @@
++++ 747-8i/Systems/747-8-autopilot.xml	2015-03-08 20:12:37.799731991 +0800
+@@ -254,8 +254,7 @@
+       <value>LNAV</value>
+     </enable>
+     <input>
+-      <!--prop>/autopilot/internal/waypoint-bearing-error-deg</prop-->
+-      <prop>/autopilot/internal/course-error-deg</prop>
++      <prop>/autopilot/internal/true-heading-error-deg</prop>
+     </input>
+     <reference>
+       <value>0</value>
+@@ -480,7 +479,7 @@
          <value>-16.67</value>
        </u_min>
        <u_max>
@@ -89,7 +163,7 @@ diff -ruN 747-8i.orig/Systems/747-8-autopilot.xml 747-8i/Systems/747-8-autopilot
        </u_max>
      </config>
     </pi-simple-controller>
-@@ -552,7 +552,7 @@
+@@ -552,7 +551,7 @@
          <value>-16.67</value>
        </u_min>
        <u_max>
@@ -98,7 +172,7 @@ diff -ruN 747-8i.orig/Systems/747-8-autopilot.xml 747-8i/Systems/747-8-autopilot
        </u_max>
      </config>
    </pi-simple-controller>
-@@ -622,7 +622,7 @@
+@@ -622,7 +621,7 @@
          <value>-16.67</value>
        </u_min>
        <u_max>
