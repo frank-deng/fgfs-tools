@@ -27,6 +27,8 @@ fgreport_generate = func{
 	local_hour = getprop('/sim/time/utc/hour') + getprop('/sim/time/local-offset') / 3600;
 	if (local_hour < 0) {
 		local_hour = 24 + local_hour;
+	} else if (local_hour >= 24) {
+		local_hour = local_hour - 24;
 	}
 	report_text = report_text ~ sprintf("Local time: %02d:%02d:%02d\n\n",
 					local_hour,
