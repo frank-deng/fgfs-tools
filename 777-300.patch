@@ -1,6 +1,6 @@
 diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
 --- 777-300.orig/777-300ER-set.xml	2012-02-16 21:15:28.000000000 +0800
-+++ 777-300/777-300ER-set.xml	2015-03-08 12:19:36.446971962 +0800
++++ 777-300/777-300ER-set.xml	2015-03-14 16:46:01.857359397 +0800
 @@ -7,7 +7,7 @@
          <aircraft-version>20111211</aircraft-version>
          <flight-model>yasim</flight-model>
@@ -178,13 +178,30 @@ diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
              <file>Aircraft/777-300/Nasal/ground_steering.nas</file>
              <file>Aircraft/Generic/limits.nas</file>
 +			<file>Aircraft/777-300/Nasal/doors.nas</file>
-+			<file>Aircraft/777-300/Nasal/ground_refuel.nas</file>
++			<file>Aircraft/777-300/Nasal/auto_refuel.nas</file>
          </b777>
          <dialogs>
              <file>Aircraft/777-300/Nasal/dialogs.nas</file>
+@@ -938,6 +1028,7 @@
+         <vne>600</vne>
+         <max-positive-g>2.5</max-positive-g> 
+         <max-negative-g>-1.76</max-negative-g>
++		<estimated-range-nm>8500</estimated-range-nm>
+     </limits>
+ 
+ </PropertyList>
 diff -ruN 777-300.orig/777-300-set.xml 777-300/777-300-set.xml
 --- 777-300.orig/777-300-set.xml	2012-02-16 21:15:28.000000000 +0800
-+++ 777-300/777-300-set.xml	2015-03-08 12:20:04.682972718 +0800
++++ 777-300/777-300-set.xml	2015-03-14 17:04:41.521377548 +0800
+@@ -7,7 +7,7 @@
+         <aircraft-version>20111229</aircraft-version>
+         <flight-model>yasim</flight-model>
+         <aero>777-300</aero>
+-        <fuel-fraction>0.75</fuel-fraction>
++        <fuel-fraction>0.10</fuel-fraction>
+         <startup>
+             <splash-texture>Aircraft/777-300/splash.png</splash-texture>
+         </startup>
 @@ -188,7 +188,7 @@
  	<view n="106">
  	    <name>Passenger 1</name>
@@ -221,6 +238,15 @@ diff -ruN 777-300.orig/777-300-set.xml 777-300/777-300-set.xml
              <max-lb>500</max-lb>
              <min-lb>350</min-lb>
          </weight>
+@@ -569,7 +569,7 @@
+         <weight n="1">
+         <!--  328 pax max @ 180 lbs -->
+             <name>Pax</name>
+-            <weight-lb>50000</weight-lb>
++            <weight-lb>59000</weight-lb>
+             <max-lb>59000</max-lb>
+             <min-lb>0</min-lb>
+         </weight>
 @@ -692,8 +692,8 @@
                      <property>instrumentation/afds/inputs/hdg-hold</property>
                  </binding>
@@ -249,6 +275,22 @@ diff -ruN 777-300.orig/777-300-set.xml 777-300/777-300-set.xml
   
    <key n="71">
    <name>G</name>
+@@ -1101,6 +1101,7 @@
+             <file>Aircraft/777-300/Nasal/ground_steering.nas</file>
+             <file>Aircraft/Generic/limits.nas</file>
+ 			<file>Aircraft/777-300/Nasal/doors.nas</file>
++			<file>Aircraft/777-300/Nasal/auto_refuel.nas</file>
+         </b777>
+         <dialogs>
+             <file>Aircraft/777-300/Nasal/dialogs.nas</file>
+@@ -1148,6 +1149,7 @@
+         <vne>600</vne>
+         <max-positive-g>2.5</max-positive-g> 
+         <max-negative-g>-1.76</max-negative-g>
++		<estimated-range-nm>6000</estimated-range-nm>
+     </limits>
+ 
+ </PropertyList>
 diff -ruN 777-300.orig/Models/OHpanel.xml 777-300/Models/OHpanel.xml
 --- 777-300.orig/Models/OHpanel.xml	2012-05-20 10:05:46.000000000 +0800
 +++ 777-300/Models/OHpanel.xml	2015-03-08 12:31:16.314990704 +0800
@@ -300,20 +342,14 @@ diff -ruN 777-300.orig/Nasal/AFDS.nas 777-300/Nasal/AFDS.nas
          }elsif(mode==1){
              # vertical AP controls
              if(me.vertical_mode.getValue() ==btn) btn=0;
-diff -ruN 777-300.orig/Nasal/ground_refuel.nas 777-300/Nasal/ground_refuel.nas
---- 777-300.orig/Nasal/ground_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ 777-300/Nasal/ground_refuel.nas	2015-02-21 10:14:07.889694917 +0800
-@@ -0,0 +1,25 @@
-+setprop('/limits/estimated-range-nm', '8500');
-+var ground_refuel = func() {
-+	if (!getprop('/autopilot/route-manager/active')){
-+		screen.log.write('Sorry, you haven\'t activated your route yet.', 1, 0, 0);
-+		screen.log.write('And I cannot determine how much fuel needed.', 1, 0, 0);
-+		return;
-+	} else if (getprop('/velocities/groundspeed-kt') > 0.1) {
-+		screen.log.write('Unable to refuel while the aircraft is moving.', 1, 0, 0);
-+		return;
-+	}
+diff -ruN 777-300.orig/Nasal/auto_refuel.nas 777-300/Nasal/auto_refuel.nas
+--- 777-300.orig/Nasal/auto_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ 777-300/Nasal/auto_refuel.nas	2015-03-14 16:48:15.649361566 +0800
+@@ -0,0 +1,21 @@
++var l_auto_refuel = setlistener('/autopilot/route-manager/active', func {
++    if (!getprop('/autopilot/route-manager/active')) {
++        return;
++    }
 +
 +	var range = getprop('/limits/estimated-range-nm');
 +	var route_len = getprop('/autopilot/route-manager/total-distance');
@@ -326,8 +362,10 @@ diff -ruN 777-300.orig/Nasal/ground_refuel.nas 777-300/Nasal/ground_refuel.nas
 +	setprop('/consumables/fuel/tank/level-norm', fuel_norm);
 +	setprop('/consumables/fuel/tank[1]/level-norm', fuel_norm);
 +	setprop('/consumables/fuel/tank[2]/level-norm', fuel_norm);
-+	screen.log.write('Airplane refueled.', 0, 1, 0);
-+}
++
++    removelistener(l_auto_refuel);
++	print('Aircraft refueled.');
++});
 +
 diff -ruN 777-300.orig/Systems/777-autopilot.xml 777-300/Systems/777-autopilot.xml
 --- 777-300.orig/Systems/777-autopilot.xml	2012-02-16 21:15:46.000000000 +0800

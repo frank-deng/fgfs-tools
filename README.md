@@ -28,8 +28,6 @@ Available Commands:
   If distance is not given, the state of Pause Manager will be shown.  
   If distance is a positive number, Pause Manager will be activated with the given distance.  
   If distance is a negative number, Pause Manager will be deactivated.  
-* loadroute FLIGHT_PLAN  
-  Load flight plan from file.
 * launch AIRCRAFT FLIGHT_PLAN  
   Start FlightGear with aircraft specified, start at airport & runway provided by the departure info of flight plan.
 
