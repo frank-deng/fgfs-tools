@@ -35,23 +35,6 @@ Available Commands:
 
 ---
 
-### B-1B-tools
-
-A useful tool to manipulate B-1B from command line.
-
-Synopsis: `B-1B-tools command`
-
-Available Commands:
-
-* refuel  
-  Refuel B-1B with full fuel on the ground.
-* mrefuel [amount]  
-  See section *Magic Refuel* for detail.
-* mrefueld [off|REFUEL_POINTS]  
-  See section *Magic Refuel Daemon* for detail.
-
----
-
 #### fgreport.nas
 
 A FlightGear Nasal script used to generate report.
@@ -91,7 +74,7 @@ Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](
 
 * Some new viewports added to 777-300ER
 * Adjusted the vertical speed in FLCH mode.
-* Ground refueling function for 777-300ER, based on the distance of the route.
+* Automatically refuel 777-300ER on startup based the distance of the route if launched via `fgtools launch` and flight plan is specified.
 * Adjusted Autopilot System so as to fly polar route.
 * Reduced the time of manual startup.
 
@@ -102,7 +85,7 @@ Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](
 Patch for 757-200.
 
 * Adjusted the vertical speed in FLCH mode.
-* Ground refueling function for 757-200, based on the distance of the route.
+* Automatically refuel 757-200 on startup based the distance of the route if launched via `fgtools launch` and flight plan is specified.
 
 ---
 
@@ -111,7 +94,7 @@ Patch for 757-200.
 Patch for [747-8i](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraft-3.4/747-8i_20150111.zip)
 
 * Adjusted the vertical speed in FLCH mode.
-* Calculate the amount of fuel based on the total distance of the route.
+* Automatically refuel 747-8i on startup based the distance of the route if launched via `fgtools launch` and flight plan is specified.
 
 ---
 
@@ -163,18 +146,9 @@ Usage:
 2. Set property `/armament/magic-refuel/signal` to `1` to start refueling.
 3. You can set `/armament/magic-refuel/signal` to `0` to stop refueling.
 
----
-
-Magic Refuel Daemon
--------------------
+#### Magic Refuel Daemon
 
 Automatically activate _Magic Refuel_ for B-1B Lancer when it is going to reach a specific waypoint, which is called Refuel Point.
 
-Usage:
-
-1. Set property `/armament/magic-refuel/refuel-points` to specify the Refuel Points.  
-   Format: `WP1:AMOUNT1,WP2:AMOUNT2,...`, e.g: `YSSY:0.97,KEDW:0.85`  
-   Argument REFUEL_POINTS shares the same format as mentioned here.
-2. Set property `/armament/magic-refuel/daemon` to `1` to activate Magic Refuel Daemon.
-3. Set property `/armament/magic-refuel/daemon` to `0` to deactivate Magic Refuel Daemon.
+To define a Refuel Point, you should edit the flight plan XML file directly. Find out the point you'd like to mark as a Refuel Point, then append `-REFUEL` after the waypoint ID.
 
