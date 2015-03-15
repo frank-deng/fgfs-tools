@@ -1,6 +1,6 @@
-diff -ruN /home/frank/devel/B-1B/B-1B-set.xml B-1B/B-1B-set.xml
---- /home/frank/devel/B-1B/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
-+++ B-1B/B-1B-set.xml	2015-01-26 19:19:29.863873466 +0800
+diff -ruN B-1B.orig/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
+--- B-1B.orig/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml	2015-01-26 19:19:29.863873466 +0800
 @@ -458,7 +458,7 @@
        <target-pitch-deg type="float">0</target-pitch-deg>
        <target-vfps type="float">0</target-vfps>
@@ -18,14 +18,12 @@ diff -ruN /home/frank/devel/B-1B/B-1B-set.xml B-1B/B-1B-set.xml
  	</weapons>
          <fuel>
  		<file>Aircraft/Generic/aar.nas</file>
-diff -ruN /home/frank/devel/B-1B/Nasal/magic_refuel.nas B-1B/Nasal/magic_refuel.nas
---- /home/frank/devel/B-1B/Nasal/magic_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ B-1B/Nasal/magic_refuel.nas	2015-02-01 17:44:30.686903343 +0800
-@@ -0,0 +1,80 @@
+diff -ruN B-1B.orig/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas
+--- B-1B.orig/Nasal/magic_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas	2015-03-15 17:31:38.912015002 +0800
+@@ -0,0 +1,68 @@
 +setprop('/armament/magic-refuel/signal', 0);
-+setprop('/armament/magic-refuel/amount', '0.95');
-+setprop('/armament/magic-refuel/daemon', 0);
-+setprop('/armament/magic-refuel/refuel-points', 'LANDO:0.95');
++setprop('/armament/magic-refuel/amount', '0.97');
 +
 +var magic_refuel = func(){
 +	var target_amount = getprop('/armament/magic-refuel/amount');
@@ -70,35 +68,37 @@ diff -ruN /home/frank/devel/B-1B/Nasal/magic_refuel.nas B-1B/Nasal/magic_refuel.
 +	}
 +});
 +
-+var magic_refuel_daemon = func {
-+	if (!getprop('/armament/magic-refuel/daemon')) {
-+		return;
-+	}
-+
-+	if (!getprop('/autopilot/route-manager/active')) {
-+		setprop('/armament/magic-refuel/daemon', 0);
-+		screen.log.write('Sorry, you haven\'t activated your route yet.', 1, 0, 0);
-+		return;
-+	}
-+		
-+	wp_cur = getprop('/autopilot/route-manager/wp/id');
-+	records_all = split(",", getprop('/armament/magic-refuel/refuel-points'));
-+	foreach(var record; records_all) {
-+		wp = split(':', record)[0];
-+		amount = split(':', record)[1];
-+		if (wp == wp_cur) {
-+			setprop('/armament/magic-refuel/amount', amount);
-+			if (getprop('/consumables/fuel/total-fuel-norm') < amount
-+				and !getprop('/armament/magic-refuel/signal')) {
-+				setprop('/armament/magic-refuel/signal', 1);
-+			}
-+			break;
++setlistener('/autopilot/route-manager/wp/id', func {
++	if (getprop('/autopilot/route-manager/active'))
++	{
++		fuel_norm_now = getprop('/consumables/fuel/total-fuel-norm');
++		fuel_norm_target = getprop('/armament/magic-refuel/amount');
++		wp_info = split('-', getprop('/autopilot/route-manager/wp/id'));
++		if (size(wp_info) > 1
++			and 'REFUEL' == wp_info[1]
++			and fuel_norm_now < fuel_norm_target
++			and !getprop('/armament/magic-refuel/signal'))
++		{
++			setprop('/armament/magic-refuel/signal', 1);
 +		}
 +	}
-+}
-+var magic_refuel_daemon_mainloop = func() {
-+	magic_refuel_daemon();
-+	settimer(magic_refuel_daemon_mainloop, 1);
-+}
-+magic_refuel_daemon_mainloop();
++});
 +
++var l = setlistener('/sim/signals/fdm-initialized', func {
++	setprop("consumables/fuel/tank[3]/level-norm", 1.0);
++	setprop("consumables/fuel/tank[5]/level-norm", 1.0);
++    removelistener(l);
++});
++
+diff -ruN B-1B.orig/Systems/b1b-autopilot.xml /home/frank/.fgdata/Aircraft/B-1B/Systems/b1b-autopilot.xml
+--- B-1B.orig/Systems/b1b-autopilot.xml	2010-12-18 07:25:28.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/B-1B/Systems/b1b-autopilot.xml	2015-03-15 16:58:27.255982714 +0800
+@@ -427,7 +427,7 @@
+       <Kp>0.25</Kp>          <!-- proportional gain -->
+       <Ki>0.0</Ki>          <!-- integral gain -->
+       <u_min>-33.33</u_min> <!-- minimum output clamp -16.67-->
+-      <u_max>33.33</u_max>   <!-- maximum output clamp 33.33-->
++      <u_max>16.67</u_max>   <!-- maximum output clamp 33.33-->
+     </config>
+   </pi-simple-controller>
+ 

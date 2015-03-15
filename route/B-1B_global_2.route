@@ -383,7 +383,7 @@
     </wp>
     <wp n="59">
       <type type="string">navaid</type>
-      <ident type="string">VABB</ident>
+      <ident type="string">VABB-REFUEL</ident>
       <lon type="double">72.86637283</lon>
       <lat type="double">19.09125901</lat>
     </wp>
@@ -677,7 +677,7 @@
     </wp>
     <wp n="108">
       <type type="string">navaid</type>
-      <ident type="string">WABB</ident>
+      <ident type="string">WABB-REFUEL</ident>
       <lon type="double">136.1079875</lon>
       <lat type="double">-1.190022</lat>
     </wp>
