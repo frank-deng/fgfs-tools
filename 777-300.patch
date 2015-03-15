@@ -1,6 +1,6 @@
 diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
 --- 777-300.orig/777-300ER-set.xml	2012-02-16 21:15:28.000000000 +0800
-+++ 777-300/777-300ER-set.xml	2015-03-14 16:46:01.857359397 +0800
++++ 777-300/777-300ER-set.xml	2015-03-14 21:43:47.073649020 +0800
 @@ -7,7 +7,7 @@
          <aircraft-version>20111211</aircraft-version>
          <flight-model>yasim</flight-model>
@@ -105,20 +105,7 @@ diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
                      <item>
                          <label>Select Livery</label>
                          <binding>
-@@ -359,13 +440,20 @@
-                             <script>dialogs.tiller_steering.open()</script>
-                         </binding>
-                     </item>
-+					<item>
-+						<label>Refuel</label>
-+						<binding>
-+							<command>nasal</command>
-+							<script>b777.ground_refuel();</script>
-+						</binding>
-+					</item>
-                 </menu>
-             </default>
-         </menubar>
+@@ -365,7 +446,7 @@
  
          <weight n="0">
              <name>Crew</name>
@@ -127,7 +114,7 @@ diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
              <max-lb>500</max-lb>
              <min-lb>350</min-lb>
          </weight>
-@@ -373,7 +461,7 @@
+@@ -373,7 +454,7 @@
          <weight n="1">
          <!--  328 pax max @ 180 lbs -->
              <name>Pax</name>
@@ -136,7 +123,7 @@ diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
              <max-lb>59000</max-lb>
              <min-lb>0</min-lb>
          </weight>
-@@ -493,8 +581,8 @@
+@@ -493,8 +574,8 @@
                      <property>instrumentation/afds/inputs/hdg-hold</property>
                  </binding>
              </key>
@@ -147,7 +134,7 @@ diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
                  <desc>toggle auto spoilers</desc>
                  <binding>
                      <command>nasal</command>
-@@ -617,14 +705,14 @@
+@@ -617,14 +698,14 @@
     </binding>
    </mod-up>
   </key> 
@@ -164,7 +151,7 @@ diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
   
    <key n="71">
    <name>G</name>
-@@ -868,7 +956,7 @@
+@@ -868,7 +949,7 @@
              <maingear-steering-cmd-norm type="double">0</maingear-steering-cmd-norm>
          </gear>
          <flight>
@@ -173,7 +160,7 @@ diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
          </flight>
      </controls>
  
-@@ -900,6 +988,8 @@
+@@ -900,6 +981,8 @@
  			<file>Aircraft/777-300/Nasal/failures.nas</file>
              <file>Aircraft/777-300/Nasal/ground_steering.nas</file>
              <file>Aircraft/Generic/limits.nas</file>
@@ -182,7 +169,7 @@ diff -ruN 777-300.orig/777-300ER-set.xml 777-300/777-300ER-set.xml
          </b777>
          <dialogs>
              <file>Aircraft/777-300/Nasal/dialogs.nas</file>
-@@ -938,6 +1028,7 @@
+@@ -938,6 +1021,7 @@
          <vne>600</vne>
          <max-positive-g>2.5</max-positive-g> 
          <max-negative-g>-1.76</max-negative-g>

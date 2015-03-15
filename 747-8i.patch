@@ -152,8 +152,8 @@ diff -ruN 747-8i.orig/Nasal/AFDS.nas 747-8i/Nasal/AFDS.nas
  			banklimit=getprop("/instrumentation/afds/inputs/bank-limit-switch");
 diff -ruN 747-8i.orig/Nasal/auto_refuel.nas 747-8i/Nasal/auto_refuel.nas
 --- 747-8i.orig/Nasal/auto_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ 747-8i/Nasal/auto_refuel.nas	2015-03-14 18:56:41.173486484 +0800
-@@ -0,0 +1,298 @@
++++ 747-8i/Nasal/auto_refuel.nas	2015-03-14 21:39:39.581645008 +0800
+@@ -0,0 +1,299 @@
 +var fuel_up = func(stage) {
 +	var tot_level = props.globals.getNode("consumables/fuel/total-fuel-gal_us",1);
 +	var cap0 = props.globals.getNode("consumables/fuel/tank/capacity-gal_us",1);
@@ -450,6 +450,7 @@ diff -ruN 747-8i.orig/Nasal/auto_refuel.nas 747-8i/Nasal/auto_refuel.nas
 +	}
 +
 +	removelistener(l_auto_refuel);
++	print('Aircraft refueled.');
 +});
 +
 diff -ruN 747-8i.orig/Systems/747-8-autopilot.xml 747-8i/Systems/747-8-autopilot.xml
