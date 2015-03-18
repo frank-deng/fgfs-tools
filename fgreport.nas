@@ -37,8 +37,7 @@ fgreport_generate = func{
 
 	var latitude = getprop('/position/latitude-deg');
 	var longitude = getprop('/position/longitude-deg');
-	report_text = report_text ~ sprintf("Latitude: %.5f%s\n", latitude, latitude < 0 ? 'S' : 'N');
-	report_text = report_text ~ sprintf("Longitude: %.5f%s\n", longitude, longitude < 0 ? 'W' : 'E');
+	report_text = report_text ~ sprintf("Position: %.5f%s %5f%s\n", abs(latitude), latitude < 0 ? 'S' : 'N', abs(longitude), longitude < 0 ? 'W' : 'E');
 	report_text = report_text ~ sprintf("Altitude: %dft\n", getprop('/position/altitude-ft'));
 	var velocity = getprop('/velocities/groundspeed-kt');
 	if ('ufo' == getprop('/sim/flight-model')) {
