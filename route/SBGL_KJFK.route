@@ -195,14 +195,14 @@
     </wp>
     <wp n="28">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">LINND</ident>
       <lon type="double">-71.710486</lon>
       <lat type="double">39.409758</lat>
     </wp>
     <wp n="29">
       <type type="string">navaid</type>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">CREEL</ident>
       <lon type="double">-73.552967</lon>
       <lat type="double">40.447364</lat>

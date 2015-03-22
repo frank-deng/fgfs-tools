@@ -10,7 +10,7 @@
   <destination>
     <airport type="string">EDDF</airport>
     <approach type="string">DEFAULT</approach>
-    <runway type="string">07C</runway>
+    <runway type="string">07L</runway>
   </destination>
   <route>
     <wp>
@@ -238,35 +238,35 @@
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">4000</altitude-ft>
-      <ident type="string">07C-12</ident>
-      <lon type="double">8.244278812</lon>
-      <lat type="double">49.96267812</lat>
+      <altitude-ft type="double">4355</altitude-ft>
+      <ident type="string">07L-12</ident>
+      <lon type="double">8.244344114</lon>
+      <lat type="double">49.9625728</lat>
     </wp>
     <wp n="35">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">2000</altitude-ft>
-      <ident type="string">07C-8</ident>
-      <lon type="double">8.34096925</lon>
-      <lat type="double">49.98607188</lat>
+      <altitude-ft type="double">2355</altitude-ft>
+      <ident type="string">07L-8</ident>
+      <lon type="double">8.341014342</lon>
+      <lat type="double">49.98600097</lat>
     </wp>
     <wp n="36">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">2000</altitude-ft>
-      <ident type="string">07C-GS</ident>
-      <lon type="double">8.382557951</lon>
-      <lat type="double">49.99610228</lat>
+      <altitude-ft type="double">2355</altitude-ft>
+      <ident type="string">07L-GS</ident>
+      <lon type="double">8.382594392</lon>
+      <lat type="double">49.99604617</lat>
     </wp>
     <wp n="37">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
-      <ident type="string">07C</ident>
+      <ident type="string">07L</ident>
       <icao type="string">EDDF</icao>
     </wp>
   </route>

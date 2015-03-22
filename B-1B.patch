@@ -18,6 +18,43 @@ diff -ruN B-1B.orig/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
  	</weapons>
          <fuel>
  		<file>Aircraft/Generic/aar.nas</file>
+diff -ruN B-1B.orig/Nasal/b1b.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/b1b.nas
+--- B-1B.orig/Nasal/b1b.nas	2010-12-18 07:25:28.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/b1b.nas	2015-03-22 10:44:53.220827524 +0800
+@@ -772,4 +772,31 @@
+     ltext = "Sorry, Duke Nukem not available yet on this plane(t)!";
+   screen.log.write(ltext);
+   }
+-}
+\ No newline at end of file
++}
++
++## Jump to next waypoint earlier
++var next_waypoint = func {
++	if ('true-heading-hold' == getprop('/autopilot/locks/heading')
++		and getprop('/autopilot/route-manager/active')) {
++
++		var max_wpt=getprop("/autopilot/route-manager/route/num");
++		var atm_wpt=getprop("/autopilot/route-manager/current-wp");
++		var eta_seconds = getprop('/autopilot/route-manager/wp/eta-seconds');
++		var wp_dist = getprop("/autopilot/route-manager/wp/dist");
++
++		if (eta_seconds != nil and wp_dist != nil
++			and eta_seconds < 37 and wp_dist < 30) {
++
++			if (getprop("/autopilot/route-manager/current-wp")<=max_wpt){
++				atm_wpt+=1;
++				setprop("/autopilot/route-manager/current-wp", atm_wpt);
++			}
++
++		}
++
++	}
++
++	settimer(next_waypoint, 0);
++}
++settimer(next_waypoint, 0);
++
 diff -ruN B-1B.orig/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas
 --- B-1B.orig/Nasal/magic_refuel.nas	1970-01-01 08:00:00.000000000 +0800
 +++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas	2015-03-15 17:31:38.912015002 +0800
@@ -90,15 +127,3 @@ diff -ruN B-1B.orig/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nas
 +    removelistener(l);
 +});
 +
-diff -ruN B-1B.orig/Systems/b1b-autopilot.xml /home/frank/.fgdata/Aircraft/B-1B/Systems/b1b-autopilot.xml
---- B-1B.orig/Systems/b1b-autopilot.xml	2010-12-18 07:25:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-1B/Systems/b1b-autopilot.xml	2015-03-15 16:58:27.255982714 +0800
-@@ -427,7 +427,7 @@
-       <Kp>0.25</Kp>          <!-- proportional gain -->
-       <Ki>0.0</Ki>          <!-- integral gain -->
-       <u_min>-33.33</u_min> <!-- minimum output clamp -16.67-->
--      <u_max>33.33</u_max>   <!-- maximum output clamp 33.33-->
-+      <u_max>16.67</u_max>   <!-- maximum output clamp 33.33-->
-     </config>
-   </pi-simple-controller>
- 
