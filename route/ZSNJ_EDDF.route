@@ -10,7 +10,7 @@
   <destination>
     <airport type="string">EDDF</airport>
     <approach type="string">DEFAULT</approach>
-    <runway type="string">07L</runway>
+    <runway type="string">07C</runway>
   </destination>
   <route>
     <wp>

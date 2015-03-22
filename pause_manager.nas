@@ -7,7 +7,6 @@ var pause_manager = func{
 		return;
 	}
 
-	var wp = getprop('/autopilot/route-manager/current-wp');
 	var dist_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
 	var dist_pause = getprop('/autopilot/settings/pause-manager-distance');
 	if (dist_remaining <= dist_pause){
