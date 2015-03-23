@@ -86,7 +86,7 @@ Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](
 
 #### 757-200.patch
 
-Patch for 757-200.
+Patch for [757-200](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraft-3.4/757-200_20150111.zip).
 
 * Adjusted the vertical speed in FLCH mode.
 * Automatically refuel 757-200 on startup based the distance of the route if launched via `fgtools launch` and flight plan is specified.
