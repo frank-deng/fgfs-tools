@@ -5,23 +5,49 @@ import sys, os, subprocess, time, platform;
 import xml.etree.ElementTree as ET;
 from FlightGear import FlightGear;
 
+def get_telnet_addr(instance_num):
+	address, port = ('localhost', 5400 + instance_num);
+	return (address, port);
+
 def get_report(fg, args):
 	print fg.get_report();
+	print '';
 	return 0;
 
 def sound_on(fg, args):
 	fg['/sim/sound/enabled'] = 1;
+	print('Sound on.');
 	return 0;
 
 def sound_off(fg, args):
 	fg['/sim/sound/enabled'] = 0;
+	print('Sound off.');
 	return 0;
 
 def pause(fg, args):
 	fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 1;
+	print('Simulation paused.');
 
 def resume(fg, args):
 	fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 0;
+	print('Simulation resumed.');
+
+def fps_limit(fg, args):
+	try:
+		target_fps = int(args[0])
+		if (target_fps == 0):
+			fg['/sim/gui/frame-rate-throttled'] = 0;
+			fg['/sim/frame-rate-throttle-hz'] = 0;
+			print('Frame rate unlimited.');
+		elif (target_fps <= 70 and target_fps >= 15):
+			fg['/sim/gui/frame-rate-throttled'] = 1;
+			fg['/sim/frame-rate-throttle-hz'] = target_fps;
+			print('Frame rate limited to %d fps.' % target_fps);
+		else:
+			raise ValueError;
+	except ValueError:
+		sys.stderr.write('Invalid number given');
+		return 1;
 
 def pause_manager(fg, args):
 	enabled = fg['/autopilot/settings/pause-manager-enabled'];
@@ -56,7 +82,7 @@ def pause_manager(fg, args):
 
 	return 0;
 
-def fglaunch(args):
+def fglaunch(instance_num, args):
 	#Check if reboot is required
 	if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
 		print 'Please reboot your machine before launching FlightGear.';
@@ -97,41 +123,49 @@ def fglaunch(args):
 		print 'Executable of fgfs not found.';
 		return 1;
 
-	return subprocess.call([fgfs_exec, '--aircraft='+aircraft] + fp_params + args[2:]);
+	return subprocess.call([fgfs_exec, '--telnet=medium,dir,100,%s,%s,style' % (get_telnet_addr(instance_num)), '--aircraft='+aircraft] + fp_params + args[2:]);
 
 if __name__ == '__main__':
 	command_all = {
 		'report': get_report,
 		'soundon': sound_on,
 		'soundoff': sound_off,
-		'pausemgr': pause_manager,
 		'pause': pause,
 		'resume': resume,
+		'pausemgr': pause_manager,
+		'fpslimit': fps_limit,
+		'launch': fglaunch,
 	};
-
-	if (len(sys.argv) < 2):
-		sys.stderr.write('Command not given.\n');
-		exit(1);
-
-	command = sys.argv[1];
-	if ('launch' == command):
-		exit(fglaunch(sys.argv[2:]));
-
-	fg = None;
+	instance_num_all = None;
 	retcode = 0;
 	try:
-		func = command_all[command];
-		address, port = os.getenv('FG_TELNET').split(':');
-		fg = FlightGear(address, int(port));
-		retcode = func(fg, sys.argv[2:]);
-		fg.quit();
-	except KeyError:
-		sys.stderr.write('Bad command.\n');
+		instance_num_all = [int(n) for n in sys.argv[1]];
+	except:
+		sys.stderr.write('Invalid Instance Number.\n');
 		exit(1);
-	except Exception, e:
-		sys.stderr.write(str(e) + "\n");
-		if (None != fg):
-			fg.quit();
-		exit(1);
+
+	for instance_num in instance_num_all:
+		print('*** Instance %d ***' % instance_num);
+		func = None;
+		try:
+			func = command_all[sys.argv[2]];
+		except:
+			sys.stderr.write('Invalid Command.\n');
+			exit(1);
+
+		if (fglaunch == func):
+			retcode = func(instance_num, sys.argv[3:]);
+		else:
+			fg = None;
+			try:
+				address, port = get_telnet_addr(instance_num);
+				fg = FlightGear(address, port);
+				retcode = func(fg, sys.argv[3:]);
+				fg.quit();
+			except Exception, e:
+				sys.stderr.write(str(e) + "\n");
+				retcode = 1;
+				if (None != fg):
+					fg.quit();
 	exit(retcode);
 

@@ -9,7 +9,11 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 A useful tool to manipulate FlightGear from command line.
 
-Synopsis: `fgtools command`
+Synopsis: `fgtools instance_num command`
+
+`instance_num` is used to determine which FlightGear instance should be launched or accessed, which could be one of 0-9. At most 10 instances could be launched at one time.
+
+Multiple digits for `instance_num` means executing command for each instance specified, one digit for one instance.
 
 Available Commands:
 
@@ -23,6 +27,8 @@ Available Commands:
   Pause simulation.
 * resume  
   Resume simulation.
+* fpslimit FPS  
+  Limit FPS to reduce CPU/GPU load.
 * pausemgr [distance]  
   View or setup the state of Pause Manager.  
   If distance is not given, the state of Pause Manager will be shown.  
@@ -30,8 +36,6 @@ Available Commands:
   If distance is a negative number, Pause Manager will be deactivated.  
 * launch AIRCRAFT FLIGHT_PLAN  
   Start FlightGear with aircraft specified, start at airport & runway provided by the departure info of flight plan.
-
-`FG_TELNET` environment variable should be defined as the telnet address:port for FlightGear, e.g: `FG_TELNET='localhost:5401'`.
 
 ---
 
