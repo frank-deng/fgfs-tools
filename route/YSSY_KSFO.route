@@ -201,9 +201,9 @@
     </wp>
     <wp n="29">
       <type type="string">navaid</type>
-      <ident type="string">CINNY</ident>
-      <lon type="double">-124.76</lon>
-      <lat type="double">36.181667</lat>
+      <ident type="string">ALANN</ident>
+      <lon type="double">-125.94</lon>
+      <lat type="double">35.596667</lat>
     </wp>
     <wp n="30">
       <type type="string">navaid</type>

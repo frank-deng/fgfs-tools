@@ -126,7 +126,7 @@ Install:
 * Edit `$FG_ROOT/gui/menubar.xml` to insert  
 * Adding this menu item after 'route-manager' menu item is recommened
 
-	
+
 	<item>
 		<name>pause-manager</name>
 		<label>Pause Manager</label>
@@ -135,7 +135,7 @@ Install:
 			<dialog-name>pause-manager</dialog-name>
 		</binding>
 	</item>
-	
+
 
 ---
 

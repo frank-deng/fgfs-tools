@@ -141,11 +141,19 @@
     </wp>
     <wp n="19">
       <type type="string">navaid</type>
+      <ident type="string">SCALP</ident>
+      <lon type="double">-158.697517</lon>
+      <lat type="double">60.985206</lat>
+    </wp>
+    <wp n="20">
+      <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4200</altitude-ft>
       <ident type="string">AMOTT</ident>
       <lon type="double">-151.373222</lon>
       <lat type="double">60.874053</lat>
     </wp>
-    <wp n="20">
+    <wp n="21">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -153,7 +161,7 @@
       <lon type="double">-150.5200375</lon>
       <lat type="double">61.13141825</lat>
     </wp>
-    <wp n="21">
+    <wp n="22">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -163,7 +171,7 @@
       <lon type="double">-150.44728</lon>
       <lat type="double">61.16676806</lat>
     </wp>
-    <wp n="22">
+    <wp n="23">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -173,7 +181,7 @@
       <lon type="double">-150.3096478</lon>
       <lat type="double">61.16725704</lat>
     </wp>
-    <wp n="23">
+    <wp n="24">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -183,7 +191,7 @@
       <lon type="double">-150.2504889</lon>
       <lat type="double">61.16742423</lat>
     </wp>
-    <wp n="24">
+    <wp n="25">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
       <ident type="string">07R</ident>
