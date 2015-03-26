@@ -149,12 +149,14 @@
     </wp>
     <wp n="20">
       <type type="string">navaid</type>
-      <ident type="string">SAKIT</ident>
-      <lon type="double">138.041139</lon>
-      <lat type="double">33.8695</lat>
+      <ident type="string">SAKAK</ident>
+      <lon type="double">137.797006</lon>
+      <lat type="double">33.720075</lat>
     </wp>
     <wp n="21">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4100</altitude-ft>
       <ident type="string">XA</ident>
       <lon type="double">139.396564</lon>
       <lat type="double">34.688822</lat>

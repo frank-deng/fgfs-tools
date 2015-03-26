@@ -45,19 +45,16 @@ def fps_limit(fg, args):
 			print('Frame rate limited to %d fps.' % target_fps);
 		else:
 			raise ValueError;
-	except ValueError:
-		sys.stderr.write('Invalid number given');
+	except:
+		sys.stderr.write('Invalid argument.');
 		return 1;
 
 def pause_manager(fg, args):
 	enabled = fg['/autopilot/settings/pause-manager-enabled'];
 	distance = int(fg['/autopilot/settings/pause-manager-distance']);
 
-	# Simulation is already paused.
-	if (1 == fg['/sim/freeze/master'] and 1 == fg['/sim/freeze/clock']):
-		print('Simulation paused.');
 	# No argument provided, show status of Pause Manager.
-	elif (0 == len(args)):
+	if (0 == len(args)):
 		if ('1' == enabled):
 			print("Pause Manager is active, simulation will be paused when the remaining route is shorter than %d nmi." % distance);
 		else:
@@ -73,11 +70,11 @@ def pause_manager(fg, args):
 
 		# Deactivate Pause Manager when a negative value was given.
 		if (distance <= 0):
-			fg['/autopilot/settings/pause-manager-enabled'] = 0;
+			fg['/autopilot/settings/pause-manager-enabled'] = False;
 			print('Pause Manager deactivated.');
 		else:
 			fg['/autopilot/settings/pause-manager-distance'] = distance;
-			fg['/autopilot/settings/pause-manager-enabled'] = 1;
+			fg['/autopilot/settings/pause-manager-enabled'] = True;
 			print("Pause Manager activated, simulation will be paused when the remaining route is shorter than %d nmi." % distance);
 
 	return 0;
@@ -137,7 +134,6 @@ if __name__ == '__main__':
 		'launch': fglaunch,
 	};
 	instance_num_all = None;
-	retcode = 0;
 	try:
 		instance_num_all = [int(n) for n in sys.argv[1]];
 	except:
@@ -154,18 +150,17 @@ if __name__ == '__main__':
 			exit(1);
 
 		if (fglaunch == func):
-			retcode = func(instance_num, sys.argv[3:]);
+			func(instance_num, sys.argv[3:]);
 		else:
 			fg = None;
 			try:
 				address, port = get_telnet_addr(instance_num);
 				fg = FlightGear(address, port);
-				retcode = func(fg, sys.argv[3:]);
+				func(fg, sys.argv[3:]);
 				fg.quit();
 			except Exception, e:
 				sys.stderr.write(str(e) + "\n");
-				retcode = 1;
 				if (None != fg):
 					fg.quit();
-	exit(retcode);
+	exit(0);
 
