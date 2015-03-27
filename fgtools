@@ -55,7 +55,7 @@ def pause_manager(fg, args):
 
 	# No argument provided, show status of Pause Manager.
 	if (0 == len(args)):
-		if ('1' == enabled):
+		if (enabled):
 			print("Pause Manager is active, simulation will be paused when the remaining route is shorter than %d nmi." % distance);
 		else:
 			print('Pause Manager is inactive.');

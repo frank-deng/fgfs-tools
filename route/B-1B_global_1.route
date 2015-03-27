@@ -1590,7 +1590,7 @@
     <wp n="260">
       <type type="string">navaid</type>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">10000</altitude-ft>
+      <altitude-ft type="double">6300</altitude-ft>
       <ident type="string">HEC</ident>
       <lon type="double">-116.4629222</lon>
       <lat type="double">34.79701944</lat>

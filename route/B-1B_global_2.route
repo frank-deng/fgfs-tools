@@ -966,7 +966,7 @@
     <wp n="156">
       <type type="string">navaid</type>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">10000</altitude-ft>
+      <altitude-ft type="double">6300</altitude-ft>
       <ident type="string">PMD</ident>
       <lon type="double">-118.0638222</lon>
       <lat type="double">34.63139722</lat>
