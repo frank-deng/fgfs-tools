@@ -1,6 +1,6 @@
 diff -ruN 757-200.orig/757-200-main.xml /home/frank/.fgdata/Aircraft/757-200/757-200-main.xml
 --- 757-200.orig/757-200-main.xml	2015-01-19 13:41:14.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/757-200/757-200-main.xml	2015-03-15 08:24:13.334737691 +0800
++++ /home/frank/.fgdata/Aircraft/757-200/757-200-main.xml	2015-03-28 10:12:50.706461839 +0800
 @@ -659,6 +659,7 @@
  			<file>Aircraft/757-200/Nasal/pneumatic.nas</file>
  			<file>Aircraft/757-200/Nasal/hydraulic.nas</file>
@@ -13,7 +13,7 @@ diff -ruN 757-200.orig/757-200-main.xml /home/frank/.fgdata/Aircraft/757-200/757
          <vne>600</vne>
          <max-positive-g>2.5</max-positive-g>
          <max-negative-g>-1.76</max-negative-g>
-+		<estimated-range-nm>3500</estimated-range-nm>
++		<estimated-range-nm>3200</estimated-range-nm>
      </limits>
  
  </PropertyList>

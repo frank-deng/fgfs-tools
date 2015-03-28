@@ -57,6 +57,8 @@
     </wp>
     <wp n="5">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">35000</altitude-ft>
       <ident type="string">KASMI</ident>
       <lon type="double">140.641033</lon>
       <lat type="double">36.086581</lat>

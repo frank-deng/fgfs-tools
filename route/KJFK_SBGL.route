@@ -193,14 +193,14 @@
     </wp>
     <wp n="27">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">BGC</ident>
       <lon type="double">-46.568117</lon>
       <lat type="double">-22.953136</lat>
     </wp>
     <wp n="28">
       <type type="string">navaid</type>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">SJC</ident>
       <lon type="double">-45.854167</lon>
       <lat type="double">-23.246333</lat>
