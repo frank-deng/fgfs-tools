@@ -13,6 +13,18 @@ var pause_manager = func
 			props.globals.getNode('/autopilot/settings/pause-manager-enabled').setBoolValue(0);
 			props.globals.getNode('/sim/freeze/clock').setBoolValue(1);
 			props.globals.getNode('/sim/freeze/master').setBoolValue(1);
+
+			#Slow down fps to reduce overhead
+			props.globals.getNode('/sim/gui/frame-rate-throttled').setBoolValue(1);
+			setprop('/sim/frame-rate-throttle-hz', 10);
+
+			#Resume fps when sim resumed
+			var t_resume_fps = setlistener('/sim/freeze/master', func {
+				if (!getprop('/sim/freeze/master')) {
+					setprop('/sim/frame-rate-throttle-hz', 60);
+				}
+				removelistener(t_resume_fps);
+			});
 		}
 	}
 
