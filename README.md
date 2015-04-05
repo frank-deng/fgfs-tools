@@ -97,3 +97,9 @@ To define a Refuel Point, you should edit the flight plan XML file directly. Fin
 
 ---
 
+#### Misceallanous
+
+Directory __Around_The_World__ contains a series of flight plans based on Jules Verne's novel _Around the World in Eighty Days_. While the whole journey takes only 8 days by Boeing 757.
+
+Directory __routes__ contains flight plans for long-haul and ultra long-haul flights.
+
