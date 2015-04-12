@@ -5,6 +5,12 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 ---
 
+#### FGTelnet.py
+
+A Python library for interacting with FlightGear props telnet interface.
+
+---
+
 #### fgtools
 #### fgtools.nas
 
@@ -14,31 +20,59 @@ Synopsis: `fgtools instance_num command [parameter] ...`
 
 `instance_num` is used to determine which FlightGear instance should be launched or accessed, specified by one of 0-9. At most 10 instances could be launched at one time.
 
-Multiple digits for `instance_num` means executing command for each instance specified, one digit for one instance.
+Multiple digits for `instance_num` means executing command for each instance specified, one digit for one instance, except **launch** command which only applies to the first instance specified.
 
 Available Commands:
 
-* report  
-  Print an report of FlightGear.
-* soundon  
-  Unmute FlightGear.
-* soundoff  
-  Mute FlightGear.
-* pause  
-  Pause simulation.
-* resume  
-  Resume simulation.
-* fpslimit FPS  
-  Set maximum FPS to reduce CPU/GPU load.
-* pausemgr [distance]  
-  View or setup the state of Pause Manager.  
-  If distance is not given, the state of Pause Manager will be shown.  
-  If distance is a positive number, Pause Manager will pause the simulation when the remaining distance is short than the given distance.  
-  If distance is a negative number, Pause Manager will be deactivated.  
-* launch AIRCRAFT FLIGHT_PLAN [fgfs_options]  
-  Start FlightGear with aircraft specified, start at airport & runway provided by the departure info of flight plan. ILS frequency will be automatically prepared for the distination runway.
+`report`
+
+Print an report of FlightGear.
+
+`soundon/soundoff`
+
+Unmute/Mute FlightGear.
+
+`pause/resume`
+
+Pause/Resume simulation.
+
+`fpslimit [FPS]`:
+
+* If FPS is not given, show maximum FPS.
+* If FPS is given, maximum FPS will be set as the given FPS value.
+
+`launch AIRCRAFT [FLIGHT_PLAN] [fgfs_options]`:
+
+Start FlightGear with the aircraft specified.
+
+If the flight plan is specified,
+
+* The aircraft will be placed at the departure airport & runway specified by the Flight Plan.
+* ILS frequency will be automatically prepared for the distination runway.
+* The simulation will be paused when the remaining route is short than 20 nmi  
+  You can append command `--prop:/autopilot/pausemgr-dist=-1` in `fgfs_options` to deactivate Pause Manager.
 
 Please copy `fgtools.nas` to `$FG_ROOT/Nasal` first, so as to get all the stuffs here work well.
+
+---
+
+#### Pause Manager
+
+Automatically pause the simulation when the remaining route is shorter than a given distance.
+
+This feature is included in `fgtools.nas`.
+
+Usage:
+
+Set property `/autopilot/pausemgr-dist` with a positive value will activate Pause Manager. A negative value will deactive Pause Manager.
+
+When the remaining route is shorter than the distance specified by property `/autopilot/pausemgr-dist`:
+
+* The simulation will be paused.
+* FPS will be reduced to 10fps before the simulation resumed. Once the simulation resumed, the FPS will be set to 60fps.
+* Property `/autopilot/pausemgr-dist` will be set to **-1**, which means the Pause Manager is inactive.
+
+You can change the value of property `/autopilot/pausemgr-dist` at any time to adjust the distance or activate/deactivate Pause Manager.
 
 ---
 
@@ -101,5 +135,5 @@ To define a Refuel Point, you should edit the flight plan XML file directly. Fin
 
 Directory __Around_The_World__ contains a series of flight plans based on Jules Verne's novel _Around the World in Eighty Days_. While the whole journey takes only 8 days by Boeing 757.
 
-Directory __routes__ contains flight plans for long-haul and ultra long-haul flights.
+Directory __routes__ contains flight plans for long-haul and ultra long-haul flights designed for Boeing 777-300ER and Boeing 747-8i.
 

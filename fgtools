@@ -3,15 +3,15 @@
 
 import sys, os, subprocess, time, platform;
 import xml.etree.ElementTree as ET;
-from FlightGear import FlightGear;
+from FGTelnet import FGTelnet;
 
-def get_telnet_addr(instance_num):
-	address, port = ('localhost', 5400 + instance_num);
-	return (address, port);
+TELNET_ADDR_BASE = 5400;
 
 def get_report(fg, args):
-	print fg.get_report();
-	print '';
+	fg['/command/fgreport/signal'] = 1;
+	while fg['/command/fgreport/signal']:
+		time.sleep(0.1);
+	print fg['/command/fgreport/text'];
 	return 0;
 
 def sound_on(fg, args):
@@ -33,51 +33,28 @@ def resume(fg, args):
 	print('Simulation resumed.');
 
 def fps_limit(fg, args):
-	try:
-		target_fps = int(args[0])
-		if (target_fps == 0):
-			fg['/sim/gui/frame-rate-throttled'] = 0;
-			fg['/sim/frame-rate-throttle-hz'] = 0;
-			print('Frame rate unlimited.');
-		elif (target_fps <= 70 and target_fps >= 15):
-			fg['/sim/gui/frame-rate-throttled'] = 1;
-			fg['/sim/frame-rate-throttle-hz'] = target_fps;
-			print('Frame rate limited to %d fps.' % target_fps);
-		else:
-			raise ValueError;
-	except:
-		sys.stderr.write('Invalid argument.');
-		return 1;
-
-def pause_manager(fg, args):
-	enabled = fg['/autopilot/settings/pause-manager-enabled'];
-	distance = int(fg['/autopilot/settings/pause-manager-distance']);
-
-	# No argument provided, show status of Pause Manager.
 	if (0 == len(args)):
-		if (enabled):
-			print("Pause Manager is active, simulation will be paused when the remaining route is shorter than %d nmi." % distance);
+		target_fps = fg['/sim/frame-rate-throttle-hz'];
+		if '0' == fg['/sim/gui/frame-rate-throttled']:
+			print('Frame rate unlimited.');
 		else:
-			print('Pause Manager is inactive.');
-	# Argument given
+			print('Frame rate limited to %d fps.' % target_fps);
 	else:
-		# Read distance value from args
 		try:
-			distance = int(args[0]);
-		except ValueError:
-			sys.stderr.write('Invalid number given');
+			target_fps = int(args[0]);
+			if (target_fps == 0):
+				fg['/sim/gui/frame-rate-throttled'] = 0;
+				fg['/sim/frame-rate-throttle-hz'] = 0;
+				print('Frame rate limitation is set to unlimited.');
+			elif (target_fps <= 70 and target_fps >= 15):
+				fg['/sim/gui/frame-rate-throttled'] = 1;
+				fg['/sim/frame-rate-throttle-hz'] = target_fps;
+				print('Frame rate limitation is set to %d fps.' % target_fps);
+			else:
+				raise ValueError;
+		except:
+			sys.stderr.write('Invalid argument.');
 			return 1;
-
-		# Deactivate Pause Manager when a negative value was given.
-		if (distance <= 0):
-			fg['/autopilot/settings/pause-manager-enabled'] = False;
-			print('Pause Manager deactivated.');
-		else:
-			fg['/autopilot/settings/pause-manager-distance'] = distance;
-			fg['/autopilot/settings/pause-manager-enabled'] = True;
-			print("Pause Manager activated, simulation will be paused when the remaining route is shorter than %d nmi." % distance);
-
-	return 0;
 
 def fglaunch(instance_num, args):
 	#Check if reboot is required
@@ -94,33 +71,53 @@ def fglaunch(instance_num, args):
 	try:
 		aircraft = args[0];
 	except IndexError:
-		print 'Usage: launch AIRCRAFT FLIGHT_PLAN Other_fgfs_Arguments ...';
+		print 'Usage: launch AIRCRAFT [FLIGHT_PLAN] [Other_fgfs_Arguments] ...';
 		return 1;
 
 	#Get runway to takeoff
 	fp_params = None;
 	try:
 		flight_plan = os.path.abspath(args[1]);
-		fp_tree = ET.parse(flight_plan);
-		fp_root = fp_tree.getroot();
-		airport = fp_root.findall('departure/airport')[0].text;
-		runway = fp_root.findall('departure/runway')[0].text;
-		fp_params = ['--airport='+airport, '--runway='+runway, '--flight-plan='+flight_plan];
-	except Exception, e:
-		print 'Failed to parse flight plan: ' + str(e);
+	except IndexError:
+		flight_plan = None;
 		fp_params = [];
 
+	if None != flight_plan:
+		try:
+			fp_tree = ET.parse(flight_plan);
+			fp_root = fp_tree.getroot();
+			airport = fp_root.findall('departure/airport')[0].text;
+			runway = fp_root.findall('departure/runway')[0].text;
+			fp_params = [
+				'--airport='+airport,
+				'--runway='+runway,
+				'--flight-plan='+flight_plan,
+				'--prop:/autopilot/pausemgr-dist=20'
+			];
+		except Exception, e:
+			sys.stderr.write('Failed to parse flight plan: ' + str(e) + '\n');
+			return 1;
+
 	#Launch FlightGear
-	fgfs_exec = None;
 	for i in fgfs_possible_exec:
 		if os.path.isfile(i):
 			fgfs_exec = i;
 			break;
 	if (fgfs_exec == None):
-		print 'Executable of fgfs not found.';
+		sys.stderr.write('Executable of fgfs not found.\n');
 		return 1;
 
-	return subprocess.call([fgfs_exec, '--telnet=medium,dir,100,%s,%s,style' % (get_telnet_addr(instance_num)), '--aircraft='+aircraft] + fp_params + args[2:]);
+	return subprocess.call(
+		[
+			fgfs_exec
+			,'--props=' + str(TELNET_ADDR_BASE + instance_num)
+			,'--props=' + str(TELNET_ADDR_BASE + 10 + instance_num)
+			,'--props=' + str(TELNET_ADDR_BASE + 20 + instance_num)
+			, '--aircraft=' + aircraft
+		]
+		+ fp_params
+		+ args[2:]
+	);
 
 if __name__ == '__main__':
 	command_all = {
@@ -129,9 +126,7 @@ if __name__ == '__main__':
 		'soundoff': sound_off,
 		'pause': pause,
 		'resume': resume,
-		'pausemgr': pause_manager,
 		'fpslimit': fps_limit,
-		'launch': fglaunch,
 	};
 	instance_num_all = None;
 	try:
@@ -139,6 +134,9 @@ if __name__ == '__main__':
 	except:
 		sys.stderr.write('Invalid Instance Number.\n');
 		exit(1);
+
+	if ('launch' == sys.argv[2]):
+		exit(fglaunch(instance_num_all[0], sys.argv[3:]));
 
 	for instance_num in instance_num_all:
 		print('*** Instance %d ***' % instance_num);
@@ -149,18 +147,14 @@ if __name__ == '__main__':
 			sys.stderr.write('Invalid Command.\n');
 			exit(1);
 
-		if (fglaunch == func):
-			func(instance_num, sys.argv[3:]);
-		else:
-			fg = None;
-			try:
-				address, port = get_telnet_addr(instance_num);
-				fg = FlightGear(address, port);
-				func(fg, sys.argv[3:]);
-				fg.quit();
-			except Exception, e:
-				sys.stderr.write(str(e) + "\n");
-				if (None != fg):
-					fg.quit();
+		fg = None;
+		try:
+			fg = FGTelnet(port = TELNET_ADDR_BASE + instance_num);
+			func(fg, sys.argv[3:]);
+			fg.quit();
+		except IndexError:
+			sys.stderr.write("Connection Timeout.\n");
+		except Exception, e:
+			sys.stderr.write(str(e) + "\n");
 	exit(0);
 

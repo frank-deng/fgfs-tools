@@ -3,14 +3,14 @@
 # =============
 var pause_manager = func
 {
-	if (getprop('/autopilot/settings/pause-manager-enabled')
+	if (getprop('/autopilot/pausemgr-dist') > 0
 		and getprop('/autopilot/route-manager/active'))
 	{
 		var dist_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
-		var dist_pause = getprop('/autopilot/settings/pause-manager-distance');
+		var dist_pause = getprop('/autopilot/pausemgr-dist');
 		if (dist_remaining <= dist_pause)
 		{
-			props.globals.getNode('/autopilot/settings/pause-manager-enabled').setBoolValue(0);
+			setprop('/autopilot/pausemgr-dist', -1);
 			props.globals.getNode('/sim/freeze/clock').setBoolValue(1);
 			props.globals.getNode('/sim/freeze/master').setBoolValue(1);
 
@@ -31,8 +31,9 @@ var pause_manager = func
 	settimer(pause_manager, 0);
 }
 _setlistener('/sim/signals/nasal-dir-initialized', func() {
-	setprop('/autopilot/settings/pause-manager-distance', 20);
-	props.globals.getNode('/autopilot/settings').addChild('pause-manager-enabled').setBoolValue(1);
+	if (nil == getprop('/autopilot/pausemgr-dist')) {
+		setprop('/autopilot/pausemgr-dist', -1);
+	}
 	pause_manager();
 });
 
@@ -83,11 +84,13 @@ var mod = func(n, m) {
     return x < 0 ? x + abs(m) : x; # ...so must handle negative n's
 }
 fgreport_generate = func{
-	var report_text = "\n";
+	var report_text = "";
 
-	report_text = report_text ~ getprop('/sim/description') ~ "\n\n";
+	#Description
+	report_text ~= getprop('/sim/description') ~ "\n\n";
 
-	report_text = report_text ~ sprintf(
+	#Time info
+	report_text ~= sprintf(
 		"Real-world time: %4d-%02d-%02d %02d:%02d:%02d\n",
 		getprop('/sim/time/real/year'),
 		getprop('/sim/time/real/month'),
@@ -96,8 +99,7 @@ fgreport_generate = func{
 		getprop('/sim/time/real/minute'),
 		getprop('/sim/time/real/second')
 	);
-
-	report_text = report_text ~ sprintf(
+	report_text ~= sprintf(
 		"UTC time: %4d-%02d-%02d %02d:%02d:%02d\n",
 		getprop('/sim/time/utc/year'),
 		getprop('/sim/time/utc/month'),
@@ -106,7 +108,6 @@ fgreport_generate = func{
 		getprop('/sim/time/utc/minute'),
 		getprop('/sim/time/utc/second')
 	);
-
 	local_hour = getprop('/sim/time/utc/hour')
 		+ getprop('/sim/time/local-offset') / 3600;
 	if (local_hour < 0) {
@@ -114,67 +115,82 @@ fgreport_generate = func{
 	} else if (local_hour >= 24) {
 		local_hour = local_hour - 24;
 	}
-
-	report_text = report_text ~ sprintf(
+	report_text ~= sprintf(
 		"Local time: %02d:%02d:%02d\n\n",
 		local_hour,
 		getprop('/sim/time/utc/minute'),
 		getprop('/sim/time/utc/second')
 	);
 
+	#Position info
 	var latitude = getprop('/position/latitude-deg');
 	var longitude = getprop('/position/longitude-deg');
-	report_text = report_text ~ sprintf("Position: %.5f%s %5f%s\n", abs(latitude), latitude < 0 ? 'S' : 'N', abs(longitude), longitude < 0 ? 'W' : 'E');
-	report_text = report_text ~ sprintf("Altitude: %dft\n", getprop('/position/altitude-ft'));
+	report_text ~= sprintf("Position: %.5f%s %5f%s\n"
+		,abs(latitude), latitude < 0 ? 'S' : 'N'
+		,abs(longitude), longitude < 0 ? 'W' : 'E');
+	report_text ~= sprintf("Altitude: %dft\n", getprop('/position/altitude-ft'));
 	var velocity = getprop('/velocities/groundspeed-kt');
 	if ('ufo' == getprop('/sim/flight-model')) {
 		var velocity = getprop('/velocities/equivalent-kt');
 	}
-	report_text = report_text ~ sprintf("Velocity: %dkts\n\n", velocity);
+	report_text ~= sprintf("Velocity: %dkts\n", velocity);
 
-	var dist_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
-	var dist_total = getprop('/autopilot/route-manager/total-distance');
-	var dist_elapsed = dist_total - dist_remaining;
-	time_elapsed = getprop('/autopilot/route-manager/flight-time');
-	time_remaining = getprop('/autopilot/route-manager/ete');
-	report_text = report_text ~ sprintf("Total Distance: %.1fnmi\n", dist_total);
-	report_text = report_text ~ sprintf("Total Remaining Distance: %.1fnmi\n", dist_remaining);
-	report_text = report_text ~ sprintf("Total Elapsed Distance: %.1fnmi\n", dist_elapsed);
-	report_text = report_text ~ sprintf("Flight Time: %02d:%02d:%02d\n",
-					int(time_elapsed / 3600),
-					mod(int(time_elapsed / 60), 60),
-					mod(time_elapsed, 60));
-	report_text = report_text ~ sprintf("Total Time Remining: %02d:%02d:%02d\n",
-					int(time_remaining / 3600),
-					mod(int(time_remaining / 60), 60),
-					mod(time_remaining, 60));
+	#Route info
+	if (getprop('/autopilot/route-manager/active')) {
+		var dist_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
+		var dist_total = getprop('/autopilot/route-manager/total-distance');
+		var dist_elapsed = dist_total - dist_remaining;
+		time_elapsed = getprop('/autopilot/route-manager/flight-time');
+		time_remaining = getprop('/autopilot/route-manager/ete');
+		report_text ~= "\n";
+		report_text ~= sprintf("Total Distance: %.1fnmi\n", dist_total);
+		report_text ~= sprintf("Total Remaining Distance: %.1fnmi\n", dist_remaining);
+		report_text ~= sprintf("Total Elapsed Distance: %.1fnmi\n", dist_elapsed);
+		report_text ~= sprintf(
+			"Flight Time: %02d:%02d:%02d\n"
+			,int(time_elapsed / 3600)
+			,mod(int(time_elapsed / 60), 60)
+			,mod(time_elapsed, 60)
+		);
+		if (time_remaining <= 2147483647) {
+			report_text ~= sprintf(
+				"Total Time Remining: %02d:%02d:%02d\n"
+				,int(time_remaining / 3600)
+				,mod(int(time_remaining / 60), 60)
+				,mod(time_remaining, 60)
+			);
+		}
+	}
 
+	#Fuel info
 	if ('ufo' != getprop('/sim/flight-model')) {
-		report_text = report_text ~ sprintf("\nFuel Remaining: %.2f pounds / %.2f gallons / %.1f%%\n"
+		report_text ~= sprintf(
+			"\nFuel Remaining: %.2f pounds / %.2f gallons / %.1f%%\n"
 			,getprop('/consumables/fuel/total-fuel-lbs')
 			,getprop('/consumables/fuel/total-fuel-gal_us')
 			,getprop('/consumables/fuel/total-fuel-norm') * 100
 		);
 	}
 
+	#Misc
 	if (getprop('/sim/crashed')) {
-		report_text = report_text ~ "\nAircraft Crashed!!!\n";
+		report_text ~= "\nAircraft Crashed!!!\n";
 	}
-
 	if (getprop('/sim/freeze/clock') and getprop('/sim/freeze/master')) {
-		report_text = report_text ~ "\nSimulation paused.\n";
+		report_text ~= "\nSimulation paused.\n";
 	}
 
-	setprop('/sim/fgreport/text', report_text);
+	return report_text;
 }
 
 _setlistener("/sim/signals/nasal-dir-initialized", func {
-	setprop('/sim/signals/fgreport', '');
-	setprop('/sim/fgreport/text', '');
-	setlistener('/sim/signals/fgreport', func {
-		if (getprop('/sim/signals/fgreport')) {
-			fgreport_generate();
-			setprop('/sim/signals/fgreport', '');
+	props.globals.getNode('/command').addChild('fgreport');
+	props.globals.getNode('/command/fgreport').addChild('signal').setBoolValue(0);
+	props.globals.getNode('/command/fgreport').addChild('text').setValue('');
+	setlistener('/command/fgreport/signal', func {
+		if (getprop('/command/fgreport/signal')) {
+			setprop('/command/fgreport/text', fgreport_generate());
+			props.globals.getNode('/command/fgreport/signal').setBoolValue(0);
 		}
 	});
 }, 0, 0);
