@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #encoding=UTF-8
 
-import sys, os, subprocess, time, platform;
+import sys, getopt, os, subprocess, time, platform;
 import xml.etree.ElementTree as ET;
 from FGTelnet import FGTelnet;
 
@@ -56,7 +56,7 @@ def fps_limit(fg, args):
 			sys.stderr.write('Invalid argument.');
 			return 1;
 
-def fglaunch(instance_num, args):
+def fglaunch(instance_num, args_input):
 	#Check if reboot is required
 	if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
 		print 'Please reboot your machine before launching FlightGear.';
@@ -69,34 +69,36 @@ def fglaunch(instance_num, args):
 	];
 
 	try:
-		aircraft = args[0];
-	except IndexError:
-		print 'Usage: launch AIRCRAFT [FLIGHT_PLAN] [Other_fgfs_Arguments] ...';
+		opts, args = getopt.getopt(args_input, '+f:');
+	except getopt.GetoptError:
+		print 'Usage: launch [-f FLIGHT_PLAN] AIRCRAFT [Other_fgfs_Arguments] ...';
 		return 1;
 
-	#Get runway to takeoff
-	fp_params = None;
-	try:
-		flight_plan = os.path.abspath(args[1]);
-	except IndexError:
-		flight_plan = None;
-		fp_params = [];
+	fp_file = None;
+	aircraft = args[0];
+	for opt, arg in opts:
+		if opt == '-f':
+			fp_file = os.path.abspath(arg);
 
-	if None != flight_plan:
+	#Get runway to takeoff
+	if (None == fp_file):
+		fp_params = ['--prop:/sim/rendering/particles=1'];
+	else:
 		try:
-			fp_tree = ET.parse(flight_plan);
+			fp_tree = ET.parse(fp_file);
 			fp_root = fp_tree.getroot();
 			airport = fp_root.findall('departure/airport')[0].text;
 			runway = fp_root.findall('departure/runway')[0].text;
 			fp_params = [
 				'--airport='+airport,
 				'--runway='+runway,
-				'--flight-plan='+flight_plan,
-				'--prop:/autopilot/pausemgr-dist=20'
+				'--flight-plan='+fp_file,
+				'--prop:/autopilot/pausemgr-dist=20',
+				'--prop:/sim/rendering/particles=0'
 			];
 		except Exception, e:
-			sys.stderr.write('Failed to parse flight plan: ' + str(e) + '\n');
-			return 1;
+			sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
+			exit(1);
 
 	#Launch FlightGear
 	for i in fgfs_possible_exec:
@@ -113,10 +115,10 @@ def fglaunch(instance_num, args):
 			,'--props=' + str(TELNET_ADDR_BASE + instance_num)
 			,'--props=' + str(TELNET_ADDR_BASE + 10 + instance_num)
 			,'--props=' + str(TELNET_ADDR_BASE + 20 + instance_num)
-			, '--aircraft=' + aircraft
+			,'--aircraft=' + aircraft
 		]
 		+ fp_params
-		+ args[2:]
+		+ args[1:]
 	);
 
 if __name__ == '__main__':
