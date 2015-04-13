@@ -70,7 +70,9 @@ def fglaunch(instance_num, args_input):
 
 	try:
 		opts, args = getopt.getopt(args_input, '+f:');
-	except getopt.GetoptError:
+		if (len(args) < 1):
+			raise Exception;
+	except Exception, getopt.GetoptError:
 		print 'Usage: launch [-f FLIGHT_PLAN] AIRCRAFT [Other_fgfs_Arguments] ...';
 		return 1;
 

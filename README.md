@@ -41,7 +41,7 @@ Pause/Resume simulation.
 * If FPS is not given, show maximum FPS.
 * If FPS is given, maximum FPS will be set as the given FPS value.
 
-`launch AIRCRAFT [FLIGHT_PLAN] [fgfs_options]`:
+`launch [-f FLIGHT_PLAN] AIRCRAFT [fgfs_options]`:
 
 Start FlightGear with the aircraft specified.
 
