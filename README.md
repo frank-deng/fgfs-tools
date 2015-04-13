@@ -45,7 +45,7 @@ Pause/Resume simulation.
 
 Start FlightGear with the aircraft specified.
 
-If the flight plan is specified,
+If FLIGHT_PLAN is specified,
 
 * The aircraft will be placed at the departure airport & runway specified by the Flight Plan.
 * ILS frequency will be automatically prepared for the distination runway.
