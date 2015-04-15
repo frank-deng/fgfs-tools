@@ -114,9 +114,7 @@ def fglaunch(instance_num, args_input):
 	return subprocess.call(
 		[
 			fgfs_exec
-			,'--props=' + str(TELNET_ADDR_BASE + instance_num)
-			,'--props=' + str(TELNET_ADDR_BASE + 10 + instance_num)
-			,'--props=' + str(TELNET_ADDR_BASE + 20 + instance_num)
+			,'--telnet=socket,bi,60,,%d,tcp' % (TELNET_ADDR_BASE + instance_num)
 			,'--aircraft=' + aircraft
 		]
 		+ fp_params
