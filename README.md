@@ -58,7 +58,7 @@ Please copy `fgtools.nas` to `$FG_ROOT/Nasal` first, so as to get all the stuffs
 
 #### Pause Manager
 
-Automatically pause the simulation when the remaining route is shorter than a given distance.
+Automatically pause the simulation when the remaining route is shorter than a given distance or the airplane crashed.
 
 This feature is included in `fgtools.nas`.
 
@@ -66,7 +66,7 @@ Usage:
 
 Set property `/autopilot/pausemgr-dist` with a positive value will activate Pause Manager. A negative value will deactive Pause Manager.
 
-When the remaining route is shorter than the distance specified by property `/autopilot/pausemgr-dist`:
+When the remaining route is shorter than the distance specified by property `/autopilot/pausemgr-dist` or the airplane crashed:
 
 * The simulation will be paused.
 * FPS will be reduced to 10fps before the simulation resumed. Once the simulation resumed, the FPS will be set to 60fps.

@@ -8,13 +8,26 @@ var pause_manager = func
 	{
 		var dist_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
 		var dist_pause = getprop('/autopilot/pausemgr-dist');
-		if (dist_remaining <= dist_pause)
-		{
+		var paused = 0;
+
+		if (dist_remaining <= dist_pause) {
 			setprop('/autopilot/pausemgr-dist', -1);
 			props.globals.getNode('/sim/freeze/clock').setBoolValue(1);
 			props.globals.getNode('/sim/freeze/master').setBoolValue(1);
+			paused = 1;
+		} else if (getprop('/sim/crashed')) {
+			#Pause simulation if aircraft crashed half way
+			setprop('/autopilot/pausemgr-dist', -1);
+			props.globals.getNode('/sim/freeze/clock').setBoolValue(1);
+			props.globals.getNode('/sim/freeze/master').setBoolValue(1);
+			paused = 1;
+		}
 
+		if (paused) {
 			#Slow down fps to reduce overhead
+			if (nil == getprop('/sim/gui/frame-rate-throttled')) {
+				props.globals.getNode('/sim/gui').addChild('frame-rate-throttled');
+			}
 			props.globals.getNode('/sim/gui/frame-rate-throttled').setBoolValue(1);
 			setprop('/sim/frame-rate-throttle-hz', 10);
 
@@ -184,13 +197,10 @@ fgreport_generate = func{
 }
 
 _setlistener("/sim/signals/nasal-dir-initialized", func {
-	props.globals.getNode('/command').addChild('fgreport');
-	props.globals.getNode('/command/fgreport').addChild('signal').setBoolValue(0);
-	props.globals.getNode('/command/fgreport').addChild('text').setValue('');
-	setlistener('/command/fgreport/signal', func {
-		if (getprop('/command/fgreport/signal')) {
-			setprop('/command/fgreport/text', fgreport_generate());
-			props.globals.getNode('/command/fgreport/signal').setBoolValue(0);
+	setprop('/command/fgreport', 'Set this property empty first, then an up-to-date report will be written to this property.');
+	setlistener('/command/fgreport', func {
+		if ('' == getprop('/command/fgreport')) {
+			setprop('/command/fgreport', fgreport_generate());
 		}
 	});
 }, 0, 0);

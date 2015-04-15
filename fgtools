@@ -8,10 +8,10 @@ from FGTelnet import FGTelnet;
 TELNET_ADDR_BASE = 5400;
 
 def get_report(fg, args):
-	fg['/command/fgreport/signal'] = 1;
-	while fg['/command/fgreport/signal']:
-		time.sleep(0.1);
-	print fg['/command/fgreport/text'];
+	fg['/command/fgreport'] = '';
+	while '' == fg['/command/fgreport']:
+		time.sleep(0);
+	print fg['/command/fgreport'];
 	return 0;
 
 def sound_on(fg, args):
