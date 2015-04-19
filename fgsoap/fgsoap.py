@@ -35,7 +35,7 @@ class FGSoapService(SimpleWSGISoapApp):
 		#Fetch values
 		try:
 			for prop in props_all:
-				values_all.append(self.conn[prop]);
+				values_all.append(self.conn.get(prop));
 		except Exception, e:
 			node_error = etree.Element('error');
 			node_error.text = str(e);
@@ -65,7 +65,7 @@ class FGSoapService(SimpleWSGISoapApp):
 
 		try:
 			for prop, val in pairs_all:
-				self.conn[prop] = val;
+				self.conn.set(prop, val);
 		except Exception, e:
 			node_error = etree.Element('error');
 			node_error.text = str(e);
@@ -78,7 +78,7 @@ class FGSoapService(SimpleWSGISoapApp):
 if __name__=='__main__':
 	try:
 		from wsgiref.simple_server import make_server
-		server = make_server('localhost', 5431, FGSoapService('localhost', 5401));
+		server = make_server('', 5410, FGSoapService('localhost', 5400));
 		server.serve_forever();
 	except KeyboardInterrupt:
 		pass;

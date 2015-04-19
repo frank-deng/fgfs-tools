@@ -36,7 +36,7 @@ SOAP_SETPROP='''
 </SOAP:ENVELOPE>
 '''
 import httplib;
-conn = httplib.HTTPConnection("localhost", 5431)
+conn = httplib.HTTPConnection("localhost", 5410)
 conn.request('POST', '/wsdl', SOAP_GETPROP)
 response = conn.getresponse();
 print response.read();

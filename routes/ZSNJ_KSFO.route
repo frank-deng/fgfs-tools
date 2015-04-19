@@ -206,7 +206,7 @@
     <wp n="30">
       <type type="string">navaid</type>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">25000</altitude-ft>
+      <altitude-ft type="double">29000</altitude-ft>
       <ident type="string">RBL</ident>
       <lon type="double">-122.23635</lon>
       <lat type="double">40.09891111</lat>
