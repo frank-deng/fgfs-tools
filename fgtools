@@ -8,11 +8,30 @@ from FGTelnet import FGTelnet;
 TELNET_ADDR_BASE = 5400;
 
 def get_report(fg, args):
-	fg['/command/fgreport'] = '';
-	while '' == fg['/command/fgreport']:
-		time.sleep(0);
-	print fg['/command/fgreport'];
-	return 0;
+	print 'Real-world Time:           '\
+		+ fg['/sim/time/real/string'];
+	print 'UTC Time:                  '\
+		+ fg['/sim/time/utc/string'];
+	print 'Local Time:                '\
+		+ fg['/instrumentation/clock/local-short-string'];
+	print 'Aircraft:                  '\
+		+ fg['/sim/description'];
+	print 'Position (lat lon):        %.6f %6f'\
+		% (fg['/position/latitude-deg'], fg['/position/longitude-deg']);
+	print 'Total Distance (nmi):      %.2f'\
+		% (fg['/autopilot/route-manager/total-distance']);
+	print 'Distance Remaining (nmi):  %.2f'\
+		% (fg['/autopilot/route-manager/distance-remaining-nm']);
+	print 'Flight Time:               '\
+		+ fg['/autopilot/route-manager/flight-time-string'];
+	print 'Time Remaining:            '\
+		+ (fg['/autopilot/route-manager/ete-string']);
+	print 'Fuel:                      %.2f%%'\
+		% (fg['/consumables/fuel/total-fuel-norm'] * 100.0);
+	print 'Paused:                    '\
+		+ str(fg['/sim/freeze/clock']);
+	print 'Crashed:                   '\
+		+ str(fg['/sim/crashed']);
 
 def sound_on(fg, args):
 	fg['/sim/sound/enabled'] = 1;
@@ -141,7 +160,7 @@ if __name__ == '__main__':
 		exit(fglaunch(instance_num_all[0], sys.argv[3:]));
 
 	for instance_num in instance_num_all:
-		print('*** Instance %d ***' % instance_num);
+		sys.stderr.write('*** Instance %d ***\n' % instance_num);
 		func = None;
 		try:
 			func = command_all[sys.argv[2]];
