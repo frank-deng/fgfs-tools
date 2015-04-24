@@ -1,3 +1,4 @@
+import java.util.Properties;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -5,12 +6,43 @@ import javax.servlet.http.*;
 public class FGReportServlet extends HttpServlet{
 	private FGTelnetConnection conn = null;
 
+	public void init(ServletConfig servletConfig)
+		throws ServletException {
+
+		super.init(servletConfig);
+
+		try {
+			//Load configuration file
+			String configFilePath = servletConfig.getServletContext().getRealPath("/WEB-INF") + "/fgfs.conf";
+			Properties conf = new Properties();
+			FileInputStream in = new FileInputStream(configFilePath);
+			conf.load(in);
+			in.close();
+
+			//Initialize connection
+			conn = new FGTelnetConnection(
+				conf.getProperty("FGFS_TELNET_ADDR"),
+				Integer.parseInt(conf.getProperty("FGFS_TELNET_BASE_PORT"))
+			);
+		} catch (IOException e) {
+			throw new ServletException(e.toString());
+		}
+	}
+
+	public void destroy() {
+		try {
+			this.conn.close();
+		} catch (IOException e) {
+			System.out.println(e.toString());
+		}
+	}
+
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
+
 		response.setContentType("text/plain;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		this.conn = new FGTelnetConnection("192.168.1.101", 5400);
 		out.println("Real-world Time:           "
 			+ this.conn.get("/sim/time/real/string"));
 		out.println("UTC Time:                  "
@@ -36,8 +68,6 @@ public class FGReportServlet extends HttpServlet{
 			+ ((this.conn.getBoolean("/sim/freeze/clock") && this.conn.getBoolean("/sim/freeze/master")) ? "True" : "False"));
 		out.println("Crashed:                   "
 			+ (this.conn.getBoolean("/sim/crashed") ? "True" : "False"));
-
-		this.conn.close();
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
