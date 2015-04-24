@@ -1,18 +1,16 @@
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.flightgear.telnetconnection.FGTelnetConnection;
 
 public class FGReportServlet extends HttpServlet{
 	private FGTelnetConnection conn = null;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-		response.setContentType("text/html;charset=UTF-8");
+		response.setContentType("text/plain;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
 		this.conn = new FGTelnetConnection("192.168.1.101", 5400);
-		out.print("<pre>");
 		out.println("Real-world Time:           "
 			+ this.conn.get("/sim/time/real/string"));
 		out.println("UTC Time:                  "
@@ -38,7 +36,6 @@ public class FGReportServlet extends HttpServlet{
 			+ ((this.conn.getBoolean("/sim/freeze/clock") && this.conn.getBoolean("/sim/freeze/master")) ? "True" : "False"));
 		out.println("Crashed:                   "
 			+ (this.conn.getBoolean("/sim/crashed") ? "True" : "False"));
-		out.print("</pre>");
 
 		this.conn.close();
 	}

@@ -2,8 +2,6 @@
 // Started June 2002 by David Megginson, david@megginson.com
 // This library is in the Public Domain and comes with NO WARRANTY.
 
-package org.flightgear.telnetconnection;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
