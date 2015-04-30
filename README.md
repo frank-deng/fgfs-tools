@@ -5,9 +5,13 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 ---
 
-#### FGTelnet.py FGTelnet.php
+#### FGTelnet.py
 
-Python library and PHP library for interacting with FlightGear props telnet interface.
+Python library for interacting with FlightGear props telnet interface.
+
+#### FGTelnet.php
+
+PHP library for interacting with FlightGear props telnet interface.
 
 ---
 
