@@ -26,9 +26,13 @@ class FGTelnet {
 	}
 	public function __destruct() {
 		if (null != $this->conn) {
-			@socket_write($this->conn, 'quit'."\r\n");
-			@socket_close($this->conn);
+			$this->close();
 		}
+	}
+	public function close() {
+		@socket_write($this->conn, 'quit'."\r\n");
+		@socket_close($this->conn);
+		$this->conn = null;
 	}
 	public function set($prop, $value) {
 		if (!@socket_write($this->conn, 'set '.$prop.' '.string($value)."\r\n")) {
@@ -36,6 +40,9 @@ class FGTelnet {
 		}
 	}
 	public function get($prop) {
+		if ('' === $prop) {
+			return '';
+		}
 		if (!@socket_write($this->conn, 'get '.$prop."\r\n")) {
 			throw new SocketException(socket_strerror(socket_last_error()));
 		}
