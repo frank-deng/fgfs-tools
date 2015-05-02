@@ -12,14 +12,26 @@ class SocketException extends Exception {
 class FGTelnet {
 	private $conn = null;
 
-	public function __construct($host = '127.0.0.1', $port) {
+	public function __construct($host = '127.0.0.1', $port = 5400, $timeout = 1) {
+		//Initialize socket
 		$this->conn = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 		if (!$this->conn) {
 			throw new SocketException('Failed to initialize socket.');
 		}
+
+		//Set timeout
+		socket_set_option($this->conn, SOL_SOCKET, SO_RCVTIMEO,
+			array('sec' => $timeout, 'usec' => 0));
+		socket_set_option($this->conn, SOL_SOCKET, SO_SNDTIMEO,
+			array('sec' => $timeout, 'usec' => 0));
+
+		//Connect to FlightGear telnet host
 		if (!@socket_connect($this->conn, $host, $port)) {
 			throw new SocketException(socket_strerror(socket_last_error()));
 		}
+
+		//Switch to data mode to avoid getting some other things
+		//apart from the data wanted
 		if (!@socket_write($this->conn, 'data'."\r\n")) {
 			throw new SocketException(socket_strerror(socket_last_error()));
 		}
@@ -51,7 +63,8 @@ class FGTelnet {
 	}
 
 	/**
-	 * Get the value of specified prop and convert the result to the according types
+	 * Get the value of specified prop and convert the result to the
+	 * according types.
 	 */
 	public function getInt($prop) {
 		return (int)($this->get($prop));
@@ -63,4 +76,4 @@ class FGTelnet {
 		return (($this->get($prop) == 'true') ? true : false);
 	}
 }
-?>
+
