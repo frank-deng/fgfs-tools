@@ -51,6 +51,27 @@ def resume(fg, args):
 	fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 0;
 	print('Simulation resumed.');
 
+def pause_manager(fg, args):
+	if len(args) == 0:
+		# View the state of Pause Manager
+		target_dist = float(fg['/autopilot/pausemgr-dist']);
+		if target_dist > 0:
+			print('Pause Manager is active, simulation will be paused when the remaining distance is shorter than %.2f nmi.' % target_dist);
+		else:
+			print('Pause Manager is inactive.');
+	else:
+		# Change the state of Pause Manager
+		try:
+			target_dist = float(args[0]);
+			fg['/autopilot/pausemgr-dist'] = target_dist;
+			if target_dist > 0:
+				print('Pause Manager activated, simulation will be paused when the remaining distance is shorter than %.2f nmi.' % target_dist);
+			else:
+				print('Pause Manager deactivated.');
+		except ValueError:
+			sys.stderr.write('Invalid argument.');
+			return 1;
+
 def fps_limit(fg, args):
 	if (0 == len(args)):
 		target_fps = fg['/sim/frame-rate-throttle-hz'];
@@ -74,6 +95,19 @@ def fps_limit(fg, args):
 		except:
 			sys.stderr.write('Invalid argument.');
 			return 1;
+
+def load_route(fg, args):
+	if (len(args) < 1):
+		sys.stderr.write('Flight plan file not specified.');
+		return 1;
+		
+	fg['/autopilot/route-manager/file-path'] = os.path.abspath(args[0]);
+	fg['/autopilot/route-manager/input'] = '@LOAD';
+	fg['/autopilot/route-manager/departure/sid'] = 'DEFAULT';
+	fg['/autopilot/route-manager/destination/approach'] = 'DEFAULT';
+	fg['/autopilot/route-manager/input'] = '@ACTIVATE';
+	fg['/autopilot/route-manager/input'] = '@JUMP0';
+	print ('Loaded flight plan ' + args[0]);
 
 def fglaunch(instance_num, args_input):
 	#Check if reboot is required
@@ -148,6 +182,8 @@ if __name__ == '__main__':
 		'pause': pause,
 		'resume': resume,
 		'fpslimit': fps_limit,
+		'pausemgr': pause_manager,
+		'loadroute': load_route,
 	};
 	instance_num_all = None;
 	try:

@@ -44,6 +44,13 @@ Pause/Resume simulation.
 
 * If FPS is not given, show maximum FPS.
 * If FPS is given, maximum FPS will be set as the given FPS value.
+* The value of FPS can be 0 or 15-70.
+
+`pausemgr [DISTANCE]`:
+
+* If DISTANCE is not given, show the state of Pause Manager.
+* If DISTANCE is given as a positive number, pausemgr will be activated with the given DISTANCE.
+* If DISTANCE is given as a negative number, pausemgr will be deactivated.
 
 `launch [-f FLIGHT_PLAN] AIRCRAFT [fgfs_options]`:
 
