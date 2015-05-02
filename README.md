@@ -52,6 +52,10 @@ Pause/Resume simulation.
 * If DISTANCE is given as a positive number, pausemgr will be activated with the given DISTANCE.
 * If DISTANCE is given as a negative number, pausemgr will be deactivated.
 
+`loadroute FLIGHT_PLAN`:
+
+Load flight plan from file specified by FLIGHT_PLAN.
+
 `launch [-f FLIGHT_PLAN] AIRCRAFT [fgfs_options]`:
 
 Start FlightGear with the aircraft specified.
