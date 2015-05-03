@@ -63,6 +63,11 @@ class FGTelnet(Telnet):
 		self._putcmd('set ' + key + ' ' + str(value));
 		self._getresp() # Discard response
 
+	def run(self, command):
+		"""Run fgcommand"""
+		self._putcmd('run ' + str(command));
+		self._getresp() # Discard response
+
 	def quit(self):
 		"""Terminate connection"""
 		self._putcmd('quit');

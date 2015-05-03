@@ -1,4 +1,5 @@
 <?php
+const CRLF = "\r\n";
 class SocketException extends Exception {
 	public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
@@ -32,7 +33,7 @@ class FGTelnet {
 
 		//Switch to data mode to avoid getting some other things
 		//apart from the data wanted
-		if (!@socket_write($this->conn, 'data'."\r\n")) {
+		if (!@socket_write($this->conn, 'data'.CRLF)) {
 			throw new SocketException(socket_strerror(socket_last_error()));
 		}
 	}
@@ -42,12 +43,17 @@ class FGTelnet {
 		}
 	}
 	public function close() {
-		@socket_write($this->conn, 'quit'."\r\n");
+		@socket_write($this->conn, 'quit'.CRLF);
 		@socket_close($this->conn);
 		$this->conn = null;
 	}
 	public function set($prop, $value) {
-		if (!@socket_write($this->conn, 'set '.$prop.' '.string($value)."\r\n")) {
+		if (!@socket_write($this->conn, 'set '.$prop.' '.(string)$value.CRLF)) {
+			throw new SocketException(socket_strerror(socket_last_error()));
+		}
+	}
+	public function run($command) {
+		if (!@socket_write($this->conn, 'run '.(string)$command.CRLF)) {
 			throw new SocketException(socket_strerror(socket_last_error()));
 		}
 	}
@@ -55,11 +61,11 @@ class FGTelnet {
 		if ('' === $prop) {
 			return '';
 		}
-		if (!@socket_write($this->conn, 'get '.$prop."\r\n")) {
+		if (!@socket_write($this->conn, 'get '.$prop.CRLF)) {
 			throw new SocketException(socket_strerror(socket_last_error()));
 		}
 		$result = @socket_read($this->conn, 65535, PHP_BINARY_READ);
-		return str_replace("\r\n", '', $result);
+		return str_replace(CRLF, '', $result);
 	}
 
 	/**

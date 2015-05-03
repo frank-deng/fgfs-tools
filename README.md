@@ -28,33 +28,11 @@ Multiple digits for `instance_num` means executing command for each instance spe
 
 Available Commands:
 
-`report`
-
-Print an report of FlightGear.
-
-`soundon/soundoff`
-
-Unmute/Mute FlightGear.
-
-`pause/resume`
-
-Pause/Resume simulation.
-
 `fpslimit [FPS]`:
 
 * If FPS is not given, show maximum FPS.
 * If FPS is given, maximum FPS will be set as the given FPS value.
 * The value of FPS can be 0 or 15-70.
-
-`pausemgr [DISTANCE]`:
-
-* If DISTANCE is not given, show the state of Pause Manager.
-* If DISTANCE is given as a positive number, pausemgr will be activated with the given DISTANCE.
-* If DISTANCE is given as a negative number, pausemgr will be deactivated.
-
-`loadroute FLIGHT_PLAN`:
-
-Load flight plan from file specified by FLIGHT_PLAN.
 
 `launch [-f FLIGHT_PLAN] AIRCRAFT [fgfs_options]`:
 
@@ -66,6 +44,32 @@ If FLIGHT_PLAN is specified,
 * ILS frequency will be automatically prepared for the distination runway.
 * The simulation will be paused when the remaining route is short than 20 nmi  
   You can append command `--prop:/autopilot/pausemgr-dist=-1` in `fgfs_options` to deactivate Pause Manager.
+
+`loadroute FLIGHT_PLAN`:
+
+Load flight plan from file specified by FLIGHT_PLAN.
+
+`pause/resume`
+
+Pause/Resume simulation.
+
+`pausemgr [DISTANCE]`:
+
+* If DISTANCE is not given, show the state of Pause Manager.
+* If DISTANCE is given as a positive number, pausemgr will be activated with the given DISTANCE.
+* If DISTANCE is given as a negative number, pausemgr will be deactivated.
+
+`report`
+
+Print an report of FlightGear.
+
+`shutdown`
+
+Shutdown simulation.
+
+`soundon/soundoff`
+
+Unmute/Mute FlightGear.
 
 Please copy `fgtools.nas` to `$FG_ROOT/Nasal` first, so as to get all the stuffs here work well.
 

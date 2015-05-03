@@ -109,6 +109,9 @@ def load_route(fg, args):
 	fg['/autopilot/route-manager/input'] = '@JUMP0';
 	print ('Loaded flight plan ' + args[0]);
 
+def shutdown(fg, args):
+	fg.run('exit');
+
 def fglaunch(instance_num, args_input):
 	#Check if reboot is required
 	if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
@@ -184,6 +187,7 @@ if __name__ == '__main__':
 		'fpslimit': fps_limit,
 		'pausemgr': pause_manager,
 		'loadroute': load_route,
+		'shutdown': shutdown,
 	};
 	instance_num_all = None;
 	try:
