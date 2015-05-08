@@ -8,29 +8,31 @@ from FGTelnet import FGTelnet;
 TELNET_ADDR_BASE = 5400;
 
 def get_report(fg, args):
-	print 'Real World Time:           '\
+	print 'Real World Time:        '\
 		+ fg['/sim/time/real/string'];
-	print 'UTC Time:                  '\
+	print 'UTC Time:               '\
 		+ fg['/sim/time/utc/string'];
-	print 'Local Time:                '\
+	print 'Local Time:             '\
 		+ fg['/instrumentation/clock/local-short-string'];
-	print 'Aircraft:                  '\
+	print 'Aircraft:               '\
 		+ fg['/sim/description'];
-	print 'Position (lat lon):        %.6f %6f'\
+	print 'Position (lat lon):     %.6f %6f'\
 		% (fg['/position/latitude-deg'], fg['/position/longitude-deg']);
-	print 'Total Distance (nmi):      %.2f'\
+	print 'Total Distance:         %.2f nmi'\
 		% (fg['/autopilot/route-manager/total-distance']);
-	print 'Distance Remaining (nmi):  %.2f'\
+	print 'Distance Remaining:     %.2f nmi'\
 		% (fg['/autopilot/route-manager/distance-remaining-nm']);
-	print 'Flight Time:               '\
+	print 'Distance Elapsed:       %.2f nmi'\
+		% (fg['/autopilot/route-manager/total-distance'] - fg['/autopilot/route-manager/distance-remaining-nm']);
+	print 'Flight Time:            '\
 		+ fg['/autopilot/route-manager/flight-time-string'];
-	print 'Time Remaining:            '\
+	print 'Estimated Time Enroute: '\
 		+ (fg['/autopilot/route-manager/ete-string']);
-	print 'Fuel:                      %.2f%%'\
+	print 'Fuel Remaining:         %.2f%%'\
 		% (fg['/consumables/fuel/total-fuel-norm'] * 100.0);
-	print 'Paused:                    '\
+	print 'Paused:                 '\
 		+ str(fg['/sim/freeze/clock'] and fg['/sim/freeze/master']);
-	print 'Crashed:                   '\
+	print 'Crashed:                '\
 		+ str(fg['/sim/crashed']);
 
 def sound_on(fg, args):
