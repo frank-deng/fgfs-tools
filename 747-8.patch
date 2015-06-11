@@ -1,6 +1,6 @@
-diff -ruN 747-8i.orig/747-8f-set.xml 747-8i/747-8f-set.xml
---- 747-8i.orig/747-8f-set.xml	2015-01-20 03:42:28.000000000 +0800
-+++ 747-8i/747-8f-set.xml	2015-03-14 16:44:05.729357514 +0800
+diff -ruN 747-8i/747-8f-set.xml 747-8i.new/747-8f-set.xml
+--- 747-8i/747-8f-set.xml	2015-01-20 03:42:28.000000000 +0800
++++ 747-8i.new/747-8f-set.xml	2015-06-11 21:59:26.305368055 +0800
 @@ -272,13 +272,13 @@
  
  		<weight n="0">
@@ -21,13 +21,13 @@ diff -ruN 747-8i.orig/747-8f-set.xml 747-8i/747-8f-set.xml
  		<maximum-landing-mass-lbs>763000</maximum-landing-mass-lbs>
  		<maximum-zero-fuel-mass-lbs>727000</maximum-zero-fuel-mass-lbs>
  	    </mass-and-balance>
-+		<estimated-range-nm>4000</estimated-range-nm>
++		<estimated-range-nm>3700</estimated-range-nm>
  	</limits>
  
  	<aircraft>
-diff -ruN 747-8i.orig/747-8i-set.xml 747-8i/747-8i-set.xml
---- 747-8i.orig/747-8i-set.xml	2015-01-20 03:42:28.000000000 +0800
-+++ 747-8i/747-8i-set.xml	2015-03-14 16:41:07.153354619 +0800
+diff -ruN 747-8i/747-8i-set.xml 747-8i.new/747-8i-set.xml
+--- 747-8i/747-8i-set.xml	2015-01-20 03:42:28.000000000 +0800
++++ 747-8i.new/747-8i-set.xml	2015-06-11 21:53:29.489366041 +0800
 @@ -287,13 +287,13 @@
  
  		<weight n="0">
@@ -48,13 +48,13 @@ diff -ruN 747-8i.orig/747-8i-set.xml 747-8i/747-8i-set.xml
  		<maximum-landing-mass-lbs>688000</maximum-landing-mass-lbs>
  		<maximum-zero-fuel-mass-lbs>651000</maximum-zero-fuel-mass-lbs>
  	    </mass-and-balance>
-+		<estimated-range-nm>7900</estimated-range-nm>
++		<estimated-range-nm>7600</estimated-range-nm>
  	</limits>
  
  	<aircraft>
-diff -ruN 747-8i.orig/747-8-main.xml 747-8i/747-8-main.xml
---- 747-8i.orig/747-8-main.xml	2015-01-20 03:42:29.000000000 +0800
-+++ 747-8i/747-8-main.xml	2015-03-14 17:41:30.301413356 +0800
+diff -ruN 747-8i/747-8-main.xml 747-8i.new/747-8-main.xml
+--- 747-8i/747-8-main.xml	2015-01-20 03:42:29.000000000 +0800
++++ 747-8i.new/747-8-main.xml	2015-03-14 17:41:30.301413356 +0800
 @@ -521,6 +521,7 @@
  			<file>Aircraft/747-8i/Nasal/IRS-controls.nas</file>
              		<file>Aircraft/747-8i/Nasal/runway.nas</file>
@@ -63,9 +63,9 @@ diff -ruN 747-8i.orig/747-8-main.xml 747-8i/747-8-main.xml
  		</Boeing747>
  		  	  
  		<cdu>
-diff -ruN 747-8i.orig/Nasal/AFDS.nas 747-8i/Nasal/AFDS.nas
---- 747-8i.orig/Nasal/AFDS.nas	2015-01-20 03:42:28.000000000 +0800
-+++ 747-8i/Nasal/AFDS.nas	2015-03-08 20:31:10.995761802 +0800
+diff -ruN 747-8i/Nasal/AFDS.nas 747-8i.new/Nasal/AFDS.nas
+--- 747-8i/Nasal/AFDS.nas	2015-01-20 03:42:28.000000000 +0800
++++ 747-8i.new/Nasal/AFDS.nas	2015-03-08 20:31:10.995761802 +0800
 @@ -401,72 +401,17 @@
              }
  	    if (!me.at1.getBoolValue()) me.autothrottle_mode.setValue(0);
@@ -150,9 +150,9 @@ diff -ruN 747-8i.orig/Nasal/AFDS.nas 747-8i/Nasal/AFDS.nas
  	}elsif(me.step==6){
  			ma_spd=getprop("/velocities/mach");
  			banklimit=getprop("/instrumentation/afds/inputs/bank-limit-switch");
-diff -ruN 747-8i.orig/Nasal/auto_refuel.nas 747-8i/Nasal/auto_refuel.nas
---- 747-8i.orig/Nasal/auto_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ 747-8i/Nasal/auto_refuel.nas	2015-03-14 21:39:39.581645008 +0800
+diff -ruN 747-8i/Nasal/auto_refuel.nas 747-8i.new/Nasal/auto_refuel.nas
+--- 747-8i/Nasal/auto_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ 747-8i.new/Nasal/auto_refuel.nas	2015-03-14 21:39:39.581645008 +0800
 @@ -0,0 +1,299 @@
 +var fuel_up = func(stage) {
 +	var tot_level = props.globals.getNode("consumables/fuel/total-fuel-gal_us",1);
@@ -453,9 +453,9 @@ diff -ruN 747-8i.orig/Nasal/auto_refuel.nas 747-8i/Nasal/auto_refuel.nas
 +	print('Aircraft refueled.');
 +});
 +
-diff -ruN 747-8i.orig/Systems/747-8-autopilot.xml 747-8i/Systems/747-8-autopilot.xml
---- 747-8i.orig/Systems/747-8-autopilot.xml	2015-01-20 03:42:29.000000000 +0800
-+++ 747-8i/Systems/747-8-autopilot.xml	2015-03-08 20:12:37.799731991 +0800
+diff -ruN 747-8i/Systems/747-8-autopilot.xml 747-8i.new/Systems/747-8-autopilot.xml
+--- 747-8i/Systems/747-8-autopilot.xml	2015-01-20 03:42:29.000000000 +0800
++++ 747-8i.new/Systems/747-8-autopilot.xml	2015-03-08 20:12:37.799731991 +0800
 @@ -254,8 +254,7 @@
        <value>LNAV</value>
      </enable>
