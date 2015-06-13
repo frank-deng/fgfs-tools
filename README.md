@@ -70,6 +70,14 @@ Please copy `fgtools.nas` to `$FG_ROOT/Nasal` first, so as to get all the stuffs
 
 ---
 
+#### temperature-logger
+
+Log CPU and GPU's temperature, so as to check whether the unexpected poweroff of the machine is caused by the overheated CPU/GPU.
+
+The format of the log is as follows: `TIME CPU_TEMPERATURE GPU_TEMPERATURE`, each column is tab-separated.
+
+---
+
 #### Pause Manager
 
 Automatically pause the simulation when the remaining route is shorter than a given distance or the airplane crashed.
