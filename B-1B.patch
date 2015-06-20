@@ -1,5 +1,5 @@
-diff -ruN B-1B.orig/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
---- B-1B.orig/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
+diff -ruN B-1B/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
+--- B-1B/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
 +++ /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml	2015-01-26 19:19:29.863873466 +0800
 @@ -458,7 +458,7 @@
        <target-pitch-deg type="float">0</target-pitch-deg>
@@ -18,8 +18,8 @@ diff -ruN B-1B.orig/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
  	</weapons>
          <fuel>
  		<file>Aircraft/Generic/aar.nas</file>
-diff -ruN B-1B.orig/Nasal/b1b.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/b1b.nas
---- B-1B.orig/Nasal/b1b.nas	2010-12-18 07:25:28.000000000 +0800
+diff -ruN B-1B/Nasal/b1b.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/b1b.nas
+--- B-1B/Nasal/b1b.nas	2010-12-18 07:25:28.000000000 +0800
 +++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/b1b.nas	2015-03-22 10:44:53.220827524 +0800
 @@ -772,4 +772,31 @@
      ltext = "Sorry, Duke Nukem not available yet on this plane(t)!";
@@ -55,10 +55,10 @@ diff -ruN B-1B.orig/Nasal/b1b.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/b1b.na
 +}
 +settimer(next_waypoint, 0);
 +
-diff -ruN B-1B.orig/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas
---- B-1B.orig/Nasal/magic_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas	2015-03-15 17:31:38.912015002 +0800
-@@ -0,0 +1,68 @@
+diff -ruN B-1B/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas
+--- B-1B/Nasal/magic_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas	2015-06-20 14:11:34.158418287 +0800
+@@ -0,0 +1,62 @@
 +setprop('/armament/magic-refuel/signal', 0);
 +setprop('/armament/magic-refuel/amount', '0.97');
 +
@@ -119,11 +119,5 @@ diff -ruN B-1B.orig/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nas
 +			setprop('/armament/magic-refuel/signal', 1);
 +		}
 +	}
-+});
-+
-+var l = setlistener('/sim/signals/fdm-initialized', func {
-+	setprop("consumables/fuel/tank[3]/level-norm", 1.0);
-+	setprop("consumables/fuel/tank[5]/level-norm", 1.0);
-+    removelistener(l);
 +});
 +

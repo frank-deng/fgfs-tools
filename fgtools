@@ -1,39 +1,36 @@
 #!/usr/bin/env python
 #encoding=UTF-8
 
-import sys, getopt, os, subprocess, time, platform;
+import sys, socket, getopt, os, subprocess, time, platform;
 import xml.etree.ElementTree as ET;
 from FGTelnet import FGTelnet;
 
 TELNET_ADDR_BASE = 5400;
 
 def get_report(fg, args):
-	print 'Real World Time:        '\
-		+ fg['/sim/time/real/string'];
-	print 'UTC Time:               '\
-		+ fg['/sim/time/utc/string'];
-	print 'Local Time:             '\
-		+ fg['/instrumentation/clock/local-short-string'];
-	print 'Aircraft:               '\
-		+ fg['/sim/description'];
-	print 'Position (lat lon):     %.6f %6f'\
-		% (fg['/position/latitude-deg'], fg['/position/longitude-deg']);
-	print 'Total Distance:         %.2f nmi'\
-		% (fg['/autopilot/route-manager/total-distance']);
-	print 'Distance Remaining:     %.2f nmi'\
-		% (fg['/autopilot/route-manager/distance-remaining-nm']);
-	print 'Distance Elapsed:       %.2f nmi'\
-		% (fg['/autopilot/route-manager/total-distance'] - fg['/autopilot/route-manager/distance-remaining-nm']);
-	print 'Flight Time:            '\
-		+ fg['/autopilot/route-manager/flight-time-string'];
-	print 'Estimated Time Enroute: '\
-		+ (fg['/autopilot/route-manager/ete-string']);
-	print 'Fuel Remaining:         %.2f%%'\
-		% (fg['/consumables/fuel/total-fuel-norm'] * 100.0);
-	print 'Paused:                 '\
-		+ str(fg['/sim/freeze/clock'] and fg['/sim/freeze/master']);
-	print 'Crashed:                '\
-		+ str(fg['/sim/crashed']);
+	print 'Real World Time:        ' + fg['/sim/time/real/string'];
+	print 'UTC Time:               ' + fg['/sim/time/utc/string'];
+	print 'Local Time:             ' + fg['/instrumentation/clock/local-short-string'];
+	print 'Aircraft:               ' + fg['/sim/description'];
+	print 'Position (lat lon):     %.6f %6f' % (fg['/position/latitude-deg'], fg['/position/longitude-deg']);
+	print 'Total Distance:         %.2fnmi' % (fg['/autopilot/route-manager/total-distance']);
+	print 'Distance Remaining:     %.2fnmi' % (fg['/autopilot/route-manager/distance-remaining-nm']);
+	print 'Distance Elapsed:       %.2fnmi' % (fg['/autopilot/route-manager/total-distance'] - fg['/autopilot/route-manager/distance-remaining-nm']);
+	print 'Flight Time:            ' + fg['/autopilot/route-manager/flight-time-string'];
+	print 'Estimated Time Enroute: ' + (fg['/autopilot/route-manager/ete-string']);
+	print 'Fuel Remaining:         %.2f%%' % (fg['/consumables/fuel/total-fuel-norm'] * 100.0);
+	print 'Paused:                 ' + str(fg['/sim/freeze/clock'] and fg['/sim/freeze/master']);
+	print 'Crashed:                ' + str(fg['/sim/crashed']);
+	print 'FPS Limit:              %d' % int(fg['/sim/frame-rate-throttle-hz']);
+	print 'Current FPS:            %d' % int(fg['/sim/frame-rate']);
+	print 'Frame Latency:          %dms' % int(fg['/sim/frame-latency-max-ms']);
+	pausemgr_dist = fg['/autopilot/pausemgr-dist'];
+	if (pausemgr_dist <= 0 ):
+		pausemgr_dist = 'Inactive';
+	else:
+		pausemgr_dist = 'Pause sim at ' + str(pausemgr_dist) + 'nmi';
+	print 'Pause Manager:          ' + pausemgr_dist;
+	print '';
 
 def sound_on(fg, args):
 	fg['/sim/sound/enabled'] = 1;
@@ -54,50 +51,33 @@ def resume(fg, args):
 	print('Simulation resumed.');
 
 def pause_manager(fg, args):
-	if len(args) == 0:
-		# View the state of Pause Manager
-		target_dist = float(fg['/autopilot/pausemgr-dist']);
-		if target_dist > 0:
-			print('Pause Manager is active, simulation will be paused when the remaining distance is shorter than %.2f nmi.' % target_dist);
-		else:
-			print('Pause Manager is inactive.');
-	else:
-		# Change the state of Pause Manager
-		try:
-			target_dist = float(args[0]);
-			fg['/autopilot/pausemgr-dist'] = target_dist;
-			if target_dist > 0:
-				print('Pause Manager activated, simulation will be paused when the remaining distance is shorter than %.2f nmi.' % target_dist);
-			else:
-				print('Pause Manager deactivated.');
-		except ValueError:
-			sys.stderr.write('Invalid argument.');
-			return 1;
+	try:
+		if (0 == len(args)):
+			raise ValueError;
+		target_dist = float(args[0]);
+		fg['/autopilot/pausemgr-dist'] = target_dist;
+	except ValueError:
+		sys.stderr.write('Invalid argument.');
+		return 1;
 
 def fps_limit(fg, args):
-	if (0 == len(args)):
-		target_fps = fg['/sim/frame-rate-throttle-hz'];
-		if '0' == fg['/sim/gui/frame-rate-throttled']:
-			print('Frame rate unlimited.');
+	try:
+		if (0 == len(args)):
+			raise ValueError;
+		target_fps = int(args[0]);
+		if (target_fps == 0):
+			fg['/sim/gui/frame-rate-throttled'] = 0;
+			fg['/sim/frame-rate-throttle-hz'] = 0;
+		elif (target_fps <= 70 and target_fps >= 15):
+			fg['/sim/gui/frame-rate-throttled'] = 1;
+			fg['/sim/frame-rate-throttle-hz'] = target_fps;
 		else:
-			print('Frame rate limited to %d fps.' % target_fps);
-	else:
-		try:
-			target_fps = int(args[0]);
-			if (target_fps == 0):
-				fg['/sim/gui/frame-rate-throttled'] = 0;
-				fg['/sim/frame-rate-throttle-hz'] = 0;
-				print('Frame rate limitation is set to unlimited.');
-			elif (target_fps <= 70 and target_fps >= 15):
-				fg['/sim/gui/frame-rate-throttled'] = 1;
-				fg['/sim/frame-rate-throttle-hz'] = target_fps;
-				print('Frame rate limitation is set to %d fps.' % target_fps);
-			else:
-				raise ValueError;
-		except:
-			sys.stderr.write('Invalid argument.');
-			return 1;
+			raise ValueError;
+	except:
+		sys.stderr.write('Invalid argument.');
+		return 1;
 
+'''
 def load_route(fg, args):
 	if (len(args) < 1):
 		sys.stderr.write('Flight plan file not specified.');
@@ -110,6 +90,7 @@ def load_route(fg, args):
 	fg['/autopilot/route-manager/input'] = '@ACTIVATE';
 	fg['/autopilot/route-manager/input'] = '@JUMP0';
 	print ('Loaded flight plan ' + args[0]);
+'''
 
 def shutdown(fg, args):
 	fg.run('exit');
@@ -160,6 +141,13 @@ def fglaunch(instance_num, args_input):
 			sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
 			exit(1);
 
+	#Check if the port is available
+	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+	result = sock.connect_ex(('localhost', TELNET_ADDR_BASE + instance_num));
+	if result == 0:
+		print 'Port %s is in use, please choose another instance number to launch.' % (TELNET_ADDR_BASE + instance_num);
+		return 1;
+
 	#Launch FlightGear
 	for i in fgfs_possible_exec:
 		if os.path.isfile(i):
@@ -186,15 +174,17 @@ if __name__ == '__main__':
 		'soundoff': sound_off,
 		'pause': pause,
 		'resume': resume,
+		'shutdown': shutdown,
 		'fpslimit': fps_limit,
 		'pausemgr': pause_manager,
-		'loadroute': load_route,
-		'shutdown': shutdown,
 	};
-	instance_num_all = None;
+	instance_num_all = [];
 	try:
-		instance_num_all = [int(n) for n in sys.argv[1]];
-	except:
+		for n in sys.argv[1]:
+			if (int(n) > 4):
+				raise ValueError;
+			instance_num_all.append(int(n));
+	except Exception, e:
 		sys.stderr.write('Invalid Instance Number.\n');
 		exit(1);
 
@@ -202,7 +192,6 @@ if __name__ == '__main__':
 		exit(fglaunch(instance_num_all[0], sys.argv[3:]));
 
 	for instance_num in instance_num_all:
-		sys.stderr.write('*** Instance %d ***\n' % instance_num);
 		func = None;
 		try:
 			func = command_all[sys.argv[2]];

@@ -40,11 +40,7 @@ If FLIGHT_PLAN is specified,
 * The simulation will be paused when the remaining route is short than 20 nmi  
   You can append command `--prop:/autopilot/pausemgr-dist=-1` in `fgfs_options` to deactivate Pause Manager.
 
-`loadroute FLIGHT_PLAN`:
-
-Load flight plan from file specified by FLIGHT_PLAN.
-
-`pause/resume`
+`pause` `resume`
 
 Pause/Resume simulation.
 
@@ -62,7 +58,7 @@ Print an report of FlightGear.
 
 Shutdown simulation.
 
-`soundon/soundoff`
+`soundon` `soundoff`
 
 Unmute/Mute FlightGear.
 
@@ -135,9 +131,18 @@ Patch for [Rockwell B-1B Lancer](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3
 * Changed the default target speed from 350 to 300.
 * Add the feature of *Magic Refuel*, see section *Magic Refuel* for detail.
 
+#### B-2.patch
+
+Patch for [Northrop B-2 Spirit](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.4/B-2_20140909.zip):
+
+* Fixed the missing engine sound.
+* Fixed the misplaced hotspots.
+* Changed the vertical speed under Altitude Hold mode.
+* Add the feature of *Magic Refuel*, see section *Magic Refuel* for detail.
+
 #### Magic Refuel
 
-Perform an aerial refuel for B-1B Lancer, but without the presense of tanker, and the aircraft's speed and altitude will not changed. Which will make you free from all the difficulties of performing a real aeiral refueling.
+Perform an aerial refuel for __B-1B Lancer__ and __B-2 Spirit__, but without the presense of tanker, and the aircraft's speed and altitude will not changed. Which will make you free from all the difficulties of performing a real aeiral refueling.
 
 Usage:
 
@@ -147,7 +152,7 @@ Usage:
 
 #### Magic Refuel Daemon
 
-Automatically activate _Magic Refuel_ for B-1B Lancer when it is going to reach a specific waypoint, which is called Refuel Point.
+Automatically activate _Magic Refuel_ for __B-1B Lancer__ and __B-2 Spirit__ when it is going to reach a specific waypoint, which is called Refuel Point.
 
 To define a Refuel Point, you should edit the flight plan XML file directly. Find out the waypoint you'd like to mark as a Refuel Point, then append `-REFUEL` after the waypoint ID.
 
