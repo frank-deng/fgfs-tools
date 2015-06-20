@@ -2,8 +2,6 @@
 --callsign='Frank'
 --enable-horizon-effect
 --enable-specular-highlight
-#--disable-real-weather-fetch
-#--telnet=medium,dir,100,localhost,5401,style
 --time-match-real
 
 #For Marble map use

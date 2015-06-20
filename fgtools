@@ -5,62 +5,54 @@ import sys, socket, getopt, os, subprocess, time, platform;
 import xml.etree.ElementTree as ET;
 from FGTelnet import FGTelnet;
 
-TELNET_ADDR_BASE = 5400;
+MAX_INSTANCE_NUM = 5;
 
-def get_report(fg, args):
+def get_report(instance_num, fg, args):
+	print 'Instance ID:            ' + str(instance_num);
+	print 'Aircraft:               ' + fg['/sim/description'];
 	print 'Real World Time:        ' + fg['/sim/time/real/string'];
 	print 'UTC Time:               ' + fg['/sim/time/utc/string'];
 	print 'Local Time:             ' + fg['/instrumentation/clock/local-short-string'];
-	print 'Aircraft:               ' + fg['/sim/description'];
 	print 'Position (lat lon):     %.6f %6f' % (fg['/position/latitude-deg'], fg['/position/longitude-deg']);
-	print 'Total Distance:         %.2fnmi' % (fg['/autopilot/route-manager/total-distance']);
-	print 'Distance Remaining:     %.2fnmi' % (fg['/autopilot/route-manager/distance-remaining-nm']);
-	print 'Distance Elapsed:       %.2fnmi' % (fg['/autopilot/route-manager/total-distance'] - fg['/autopilot/route-manager/distance-remaining-nm']);
-	print 'Flight Time:            ' + fg['/autopilot/route-manager/flight-time-string'];
-	print 'Estimated Time Enroute: ' + (fg['/autopilot/route-manager/ete-string']);
+
+	if (fg['/autopilot/route-manager/active']):
+		dist_total = fg['/autopilot/route-manager/total-distance'];
+		dist_remaining = fg['/autopilot/route-manager/distance-remaining-nm'];
+		print 'Total Distance:         %.2fnmi' % (dist_total);
+		print 'Distance Remaining:     %.2fnmi' % (dist_remaining);
+		print 'Distance Elapsed:       %.2fnmi' % (dist_total - dist_remaining);
+		print 'Flight Time:            ' + fg['/autopilot/route-manager/flight-time-string'];
+		print 'Estimated Time Enroute: ' + fg['/autopilot/route-manager/ete-string'];
+
 	print 'Fuel Remaining:         %.2f%%' % (fg['/consumables/fuel/total-fuel-norm'] * 100.0);
+
 	print 'Paused:                 ' + str(fg['/sim/freeze/clock'] and fg['/sim/freeze/master']);
 	print 'Crashed:                ' + str(fg['/sim/crashed']);
 	print 'FPS Limit:              %d' % int(fg['/sim/frame-rate-throttle-hz']);
 	print 'Current FPS:            %d' % int(fg['/sim/frame-rate']);
 	print 'Frame Latency:          %dms' % int(fg['/sim/frame-latency-max-ms']);
-	pausemgr_dist = fg['/autopilot/pausemgr-dist'];
-	if (pausemgr_dist <= 0 ):
-		pausemgr_dist = 'Inactive';
-	else:
-		pausemgr_dist = 'Pause sim at ' + str(pausemgr_dist) + 'nmi';
-	print 'Pause Manager:          ' + pausemgr_dist;
+
 	print '';
 
-def sound_on(fg, args):
+def sound_on(instance_num, fg, args):
 	fg['/sim/sound/enabled'] = 1;
 	print('Sound on.');
 	return 0;
 
-def sound_off(fg, args):
+def sound_off(instance_num, fg, args):
 	fg['/sim/sound/enabled'] = 0;
 	print('Sound off.');
 	return 0;
 
-def pause(fg, args):
+def pause(instance_num, fg, args):
 	fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 1;
 	print('Simulation paused.');
 
-def resume(fg, args):
+def resume(instance_num, fg, args):
 	fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 0;
 	print('Simulation resumed.');
 
-def pause_manager(fg, args):
-	try:
-		if (0 == len(args)):
-			raise ValueError;
-		target_dist = float(args[0]);
-		fg['/autopilot/pausemgr-dist'] = target_dist;
-	except ValueError:
-		sys.stderr.write('Invalid argument.');
-		return 1;
-
-def fps_limit(fg, args):
+def fps_limit(instance_num, fg, args):
 	try:
 		if (0 == len(args)):
 			raise ValueError;
@@ -77,49 +69,46 @@ def fps_limit(fg, args):
 		sys.stderr.write('Invalid argument.');
 		return 1;
 
-'''
-def load_route(fg, args):
-	if (len(args) < 1):
-		sys.stderr.write('Flight plan file not specified.');
-		return 1;
-		
-	fg['/autopilot/route-manager/file-path'] = os.path.abspath(args[0]);
-	fg['/autopilot/route-manager/input'] = '@LOAD';
-	fg['/autopilot/route-manager/departure/sid'] = 'DEFAULT';
-	fg['/autopilot/route-manager/destination/approach'] = 'DEFAULT';
-	fg['/autopilot/route-manager/input'] = '@ACTIVATE';
-	fg['/autopilot/route-manager/input'] = '@JUMP0';
-	print ('Loaded flight plan ' + args[0]);
-'''
-
-def shutdown(fg, args):
+def shutdown(instance_num, fg, args):
 	fg.run('exit');
 
-def fglaunch(instance_num, args_input):
-	#Check if reboot is required
-	if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
-		print 'Please reboot your machine before launching FlightGear.';
-		return 1;
-
+def fglaunch(instance_num, fg_port, args_input):
 	fgfs_possible_exec = [
 		'/usr/bin/fgfs',
 		'/usr/local/bin/fgfs',
 		os.getenv('FGFS_EXEC'),
 	];
+	fp_file = None;
+	pausemgr_dist = 20;
+	telnet_port = fg_port[0];
+	httpd_port = fg_port[1];
 
+	#Process Command Line
 	try:
-		opts, args = getopt.getopt(args_input, '+f:');
+		opts, args = getopt.getopt(args_input, '+f:p:');
 		if (len(args) < 1):
 			raise Exception;
-	except Exception, getopt.GetoptError:
-		print 'Usage: launch [-f FLIGHT_PLAN] AIRCRAFT [Other_fgfs_Arguments] ...';
+		aircraft = args[0];
+		for opt, arg in opts:
+			if opt == '-f':
+				fp_file = os.path.abspath(arg);
+			if opt == '-p':
+				pausemgr_dist = int(arg);
+	except Exception, e:
+		print 'Usage: %s launch [-f FLIGHT_PLAN] [-p PAUSE_DISTANCE_NMI] Aircraft [Other_fgfs_Arguments] ...' % sys.argv[0];
 		return 1;
 
-	fp_file = None;
-	aircraft = args[0];
-	for opt, arg in opts:
-		if opt == '-f':
-			fp_file = os.path.abspath(arg);
+	#Check if reboot is required
+	if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
+		print 'Please reboot your machine before launching FlightGear.';
+		return 1;
+
+	#Check if the port is available
+	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+	result = sock.connect_ex(('localhost', telnet_port));
+	if result == 0:
+		print 'Port %d is in use, please choose another instance number to launch.' % (telnet_port);
+		return 1;
 
 	#Get runway to takeoff
 	if (None == fp_file):
@@ -134,19 +123,12 @@ def fglaunch(instance_num, args_input):
 				'--airport='+airport,
 				'--runway='+runway,
 				'--flight-plan='+fp_file,
-				'--prop:/autopilot/pausemgr-dist=20',
+				'--prop:/autopilot/pausemgr-dist='+str(pausemgr_dist),
 				'--prop:/sim/rendering/particles=0'
 			];
 		except Exception, e:
 			sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
 			exit(1);
-
-	#Check if the port is available
-	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-	result = sock.connect_ex(('localhost', TELNET_ADDR_BASE + instance_num));
-	if result == 0:
-		print 'Port %s is in use, please choose another instance number to launch.' % (TELNET_ADDR_BASE + instance_num);
-		return 1;
 
 	#Launch FlightGear
 	for i in fgfs_possible_exec:
@@ -160,7 +142,8 @@ def fglaunch(instance_num, args_input):
 	return subprocess.call(
 		[
 			fgfs_exec
-			,'--telnet=socket,bi,60,,%d,tcp' % (TELNET_ADDR_BASE + instance_num)
+			,'--telnet=socket,bi,60,,%d,tcp' % (telnet_port)
+			,'--httpd=' + str(httpd_port)
 			,'--aircraft=' + aircraft
 		]
 		+ fp_params
@@ -176,20 +159,21 @@ if __name__ == '__main__':
 		'resume': resume,
 		'shutdown': shutdown,
 		'fpslimit': fps_limit,
-		'pausemgr': pause_manager,
+		'launch': fglaunch,
 	};
 	instance_num_all = [];
+	fg_telnet_ports = os.getenv('FG_TELNET_PORTS').split(',');
+	fg_httpd_ports = os.getenv('FG_HTTPD_PORTS').split(',');
+	status = 0;
+
 	try:
 		for n in sys.argv[1]:
-			if (int(n) > 4):
+			if (int(n) > MAX_INSTANCE_NUM - 1):
 				raise ValueError;
 			instance_num_all.append(int(n));
 	except Exception, e:
 		sys.stderr.write('Invalid Instance Number.\n');
 		exit(1);
-
-	if ('launch' == sys.argv[2]):
-		exit(fglaunch(instance_num_all[0], sys.argv[3:]));
 
 	for instance_num in instance_num_all:
 		func = None;
@@ -199,14 +183,21 @@ if __name__ == '__main__':
 			sys.stderr.write('Invalid Command.\n');
 			exit(1);
 
+		if (func == fglaunch):
+			exit(func(instance_num,
+				(int(fg_telnet_ports[instance_num]), int(fg_httpd_ports[instance_num])),
+				sys.argv[3:]));
+
 		fg = None;
 		try:
-			fg = FGTelnet(port = TELNET_ADDR_BASE + instance_num);
-			func(fg, sys.argv[3:]);
+			fg = FGTelnet(port = fg_telnet_ports[instance_num]);
+			func(instance_num, fg, sys.argv[3:]);
 			fg.quit();
 		except IndexError:
 			sys.stderr.write("Connection Timeout.\n");
+			status = 2;
 		except Exception, e:
 			sys.stderr.write(str(e) + "\n");
-	exit(0);
+			status = 2;
+	exit(status);
 
