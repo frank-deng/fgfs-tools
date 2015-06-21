@@ -1,6 +1,6 @@
-diff -ruN B-1B/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
---- B-1B/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml	2015-01-26 19:19:29.863873466 +0800
+diff -ruN B-1B.orig/B-1B-set.xml B-1B/B-1B-set.xml
+--- B-1B.orig/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
++++ B-1B/B-1B-set.xml	2015-06-21 22:54:42.119004910 +0800
 @@ -458,7 +458,7 @@
        <target-pitch-deg type="float">0</target-pitch-deg>
        <target-vfps type="float">0</target-vfps>
@@ -10,17 +10,18 @@ diff -ruN B-1B/B-1B-set.xml /home/frank/.fgdata/Aircraft/B-1B/B-1B-set.xml
        <climb-out-initial-pitch-deg type="float">6.0</climb-out-initial-pitch-deg>
        <climb-out-final-pitch-deg type="float">3.0</climb-out-final-pitch-deg>
        <target-climb-rate-fpm type="float">2000.0</target-climb-rate-fpm>
-@@ -737,6 +737,7 @@
- 		<file>Aircraft/B-1B/Nasal/guide_to_target.nas</file>
- 		<file>Aircraft/B-1B/Nasal/wso_mfd.nas</file>
- 		<file>Aircraft/B-1B/Nasal/fuel_load.nas</file>
-+		<file>Aircraft/B-1B/Nasal/magic_refuel.nas</file>
- 	</weapons>
-         <fuel>
- 		<file>Aircraft/Generic/aar.nas</file>
-diff -ruN B-1B/Nasal/b1b.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/b1b.nas
---- B-1B/Nasal/b1b.nas	2010-12-18 07:25:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/b1b.nas	2015-03-22 10:44:53.220827524 +0800
+@@ -743,4 +743,8 @@
+ 	</fuel>
+ </nasal>
+ 
++<limits>
++	<estimated-range-nm>7700</estimated-range-nm>
++</limits>
++
+ </PropertyList>
+diff -ruN B-1B.orig/Nasal/b1b.nas B-1B/Nasal/b1b.nas
+--- B-1B.orig/Nasal/b1b.nas	2010-12-18 07:25:28.000000000 +0800
++++ B-1B/Nasal/b1b.nas	2015-03-22 10:44:53.220827524 +0800
 @@ -772,4 +772,31 @@
      ltext = "Sorry, Duke Nukem not available yet on this plane(t)!";
    screen.log.write(ltext);
@@ -55,69 +56,17 @@ diff -ruN B-1B/Nasal/b1b.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/b1b.nas
 +}
 +settimer(next_waypoint, 0);
 +
-diff -ruN B-1B/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas
---- B-1B/Nasal/magic_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-1B/Nasal/magic_refuel.nas	2015-06-20 14:11:34.158418287 +0800
-@@ -0,0 +1,62 @@
-+setprop('/armament/magic-refuel/signal', 0);
-+setprop('/armament/magic-refuel/amount', '0.97');
-+
-+var magic_refuel = func(){
-+	var target_amount = getprop('/armament/magic-refuel/amount');
-+
-+	#Refuel speed in gal-us/second.
-+	var refuel_speed = 27;
-+	var refuel_tanks = 0;
-+
-+	if (!getprop('/armament/magic-refuel/signal')
-+		or getprop('/consumables/fuel/total-fuel-norm') >= target_amount) {
-+		screen.log.write('Refuel Complete!!!', 0, 1, 0);
-+		setprop('/armament/magic-refuel/signal', '0');
-+		return;
-+	}
-+
-+	for (var i = 0; i < 8; i += 1) {
-+		var amount = getprop('/consumables/fuel/tank[' ~ i ~ ']/level-gal_us');
-+		var capacity = getprop('/consumables/fuel/tank[' ~ i ~ ']/capacity-gal_us');
-+		if (amount < capacity - 0.1) {
-+			refuel_tanks += 1;
-+		}
-+	}
-+
-+	for (var i = 0; i < 8; i += 1) {
-+		var amount = getprop('/consumables/fuel/tank[' ~ i ~ ']/level-gal_us');
-+		var capacity = getprop('/consumables/fuel/tank[' ~ i ~ ']/capacity-gal_us');
-+		amount = amount + (refuel_speed / refuel_tanks);
-+		if (amount >= capacity) {
-+			amount = capacity;
-+		}
-+		setprop('/consumables/fuel/tank[' ~ i ~ ']/level-gal_us', amount);
-+		if (!getprop('/consumables/fuel/tank[' ~ i ~ ']/selected')) {
-+			setprop('/consumables/fuel/tank[' ~ i ~ ']/selected', 1);
-+		}
-+	}
-+
-+	settimer(magic_refuel, 1);
-+}
-+setlistener('/armament/magic-refuel/signal', func{
-+	if (getprop('/armament/magic-refuel/signal')){
-+		magic_refuel();
-+	}
-+});
-+
-+setlistener('/autopilot/route-manager/wp/id', func {
-+	if (getprop('/autopilot/route-manager/active'))
-+	{
-+		fuel_norm_now = getprop('/consumables/fuel/total-fuel-norm');
-+		fuel_norm_target = getprop('/armament/magic-refuel/amount');
-+		wp_info = split('-', getprop('/autopilot/route-manager/wp/id'));
-+		if (size(wp_info) > 1
-+			and 'REFUEL' == wp_info[1]
-+			and fuel_norm_now < fuel_norm_target
-+			and !getprop('/armament/magic-refuel/signal'))
-+		{
-+			setprop('/armament/magic-refuel/signal', 1);
-+		}
-+	}
-+});
-+
+diff -ruN B-1B.orig/Systems/b1b-autopilot.xml B-1B/Systems/b1b-autopilot.xml
+--- B-1B.orig/Systems/b1b-autopilot.xml	2010-12-18 07:25:28.000000000 +0800
++++ B-1B/Systems/b1b-autopilot.xml	2015-06-21 22:45:51.883018729 +0800
+@@ -426,8 +426,8 @@
+     <config>
+       <Kp>0.25</Kp>          <!-- proportional gain -->
+       <Ki>0.0</Ki>          <!-- integral gain -->
+-      <u_min>-33.33</u_min> <!-- minimum output clamp -16.67-->
+-      <u_max>33.33</u_max>   <!-- maximum output clamp 33.33-->
++      <u_min>-16.67</u_min> <!-- minimum output clamp -16.67-->
++      <u_max>16.67</u_max>   <!-- maximum output clamp 16.67-->
+     </config>
+   </pi-simple-controller>
+ 

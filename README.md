@@ -62,7 +62,7 @@ Please copy `fgtools.nas` to `$FG_ROOT/Nasal` first, so as to get all the stuffs
 
 #### temperature
 
-A utility to display both CPU and GPU's temperature. `nvidia-smi` is used for GPU temperature at present.
+A utility to display both CPU and GPU's temperature. `nvidia-smi` is used for getting GPU temperature at present.
 
 ---
 
@@ -101,7 +101,8 @@ Patch for [747-8f](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraf
 Patch for [Rockwell B-1B Lancer](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.2/B-1B_20130823.zip):
 
 * Changed the default target speed from 350 to 300.
-* Add the feature of *Magic Refuel*, see section *Magic Refuel* for detail.
+
+---
 
 #### B-2.patch
 
@@ -110,23 +111,6 @@ Patch for [Northrop B-2 Spirit](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.
 * Fixed the missing engine sound.
 * Fixed the misplaced hotspots.
 * Changed the vertical speed under Altitude Hold mode.
-* Add the feature of *Magic Refuel*, see section *Magic Refuel* for detail.
-
-#### Magic Refuel
-
-Perform an aerial refuel for __B-1B Lancer__ and __B-2 Spirit__, but without the presense of tanker, and the aircraft's speed and altitude will not changed. Which will make you free from all the difficulties of performing a real aeiral refueling.
-
-Usage:
-
-1. Set property `/armament/magic-refuel/amount` to the amount you'd like to refuel to.
-2. Set property `/armament/magic-refuel/signal` to `1` to start refueling.
-3. You can set `/armament/magic-refuel/signal` to `0` to stop refueling.
-
-#### Magic Refuel Daemon
-
-Automatically activate _Magic Refuel_ for __B-1B Lancer__ and __B-2 Spirit__ when it is going to reach a specific waypoint, which is called Refuel Point.
-
-To define a Refuel Point, you should edit the flight plan XML file directly. Find out the waypoint you'd like to mark as a Refuel Point, then append `-REFUEL` after the waypoint ID.
 
 ---
 
@@ -134,5 +118,5 @@ To define a Refuel Point, you should edit the flight plan XML file directly. Fin
 
 Directory __Around_The_World__ contains a series of flight plans based on Jules Verne's novel _Around the World in Eighty Days_. While the whole journey takes only 8 days by Boeing 757.
 
-Directory __routes__ contains flight plans for long-haul and ultra long-haul flights designed for Boeing 777-300ER and Boeing 747-8i.
+Directory __routes__ contains flight plans for long-haul and ultra long-haul flights.
 

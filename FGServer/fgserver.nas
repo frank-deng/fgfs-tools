@@ -5,11 +5,12 @@ var refresh_fgreport = func {
 	setprop(path ~ 'real_world_time', getprop('/sim/time/real/string'));
 	setprop(path ~ 'utc_time', getprop('/sim/time/real/string'));
 	setprop(path ~ 'local_time', getprop('/instrumentation/clock/local-short-string'));
+	setprop(path ~ 'longitude', getprop('/position/longitude-deg'));
 	setprop(path ~ 'latitude', getprop('/position/latitude-deg'));
 	setprop(path ~ 'altitude', getprop('/position/altitude-ft'));
 	setprop(path ~ 'agl', getprop('/position/altitude-agl-ft'));
 	setprop(path ~ 'heading', getprop('/orientation/heading-deg'));
-	setprop(path ~ 'vertical_speed', getprop('/velocities/vertical-speed-fps') * 1000.0);
+	setprop(path ~ 'vertical_speed', getprop('/velocities/vertical-speed-fps') * 60.0);
 	props.globals.getNode(path ~ 'autopilot_active').setBoolValue(getprop('/autopilot/route-manager/active'));
 	props.globals.getNode(path ~ 'crashed').setBoolValue(getprop('/sim/crashed'));
 	props.globals.getNode(path ~ 'paused').setBoolValue(getprop('/sim/freeze/clock') and getprop('/sim/freeze/master'));

@@ -317,7 +317,7 @@
     </wp>
     <wp n="48">
       <type type="string">navaid</type>
-      <ident type="string">LHBP-REFUEL</ident>
+      <ident type="string">LHBP</ident>
       <lon type="double">19.257396</lon>
       <lat type="double">47.43553</lat>
     </wp>
@@ -569,7 +569,7 @@
     </wp>
     <wp n="90">
       <type type="string">navaid</type>
-      <ident type="string">YPPH-REFUEL</ident>
+      <ident type="string">YPPH</ident>
       <lon type="double">115.966614</lon>
       <lat type="double">-31.9396725</lat>
     </wp>
@@ -737,7 +737,7 @@
     </wp>
     <wp n="118">
       <type type="string">navaid</type>
-      <ident type="string">HECA-REFUEL</ident>
+      <ident type="string">HECA</ident>
       <lon type="double">31.40776979</lon>
       <lat type="double">30.11959231</lat>
     </wp>
@@ -965,7 +965,7 @@
     </wp>
     <wp n="156">
       <type type="string">navaid</type>
-      <ident type="string">SBGR-REFUEL</ident>
+      <ident type="string">SBGR</ident>
       <lon type="double">-46.46967522</lon>
       <lat type="double">-23.43233312</lat>
     </wp>
@@ -1169,7 +1169,7 @@
     </wp>
     <wp n="190">
       <type type="string">navaid</type>
-      <ident type="string">NZCH-REFUEL</ident>
+      <ident type="string">NZCH</ident>
       <lon type="double">172.5346832</lon>
       <lat type="double">-43.48698477</lat>
     </wp>
@@ -1361,7 +1361,7 @@
     </wp>
     <wp n="222">
       <type type="string">navaid</type>
-      <ident type="string">CYYD-REFUEL</ident>
+      <ident type="string">CYYD</ident>
       <lon type="double">-127.1825875</lon>
       <lat type="double">54.8248115</lat>
     </wp>
@@ -1584,13 +1584,13 @@
     <wp n="259">
       <type type="string">navaid</type>
       <ident type="string">EED</ident>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">6302</altitude-ft>
       <lon type="double">-114.4741056</lon>
       <lat type="double">34.76600556</lat>
     </wp>
     <wp n="260">
       <type type="string">navaid</type>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">6300</altitude-ft>
       <ident type="string">HEC</ident>
       <lon type="double">-116.4629222</lon>
       <lat type="double">34.79701944</lat>

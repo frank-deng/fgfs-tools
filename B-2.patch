@@ -1,6 +1,6 @@
-diff -ruN B-2/B-2-set.xml /home/frank/.fgdata/Aircraft/B-2/B-2-set.xml
---- B-2/B-2-set.xml	2010-12-17 17:25:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-2/B-2-set.xml	2015-06-20 14:08:41.446413662 +0800
+diff -ruN B-2.orig/B-2-set.xml B-2/B-2-set.xml
+--- B-2.orig/B-2-set.xml	2010-12-18 07:25:28.000000000 +0800
++++ B-2/B-2-set.xml	2015-06-21 22:43:21.483022649 +0800
 @@ -170,10 +170,10 @@
  	      <name>O</name>
  	      <desc>open/close cockpit access hatch</desc>
@@ -31,27 +31,29 @@ diff -ruN B-2/B-2-set.xml /home/frank/.fgdata/Aircraft/B-2/B-2-set.xml
  	
  		
    </keyboard>
-@@ -345,6 +345,7 @@
- 	<b2>
- 		<file>Aircraft/B-2/Nasal/b2.nas</file>
- 		<script>init_delay();</script>
-+		<file>Aircraft/B-2/Nasal/magic_refuel.nas</file>
- 	</b2>
- 	<!--<b2-fuel>
- 		<module>fuel</module>
-diff -ruN B-2/Models/b2-spirit.xml /home/frank/.fgdata/Aircraft/B-2/Models/b2-spirit.xml
---- B-2/Models/b2-spirit.xml	2010-12-17 17:25:30.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-2/Models/b2-spirit.xml	2015-06-20 11:34:20.310165657 +0800
-@@ -1296,4 +1296,4 @@
+@@ -353,4 +353,8 @@
+ 
+  </nasal>
+ 
++<limits>
++	<estimated-range-nm>7700</estimated-range-nm>
++</limits>
++
+ </PropertyList>
+diff -ruN B-2.orig/Models/b2-spirit.xml B-2/Models/b2-spirit.xml
+--- B-2.orig/Models/b2-spirit.xml	2010-12-18 07:25:29.000000000 +0800
++++ B-2/Models/b2-spirit.xml	2015-06-21 22:47:43.987015808 +0800
+@@ -1296,4 +1296,5 @@
  
  
   
 -</PropertyList>
 \ No newline at end of file
 +</PropertyList>
-diff -ruN B-2/Models/Instruments-3d/apmode.xml /home/frank/.fgdata/Aircraft/B-2/Models/Instruments-3d/apmode.xml
---- B-2/Models/Instruments-3d/apmode.xml	2010-12-17 17:25:28.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-2/Models/Instruments-3d/apmode.xml	2015-06-20 11:38:05.778171694 +0800
++
+diff -ruN B-2.orig/Models/Instruments-3d/apmode.xml B-2/Models/Instruments-3d/apmode.xml
+--- B-2.orig/Models/Instruments-3d/apmode.xml	2010-12-18 07:25:28.000000000 +0800
++++ B-2/Models/Instruments-3d/apmode.xml	2015-06-20 11:38:05.778171694 +0800
 @@ -12,17 +12,17 @@
  	 <top-left>
  		 <x-m>0.04</x-m>
@@ -80,9 +82,9 @@ diff -ruN B-2/Models/Instruments-3d/apmode.xml /home/frank/.fgdata/Aircraft/B-2/
 -</PropertyList>
 \ No newline at end of file
 +</PropertyList>
-diff -ruN B-2/Models/Instruments-3d/glas_3.xml /home/frank/.fgdata/Aircraft/B-2/Models/Instruments-3d/glas_3.xml
---- B-2/Models/Instruments-3d/glas_3.xml	2010-12-17 17:25:30.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-2/Models/Instruments-3d/glas_3.xml	2015-06-20 11:41:14.630176752 +0800
+diff -ruN B-2.orig/Models/Instruments-3d/glas_3.xml B-2/Models/Instruments-3d/glas_3.xml
+--- B-2.orig/Models/Instruments-3d/glas_3.xml	2010-12-18 07:25:29.000000000 +0800
++++ B-2/Models/Instruments-3d/glas_3.xml	2015-06-20 11:41:14.630176752 +0800
 @@ -12,17 +12,17 @@
  	 <top-left>
  		 <x-m>0.04</x-m>
@@ -111,9 +113,9 @@ diff -ruN B-2/Models/Instruments-3d/glas_3.xml /home/frank/.fgdata/Aircraft/B-2/
 -</PropertyList>
 \ No newline at end of file
 +</PropertyList>
-diff -ruN B-2/Nasal/b2.nas /home/frank/.fgdata/Aircraft/B-2/Nasal/b2.nas
---- B-2/Nasal/b2.nas	2010-12-17 17:25:30.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-2/Nasal/b2.nas	2015-06-20 12:05:50.562216276 +0800
+diff -ruN B-2.orig/Nasal/b2.nas B-2/Nasal/b2.nas
+--- B-2.orig/Nasal/b2.nas	2010-12-18 07:25:30.000000000 +0800
++++ B-2/Nasal/b2.nas	2015-06-20 12:05:50.562216276 +0800
 @@ -243,7 +243,7 @@
  
  if(WOW == 1) {
@@ -163,75 +165,9 @@ diff -ruN B-2/Nasal/b2.nas /home/frank/.fgdata/Aircraft/B-2/Nasal/b2.nas
 +}
 +settimer(next_waypoint, 0);
 +
-diff -ruN B-2/Nasal/magic_refuel.nas /home/frank/.fgdata/Aircraft/B-2/Nasal/magic_refuel.nas
---- B-2/Nasal/magic_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-2/Nasal/magic_refuel.nas	2015-06-20 14:08:12.326412882 +0800
-@@ -0,0 +1,62 @@
-+setprop('/command/magic-refuel/signal', 0);
-+setprop('/command/magic-refuel/amount', '0.97');
-+
-+var magic_refuel = func(){
-+	var target_amount = getprop('/command/magic-refuel/amount');
-+
-+	#Refuel speed in gal-us/second.
-+	var refuel_speed = 27;
-+	var refuel_tanks = 0;
-+
-+	if (!getprop('/command/magic-refuel/signal')
-+		or getprop('/consumables/fuel/total-fuel-norm') >= target_amount) {
-+		screen.log.write('Refuel Complete!!!', 0, 1, 0);
-+		setprop('/command/magic-refuel/signal', '0');
-+		return;
-+	}
-+
-+	for (var i = 0; i < 6; i += 1) {
-+		var amount = getprop('/consumables/fuel/tank[' ~ i ~ ']/level-gal_us');
-+		var capacity = getprop('/consumables/fuel/tank[' ~ i ~ ']/capacity-gal_us');
-+		if (amount < capacity - 0.1) {
-+			refuel_tanks += 1;
-+		}
-+	}
-+
-+	for (var i = 0; i < 6; i += 1) {
-+		var amount = getprop('/consumables/fuel/tank[' ~ i ~ ']/level-gal_us');
-+		var capacity = getprop('/consumables/fuel/tank[' ~ i ~ ']/capacity-gal_us');
-+		amount = amount + (refuel_speed / refuel_tanks);
-+		if (amount >= capacity) {
-+			amount = capacity;
-+		}
-+		setprop('/consumables/fuel/tank[' ~ i ~ ']/level-gal_us', amount);
-+		if (!getprop('/consumables/fuel/tank[' ~ i ~ ']/selected')) {
-+			setprop('/consumables/fuel/tank[' ~ i ~ ']/selected', 1);
-+		}
-+	}
-+
-+	settimer(magic_refuel, 1);
-+}
-+setlistener('/command/magic-refuel/signal', func{
-+	if (getprop('/command/magic-refuel/signal')){
-+		magic_refuel();
-+	}
-+});
-+
-+setlistener('/autopilot/route-manager/wp/id', func {
-+	if (getprop('/autopilot/route-manager/active'))
-+	{
-+		fuel_norm_now = getprop('/consumables/fuel/total-fuel-norm');
-+		fuel_norm_target = getprop('/command/magic-refuel/amount');
-+		wp_info = split('-', getprop('/autopilot/route-manager/wp/id'));
-+		if (size(wp_info) > 1
-+			and 'REFUEL' == wp_info[1]
-+			and fuel_norm_now < fuel_norm_target
-+			and !getprop('/command/magic-refuel/signal'))
-+		{
-+			setprop('/command/magic-refuel/signal', 1);
-+		}
-+	}
-+});
-+
-diff -ruN B-2/Sounds/B-2-sound.xml /home/frank/.fgdata/Aircraft/B-2/Sounds/B-2-sound.xml
---- B-2/Sounds/B-2-sound.xml	2010-12-17 17:25:30.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-2/Sounds/B-2-sound.xml	2015-06-20 14:34:05.294454470 +0800
+diff -ruN B-2.orig/Sounds/B-2-sound.xml B-2/Sounds/B-2-sound.xml
+--- B-2.orig/Sounds/B-2-sound.xml	2010-12-18 07:25:30.000000000 +0800
++++ B-2/Sounds/B-2-sound.xml	2015-06-20 14:34:05.294454470 +0800
 @@ -22,7 +22,7 @@
  	</orientation>
  	<volume>
@@ -527,16 +463,14 @@ diff -ruN B-2/Sounds/B-2-sound.xml /home/frank/.fgdata/Aircraft/B-2/Sounds/B-2-s
        </pitch>
      </gear>
  
-diff -ruN B-2/Systems/B-2-autopilot.xml /home/frank/.fgdata/Aircraft/B-2/Systems/B-2-autopilot.xml
---- B-2/Systems/B-2-autopilot.xml	2014-01-27 15:27:48.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/B-2/Systems/B-2-autopilot.xml	2015-06-20 14:15:25.510424483 +0800
-@@ -437,8 +437,8 @@
-     <config>
+diff -ruN B-2.orig/Systems/B-2-autopilot.xml B-2/Systems/B-2-autopilot.xml
+--- B-2.orig/Systems/B-2-autopilot.xml	2014-01-28 05:27:48.000000000 +0800
++++ B-2/Systems/B-2-autopilot.xml	2015-06-21 22:45:28.655019335 +0800
+@@ -438,7 +438,7 @@
        <Kp>0.25</Kp>          <!-- proportional gain -->
        <Ki>0.0</Ki>          <!-- integral gain -->
--      <u_min>-16.67</u_min> <!-- minimum output clamp -->
+       <u_min>-16.67</u_min> <!-- minimum output clamp -->
 -      <u_max>40.0</u_max>   <!-- maximum output clamp -->
-+      <u_min>-33.33</u_min> <!-- minimum output clamp -->
 +      <u_max>16.67</u_max>   <!-- maximum output clamp -->
      </config>
    </pi-simple-controller>
