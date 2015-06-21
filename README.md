@@ -101,6 +101,7 @@ Patch for [747-8f](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraf
 Patch for [Rockwell B-1B Lancer](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.2/B-1B_20130823.zip):
 
 * Changed the default target speed from 350 to 300.
+* Changed the vertical speed under Altitude Hold mode.
 
 ---
 
@@ -109,7 +110,7 @@ Patch for [Rockwell B-1B Lancer](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3
 Patch for [Northrop B-2 Spirit](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.4/B-2_20140909.zip):
 
 * Fixed the missing engine sound.
-* Fixed the misplaced hotspots.
+* Fixed the misplaced hotspots for selecting pilot mode.
 * Changed the vertical speed under Altitude Hold mode.
 
 ---
