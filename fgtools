@@ -24,14 +24,10 @@ def get_report(instance_num, fg, args):
 		print 'Flight Time:            ' + fg['/autopilot/route-manager/flight-time-string'];
 		print 'Estimated Time Enroute: ' + fg['/autopilot/route-manager/ete-string'];
 
-	print 'Fuel Remaining:         %.2f%%' % (fg['/consumables/fuel/total-fuel-norm'] * 100.0);
-
 	print 'Paused:                 ' + str(fg['/sim/freeze/clock'] and fg['/sim/freeze/master']);
 	print 'Crashed:                ' + str(fg['/sim/crashed']);
-	print 'FPS Limit:              %d' % int(fg['/sim/frame-rate-throttle-hz']);
-	print 'Current FPS:            %d' % int(fg['/sim/frame-rate']);
-	print 'Frame Latency:          %dms' % int(fg['/sim/frame-latency-max-ms']);
-
+	print 'FPS Limit:              ' + str(int(fg['/sim/frame-rate-throttle-hz']));
+	print 'Current FPS:            ' + str(int(fg['/sim/frame-rate']));
 	print '';
 
 def sound_on(instance_num, fg, args):
@@ -54,8 +50,6 @@ def resume(instance_num, fg, args):
 
 def fps_limit(instance_num, fg, args):
 	try:
-		if (0 == len(args)):
-			raise ValueError;
 		target_fps = int(args[0]);
 		if (target_fps == 0):
 			fg['/sim/gui/frame-rate-throttled'] = 0;
@@ -95,7 +89,7 @@ def fglaunch(instance_num, fg_port, args_input):
 			if opt == '-p':
 				pausemgr_dist = int(arg);
 	except Exception, e:
-		print 'Usage: %s launch [-f FLIGHT_PLAN] [-p PAUSE_DISTANCE_NMI] Aircraft [Other_fgfs_Arguments] ...' % sys.argv[0];
+		print 'Usage: %s launch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [Other_fgfs_Arguments] ...' % sys.argv[0];
 		return 1;
 
 	#Check if reboot is required

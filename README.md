@@ -29,7 +29,7 @@ Available Commands:
 * If FPS is given, maximum FPS will be set as the given FPS value.
 * The value of FPS can be 0 or 15-70.
 
-`launch [-f FLIGHT_PLAN] AIRCRAFT [fgfs_options]`:
+`launch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [fgfs_options] ...`:
 
 Start FlightGear with the aircraft specified.
 
@@ -37,18 +37,12 @@ If FLIGHT_PLAN is specified,
 
 * The aircraft will be placed at the departure airport & runway specified by the Flight Plan.
 * ILS frequency will be automatically prepared for the distination runway.
-* The simulation will be paused when the remaining route is short than 20 nmi  
-  You can append command `--prop:/autopilot/pausemgr-dist=-1` in `fgfs_options` to deactivate Pause Manager.
+* The simulation will be paused when the remaining route is short than 20nmi  
+  You can specify `PAUSE_DISTANCE_NMI` to set a distance other than 20nmi for Pause Manager.
 
 `pause` `resume`
 
 Pause/Resume simulation.
-
-`pausemgr [DISTANCE]`:
-
-* If DISTANCE is not given, show the state of Pause Manager.
-* If DISTANCE is given as a positive number, pausemgr will be activated with the given DISTANCE.
-* If DISTANCE is given as a negative number, pausemgr will be deactivated.
 
 `report`
 
@@ -66,31 +60,9 @@ Please copy `fgtools.nas` to `$FG_ROOT/Nasal` first, so as to get all the stuffs
 
 ---
 
-#### temperature-logger
+#### temperature
 
-Log CPU and GPU's temperature, so as to check whether the unexpected poweroff of the machine is caused by the overheated CPU/GPU.
-
-The format of the log is as follows: `TIME CPU_TEMPERATURE GPU_TEMPERATURE`, each column is tab-separated.
-
----
-
-#### Pause Manager
-
-Automatically pause the simulation when the remaining route is shorter than a given distance or the airplane crashed.
-
-This feature is included in `fgtools.nas`.
-
-Usage:
-
-Set property `/autopilot/pausemgr-dist` with a positive value will activate Pause Manager. A negative value will deactive Pause Manager.
-
-When the remaining route is shorter than the distance specified by property `/autopilot/pausemgr-dist` or the airplane crashed:
-
-* The simulation will be paused.
-* FPS will be reduced to 10fps before the simulation resumed. Once the simulation resumed, the FPS will be set to 60fps.
-* Property `/autopilot/pausemgr-dist` will be set to **-1**, which means the Pause Manager is inactive.
-
-You can change the value of property `/autopilot/pausemgr-dist` at any time to adjust the distance or activate/deactivate Pause Manager.
+A utility to display both CPU and GPU's temperature. `nvidia-smi` is used for GPU temperature at present.
 
 ---
 

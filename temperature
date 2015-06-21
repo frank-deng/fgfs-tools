@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+
+import sys, subprocess;
+import xml.etree.ElementTree as ET;
+
+def cpu_temp():
+	fp = open('/sys/class/thermal/thermal_zone0/temp', 'r');
+	text = fp.readline();
+	fp.close();
+	result_c = int((float)(text) / 1000.0);
+	result_f = int(result_c * 9.0 / 5.0 + 32.0);
+	return (result_c, result_f);
+
+def gpu_temp():
+	# Fetch XML data from nvidia-smi
+	nvidia_smi = subprocess.Popen(['nvidia-smi', '-q', '-x'], stdout=subprocess.PIPE);
+	stdout, stderr = nvidia_smi.communicate();
+	if (nvidia_smi.returncode != 0):
+		raise Exception('Failed to fetch GPU Temperature.');
+
+	# Parse XML data
+	tree = ET.fromstring(stdout);
+	result_c = int(list(tree.findall('./gpu/temperature/gpu_temp'))[0].text.replace(' C', ''));
+	result_f = int(result_c * 9.0 / 5.0 + 32.0);
+	return (result_c, result_f);
+
+if __name__ == '__main__':
+	status = 0;
+	try:
+		print('CPU Temperature: %d C / %d F' % cpu_temp());
+	except Exception, e:
+		sys.stderr.write(str(e) + '\n');
+		status = 1;
+
+	try:
+		print('GPU Temperature: %d C / %d F' % gpu_temp());
+	except Exception, e:
+		sys.stderr.write(str(e) + '\n');
+		status = 1;
+
+	exit(status);
+
