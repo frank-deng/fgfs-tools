@@ -7,25 +7,33 @@ $gpu_temp = gpu_temperature();
 $cpu_temp = ($cpu_temp ? (string)$cpu_temp.'&deg;C' : 'N/A');
 $gpu_temp = ($gpu_temp ? (string)$gpu_temp.'&deg;C' : 'N/A');
 
+//Fetch reports for each instance
+$report_all = Array();
+for ($i = 0; $i < FG_INSTANCE_COUNT; $i++) {
+	$r = fgfs_report($i);
+	if ($r){
+		$report_all[$i] = $r;
+	}
+}
+
 ?><!DOCTYPE html>
 <html>
 	<head>
-		<meta name='viewport' id='viewport' content='width=400px, target-densitydpi=device-dpi, user-scalable=no'/>
+		<meta name='viewport' id='viewport' content='width=746px, target-densitydpi=device-dpi, user-scalable=yes'/>
+		<meta http-equiv='refresh' content='60'/>
 		<meta charset='UTF-8'/>
 		<title>FlightGear Report</title>
-		<link href='style.css' rel='stylesheet' type='text/css'/>
 		<style type='text/css'>
 			body {
-				max-width: 620px;
 				margin-left: auto;
 				margin-right: auto;
 				padding: 3px 10px;
 				font-size: 14px;
+				max-width: 740px;
 			}
 			table { 
 				border-spacing: 0;
 				border-collapse: collapse;
-				margin-top: 6px;
 			}
 			.warning {
 				color: red;
@@ -34,7 +42,7 @@ $gpu_temp = ($gpu_temp ? (string)$gpu_temp.'&deg;C' : 'N/A');
 			h2 {
 				font-size: 16px;
 				margin-top: 10px;
-				margin-bottom: 0px;
+				margin-bottom: 10px;
 				padding-bottom: 2px;
 				border-bottom: 1px solid black;
 			}
@@ -45,6 +53,64 @@ $gpu_temp = ($gpu_temp ? (string)$gpu_temp.'&deg;C' : 'N/A');
 			table td {
 				padding-right: 10px;
 			}
+
+			.map {
+				width: 720px;
+				height: 450px;
+				border: 1px solid black;
+				background-image: url('image/map.jpg');
+				background-size: 100% 100%;
+				margin-left: auto;
+				margin-right: auto;
+				position: relative;
+				overflow: hidden;
+			}
+			.map .pointer {
+				width: 4px;
+				height: 4px;
+				line-height: 4px;
+				margin: -2px;
+				border: 1px solid black;
+				border-radius: 10px;
+				position: absolute;
+				color: black;
+				font-size: 4px;
+				display: none;
+				overflow: hidden;
+				text-align: center;
+			}
+			h2 .pointer {
+				display: inline-block;
+				vertical-align: middle;
+				width: 4px;
+				height: 4px;
+				line-height: 4px;
+				border: 1px solid black;
+				border-radius: 10px;
+			}
+			.pointer#p0{
+				background-color: red;
+			}
+			.pointer#p1{
+				background-color: lime;
+			}
+			.pointer#p3{
+				background-color: cyan;
+			}
+			.pointer#p4{
+				background-color: yellow;
+			}
+			<?php
+			foreach ($report_all as $i => $report) {
+				?>
+				.map .pointer#p<?=$i?> {
+					display: block;
+					left: <?=(100 * ($report['longitude'] + 180) / 360)?>%;
+					top: <?=(100 * (90 - $report['latitude']) / 180)?>%;
+				}
+				<?php
+			}
+			?>
 		</style>
 	</head>
 	<body>
@@ -58,11 +124,26 @@ $gpu_temp = ($gpu_temp ? (string)$gpu_temp.'&deg;C' : 'N/A');
 				echo '<p class="warning">WARNING: Overheat!!!</p>';
 			}
 		?>
+		<h2>Map</h2>
+		<div class='map'>
+			<div class='pointer' id='p0'></div>
+			<div class='pointer' id='p1'></div>
+			<div class='pointer' id='p2'></div>
+			<div class='pointer' id='p3'></div>
+			<div class='pointer' id='p4'></div>
+		</div>
+		<p></p>
+		<?php
+		foreach ($report_all as $i => $report) {
+			?>
+			<?php
+		}
+		?>
+
 <?php
-	for ($i = 0; $i <= 4; $i++) {
-		$report = fgfs_report($i);
+	foreach ($report_all as $i => $report) {
 		if ($report) {
-			echo "<h2>Instance $i</h2>\n";
+			echo "<h2><div class='pointer' id='p$i'></div> Instance $i</h2>\n";
 			?>
 			<table>
 				<tr><th colspan='2'>Basic information</th></tr>

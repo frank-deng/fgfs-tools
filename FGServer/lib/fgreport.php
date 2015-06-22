@@ -33,8 +33,8 @@ function gpu_temperature($temp_f = false) {
 }
 function fgfs_report($instance) {
 	$conn = curl_init();
-	$port = explode(',', FG_HTTPD_PORTS)[$instance];
-	$url = FG_HOST.':'.$port.'/json/command/fgreport';
+	$host = explode('|', FG_HOSTS)[$instance];
+	$url = $host.'/json/command/fgreport';
 	curl_setopt($conn, CURLOPT_URL, $url);
 	curl_setopt($conn, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($conn, CURLOPT_HEADER, 0);

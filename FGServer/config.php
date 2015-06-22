@@ -1,4 +1,4 @@
 <?php
-define('FG_HOST', 'localhost');
-define('FG_HTTPD_PORTS', '5410,5411,5412,5413,5414');
+define('FG_INSTANCE_COUNT', 5);
+define('FG_HOSTS', 'localhost:5410|localhost:5411|localhost:5412|localhost:5413|localhost:5414');
 
