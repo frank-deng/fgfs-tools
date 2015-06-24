@@ -954,13 +954,13 @@
     <wp n="154">
       <type type="string">navaid</type>
       <ident type="string">LNNDA</ident>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">6302</altitude-ft>
       <lon type="double">-120.444167</lon>
       <lat type="double">37.482222</lat>
     </wp>
     <wp n="155">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">6300</altitude-ft>
       <ident type="string">CZQ</ident>
       <lon type="double">-119.8151361</lon>
       <lat type="double">36.88432222</lat>
