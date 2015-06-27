@@ -319,9 +319,9 @@
     </wp>
     <wp n="49">
       <type type="string">navaid</type>
-      <ident type="string">YMWA</ident>
-      <lon type="double">115.5173702</lon>
-      <lat type="double">-28.47404316</lat>
+      <ident type="string">TINDA</ident>
+      <lon type="double">115.658603</lon>
+      <lat type="double">-27.954992</lat>
     </wp>
     <wp n="50">
       <type type="string">navaid</type>

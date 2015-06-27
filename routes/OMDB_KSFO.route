@@ -183,9 +183,9 @@
     </wp>
     <wp n="26">
       <type type="string">navaid</type>
-      <ident type="string">RDD</ident>
-      <lon type="double">-122.2916944</lon>
-      <lat type="double">40.50455556</lat>
+      <ident type="string">ASAYE</ident>
+      <lon type="double">-122.388228</lon>
+      <lat type="double">40.778381</lat>
     </wp>
     <wp n="27">
       <type type="string">navaid</type>
