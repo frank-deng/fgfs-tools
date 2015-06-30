@@ -98,7 +98,7 @@ var mod = func(n, m) {
 }
 var extra_data_func = func(){
 	#/autopilot/route-manager/ete-string
-	time_remaining = getprop('/autopilot/route-manager/ete');
+	var time_remaining = getprop('/autopilot/route-manager/ete');
 	if (time_remaining <= 2147483647) {
 		setprop('/autopilot/route-manager/ete-string'
 			,sprintf('%02d:%02d:%02d'
@@ -112,39 +112,13 @@ var extra_data_func = func(){
 	}
 
 	#/autopilot/route-manager/flight-time-string
-	time_elapsed = getprop('/autopilot/route-manager/flight-time');
+	var time_elapsed = getprop('/autopilot/route-manager/flight-time');
 	setprop('/autopilot/route-manager/flight-time-string',
 		sprintf(
 			'%02d:%02d:%02d'
 			,int(time_elapsed / 3600)
 			,mod(int(time_elapsed / 60), 60)
 			,mod(time_elapsed, 60)
-		)
-	);
-
-	#/sim/time/real/string
-	setprop('/sim/time/real/string',
-		sprintf(
-			'%4d-%02d-%02dT%02d:%02d:%02d',
-			getprop('/sim/time/real/year'),
-			getprop('/sim/time/real/month'),
-			getprop('/sim/time/real/day'),
-			getprop('/sim/time/real/hour'),
-			getprop('/sim/time/real/minute'),
-			getprop('/sim/time/real/second')
-		)
-	);
-
-	#/sim/time/utc/string
-	setprop('/sim/time/utc/string',
-		sprintf(
-			'%4d-%02d-%02dT%02d:%02d:%02d',
-			getprop('/sim/time/utc/year'),
-			getprop('/sim/time/utc/month'),
-			getprop('/sim/time/utc/day'),
-			getprop('/sim/time/utc/hour'),
-			getprop('/sim/time/utc/minute'),
-			getprop('/sim/time/utc/second')
 		)
 	);
 

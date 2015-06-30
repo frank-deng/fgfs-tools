@@ -10,8 +10,7 @@ MAX_INSTANCE_NUM = 5;
 def get_report(instance_num, fg, args):
 	print 'Instance ID:            ' + str(instance_num);
 	print 'Aircraft:               ' + fg['/sim/description'];
-	print 'Real World Time:        ' + fg['/sim/time/real/string'];
-	print 'UTC Time:               ' + fg['/sim/time/utc/string'];
+	print 'UTC Time:               ' + fg['/sim/time/gmt'];
 	print 'Local Time:             ' + fg['/instrumentation/clock/local-short-string'];
 	print 'Position (lat lon):     %.6f %6f' % (fg['/position/latitude-deg'], fg['/position/longitude-deg']);
 
@@ -32,21 +31,17 @@ def get_report(instance_num, fg, args):
 
 def sound_on(instance_num, fg, args):
 	fg['/sim/sound/enabled'] = 1;
-	print('Sound on.');
 	return 0;
 
 def sound_off(instance_num, fg, args):
 	fg['/sim/sound/enabled'] = 0;
-	print('Sound off.');
 	return 0;
 
 def pause(instance_num, fg, args):
 	fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 1;
-	print('Simulation paused.');
 
 def resume(instance_num, fg, args):
 	fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 0;
-	print('Simulation resumed.');
 
 def fps_limit(instance_num, fg, args):
 	try:
@@ -76,6 +71,7 @@ def fglaunch(instance_num, fg_port, args_input):
 	pausemgr_dist = 20;
 	telnet_port = fg_port[0];
 	httpd_port = fg_port[1];
+	help_info = 'Usage: %s launch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [Other_fgfs_Arguments] ...' % sys.argv[0];
 
 	#Process Command Line
 	try:
@@ -89,7 +85,7 @@ def fglaunch(instance_num, fg_port, args_input):
 			if opt == '-p':
 				pausemgr_dist = int(arg);
 	except Exception, e:
-		print 'Usage: %s launch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [Other_fgfs_Arguments] ...' % sys.argv[0];
+		print help_info;
 		return 1;
 
 	#Check if reboot is required

@@ -8,7 +8,7 @@ def cpu_temp():
 	text = fp.readline();
 	fp.close();
 	result_c = int((float)(text) / 1000.0);
-	result_f = int(result_c * 9.0 / 5.0 + 32.0);
+	result_f = float(result_c * 9.0 / 5.0 + 32.0);
 	return (result_c, result_f);
 
 def gpu_temp():
@@ -21,19 +21,19 @@ def gpu_temp():
 	# Parse XML data
 	tree = ET.fromstring(stdout);
 	result_c = int(list(tree.findall('./gpu/temperature/gpu_temp'))[0].text.replace(' C', ''));
-	result_f = int(result_c * 9.0 / 5.0 + 32.0);
+	result_f = float(result_c * 9.0 / 5.0 + 32.0);
 	return (result_c, result_f);
 
 if __name__ == '__main__':
 	status = 0;
 	try:
-		print('CPU Temperature: %d C / %d F' % cpu_temp());
+		print('CPU:\t%d C\t%.1f F' % cpu_temp());
 	except Exception, e:
 		sys.stderr.write(str(e) + '\n');
 		status = 1;
 
 	try:
-		print('GPU Temperature: %d C / %d F' % gpu_temp());
+		print('GPU:\t%d C\t%.1f F' % gpu_temp());
 	except Exception, e:
 		sys.stderr.write(str(e) + '\n');
 		status = 1;
