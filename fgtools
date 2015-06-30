@@ -135,6 +135,7 @@ def fglaunch(instance_num, fg_port, args_input):
 			,'--telnet=socket,bi,60,,%d,tcp' % (telnet_port)
 			,'--httpd=' + str(httpd_port)
 			,'--aircraft=' + aircraft
+			,'--prop:/sim/instance-id=' + str(instance_num)
 		]
 		+ fp_params
 		+ args[1:]
