@@ -36,7 +36,7 @@ diff -ruN B-2.orig/B-2-set.xml B-2/B-2-set.xml
   </nasal>
  
 +<limits>
-+	<estimated-range-nm>7700</estimated-range-nm>
++	<estimated-range-nm>7400</estimated-range-nm>
 +</limits>
 +
  </PropertyList>

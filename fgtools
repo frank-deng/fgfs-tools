@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 #encoding=UTF-8
 
-import sys, socket, getopt, os, subprocess, time, platform;
+import sys, socket, getopt, os, subprocess, platform;
 import xml.etree.ElementTree as ET;
-from FGTelnet import FGTelnet;
-
-MAX_INSTANCE_NUM = 5;
 
 def get_report(instance_num, fg, args):
 	print 'Instance ID:            ' + str(instance_num);
@@ -61,17 +58,145 @@ def fps_limit(instance_num, fg, args):
 def shutdown(instance_num, fg, args):
 	fg.run('exit');
 
-def fglaunch(instance_num, fg_port, args_input):
+def cpu_temp():
+	fp = open('/sys/class/thermal/thermal_zone0/temp', 'r');
+	text = fp.readline();
+	fp.close();
+	result_c = int((float)(text) / 1000.0);
+	result_f = float(result_c * 9.0 / 5.0 + 32.0);
+	return (result_c, result_f);
+
+def gpu_temp():
+	# Fetch XML data from nvidia-smi
+	nvidia_smi = subprocess.Popen(['nvidia-smi', '-q', '-x'], stdout=subprocess.PIPE);
+	stdout, stderr = nvidia_smi.communicate();
+	if (nvidia_smi.returncode != 0):
+		raise Exception('Failed to fetch GPU Temperature.');
+
+	# Parse XML data
+	tree = ET.fromstring(stdout);
+	result_c = int(list(tree.findall('./gpu/temperature/gpu_temp'))[0].text.replace(' C', ''));
+	result_f = float(result_c * 9.0 / 5.0 + 32.0);
+	return (result_c, result_f);
+
+def temperature(args):
+	status = 0;
+	try:
+		print('CPU:  %d C / %.1f F' % cpu_temp());
+	except Exception, e:
+		sys.stderr.write(str(e) + '\n');
+		status = 1;
+	try:
+		print('GPU:  %d C / %.1f F' % gpu_temp());
+	except Exception, e:
+		sys.stderr.write(str(e) + '\n');
+		status = 1;
+	return status;
+
+def route2kml(args):
+	if (args[0] in ('-h', '--help', '-?')):
+		sys.stderr.write('''Usage: %s route2kml [INPUT_FILE] [OUTPUT_FILE]
+
+If INPUT_FILE is not specified, stdin is used.
+If OUTPUT_FILE is not specified, stdout is used.
+''' % sys.argv[0]);
+		return 1;
+
+	# Handle command line
+	stream_input = sys.stdin;
+	stream_output = sys.stdout;
+	route_name = 'Route'
+	try:
+		stream_input = open(args[0], 'r');
+		route_name = os.path.basename(args[0]);
+	except IndexError:
+		pass;
+	try:
+		stream_output = open(args[1], 'w');
+	except IndexError:
+		pass;
+
+	try:
+		# Fetch waypoints
+		waypoints = [];
+		tree = ET.parse(stream_input);
+		root = tree.getroot();
+		wp_all = root.findall('route/wp');
+		for wp in wp_all:
+			lon = wp.find('lon');
+			lat = wp.find('lat');
+			if (lon != None or lat != None):
+				waypoints.append((float(lon.text), float(lat.text)));
+
+		# Write to KML
+		stream_output.write("""<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+	<Document>
+		<name>""" + route_name + """</name>
+		<Style id="track">
+			<BalloonStyle>
+				<displayMode>default</displayMode>
+			</BalloonStyle>
+			<IconStyle>
+				<scale>1.000000</scale>
+				<Icon>
+					<href>/usr/share/kde4/apps/marble/data/bitmaps/default_location.png</href>
+				</Icon>
+				<hotSpot x="0.500000" y="0.500000" xunits="fraction" yunits="fraction"/>
+			</IconStyle>
+			<LineStyle>
+				<color>c80008e2</color>
+				<width>4</width>
+			</LineStyle>
+			<ListStyle/>
+			<PolyStyle>
+				<fill>1</fill>
+				<outline>1</outline>
+			</PolyStyle>
+		</Style>
+		<StyleMap id="map-track">
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#track</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Placemark>
+			<name>""" + route_name + """</name>
+			<styleUrl>#map-track</styleUrl>
+			<gx:MultiTrack>
+				<gx:Track>
+""");
+
+		for wp in waypoints:
+			stream_output.write('                     <gx:coord>' + str(wp[0]) + ' ' + str(wp[1]) + '</gx:coord>\n');
+
+		stream_output.write("""                </gx:Track>
+			</gx:MultiTrack>
+		</Placemark>
+	</Document>
+</kml>
+""");
+
+		stream_input.close();
+		stream_output.close();
+	except Exception, e:
+		sys.stderr.write(str(e) + '\n');
+		return 1;
+
+	return 0;
+
+def fglaunch(args_input):
+	help_info = 'Usage: %s launch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [Other_fgfs_Arguments] ...' % sys.argv[0];
 	fgfs_possible_exec = [
+		os.getenv('FGFS_BIN'),
 		'/usr/bin/fgfs',
 		'/usr/local/bin/fgfs',
-		os.getenv('FGFS_EXEC'),
 	];
+	fg_telnet_ports = os.getenv('FG_TELNET_PORTS').split(',');
+	fg_httpd_ports = os.getenv('FG_HTTPD_PORTS').split(',');
+	instance_num = None;
 	fp_file = None;
 	pausemgr_dist = 20;
-	telnet_port = fg_port[0];
-	httpd_port = fg_port[1];
-	help_info = 'Usage: %s launch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [Other_fgfs_Arguments] ...' % sys.argv[0];
 
 	#Process Command Line
 	try:
@@ -90,15 +215,27 @@ def fglaunch(instance_num, fg_port, args_input):
 
 	#Check if reboot is required
 	if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
-		print 'Please reboot your machine before launching FlightGear.';
+		sys.stderr.write('Please reboot your machine before launching FlightGear.\n');
 		return 1;
 
-	#Check if the port is available
-	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-	result = sock.connect_ex(('localhost', telnet_port));
-	if result == 0:
-		print 'Port %d is in use, please choose another instance number to launch.' % (telnet_port);
+	#Check if there is any instance not in use
+	telnet_port = httpd_port = None;
+	for i in range(len(fg_telnet_ports)):
+		telnet_port = int(fg_telnet_ports[i]);
+		httpd_port = int(fg_httpd_ports[i]);
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+		telnet_result = sock.connect_ex(('localhost', telnet_port));
+		httpd_result = sock.connect_ex(('localhost', httpd_port));
+		if telnet_result == 0 or httpd_result == 0:
+			continue;
+		else:
+			instance_num = i;
+			break;
+	if (None == instance_num):
+		sys.stderr.write('Unable to launch more FlightGear Instance.\n');
 		return 1;
+	else: 
+		print 'Use instance #' + str(instance_num) + '.';
 
 	#Get runway to takeoff
 	if (None == fp_file):
@@ -122,6 +259,8 @@ def fglaunch(instance_num, fg_port, args_input):
 
 	#Launch FlightGear
 	for i in fgfs_possible_exec:
+		if i == None:
+			continue;
 		if os.path.isfile(i):
 			fgfs_exec = i;
 			break;
@@ -143,23 +282,41 @@ def fglaunch(instance_num, fg_port, args_input):
 
 if __name__ == '__main__':
 	command_all = {
-		'report': get_report,
-		'soundon': sound_on,
-		'soundoff': sound_off,
-		'pause': pause,
-		'resume': resume,
-		'shutdown': shutdown,
-		'fpslimit': fps_limit,
-		'launch': fglaunch,
+		'report': (get_report, 1),
+		'soundon': (sound_on, 1),
+		'soundoff': (sound_off, 1),
+		'pause': (pause, 1),
+		'resume': (resume, 1),
+		'shutdown': (shutdown, 1),
+		'fpslimit': (fps_limit, 1),
+		'launch': (fglaunch, 0),
+		'temperature': (temperature, 0),
+		'route2kml': (route2kml, 0),
 	};
-	instance_num_all = [];
-	fg_telnet_ports = os.getenv('FG_TELNET_PORTS').split(',');
-	fg_httpd_ports = os.getenv('FG_HTTPD_PORTS').split(',');
-	status = 0;
 
+	# Fetch command
+	func_info = None;
 	try:
-		for n in sys.argv[1]:
-			if (int(n) > MAX_INSTANCE_NUM - 1):
+		func_info = command_all[sys.argv[1]];
+	except:
+		print('Available Commands:\n');
+		for cmd in sorted(command_all.iterkeys()):
+			print('   ' + cmd);
+		print('');
+		exit(1);
+
+	# Not a multi-instance command
+	if (func_info[1] == 0):
+		exit(func_info[0](sys.argv[2:]));
+
+	# Multi-instance command
+	from FGTelnet import FGTelnet;
+	fg_telnet_ports = os.getenv('FG_TELNET_PORTS').split(',');
+	instance_num_all = [];
+	status = 0;
+	try:
+		for n in sys.argv[2]:
+			if (int(n) > len(fg_telnet_ports) - 1):
 				raise ValueError;
 			instance_num_all.append(int(n));
 	except Exception, e:
@@ -167,22 +324,10 @@ if __name__ == '__main__':
 		exit(1);
 
 	for instance_num in instance_num_all:
-		func = None;
-		try:
-			func = command_all[sys.argv[2]];
-		except:
-			sys.stderr.write('Invalid Command.\n');
-			exit(1);
-
-		if (func == fglaunch):
-			exit(func(instance_num,
-				(int(fg_telnet_ports[instance_num]), int(fg_httpd_ports[instance_num])),
-				sys.argv[3:]));
-
 		fg = None;
 		try:
 			fg = FGTelnet(port = fg_telnet_ports[instance_num]);
-			func(instance_num, fg, sys.argv[3:]);
+			func_info[0](instance_num, fg, sys.argv[3:]);
 			fg.quit();
 		except IndexError:
 			sys.stderr.write("Connection Timeout.\n");

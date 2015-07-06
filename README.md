@@ -11,23 +11,19 @@ Python library for interacting with FlightGear props telnet interface.
 
 ---
 
-#### fgtools fgtools.nas
+#### fgtools
 
 A useful tool to manipulate FlightGear from command line.
 
-Synopsis: `fgtools instance_num command [parameter] ...`
+**Synopsis: **`fgtools command [parameter] ...`
 
-`instance_num` is used to determine which FlightGear instance should be launched or accessed, specified by one of 0-9. At most 10 instances could be launched at one time.
+**Available Commands:**
 
-Multiple digits for `instance_num` means executing command for each instance specified, one digit for one instance, except **launch** command which only applies to the first instance specified.
+`fpslimit INSTANCE_NUM FPS`:
 
-Available Commands:
+Set the maximum FPS for one or more instance(s), so as to prevent the overheat of the computer.
 
-`fpslimit [FPS]`:
-
-* If FPS is not given, show maximum FPS.
-* If FPS is given, maximum FPS will be set as the given FPS value.
-* The value of FPS can be 0 or 15-70.
+The value of FPS should between 15 and 70, or 0 for disable maximum FPS limit.
 
 `launch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [fgfs_options] ...`:
 
@@ -40,21 +36,35 @@ If FLIGHT_PLAN is specified,
 * The simulation will be paused when the remaining route is short than 20nmi  
   You can specify `PAUSE_DISTANCE_NMI` to set a distance other than 20nmi for Pause Manager.
 
-`pause` `resume`
+`pause/resume INSTANCE_NUM`:
 
 Pause/Resume simulation.
 
-`report`
+`report INSTANCE_NUM`:
 
-Print an report of FlightGear.
+Print report of FlightGear.
 
-`shutdown`
+`route2kml [INPUT_FILE] [OUTPUT_FILE]`:
+
+Convert FlightGear route to KML format, so as to display the route in [Marble](http://marble.kde.org).
+
+* If INPUT_FILE is not specified, stdin is used.
+* If OUTPUT_FILE is not specified, stdout is used.
+
+`shutdown INSTANCE_NUM`:
 
 Shutdown simulation.
 
-`soundon` `soundoff`
+`soundon/soundoff INSTANCE_NUM`:
 
 Unmute/Mute FlightGear.
+
+`temperature`:
+
+Show temperature CPU and GPU.
+
+* `INSTANCE_NUM` is used to determine which FlightGear instance should be processed, specified by one of 0-9. At most 10 instances could be launched at one time.
+* Multiple digits for `INSTANCE_NUM` means executing command for each instance specified, one digit for one instance.
 
 Please copy `fgtools.nas` to `$FG_ROOT/Nasal` first, so as to get all the stuffs here work well.
 
