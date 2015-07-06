@@ -48,8 +48,8 @@ Print report of FlightGear.
 
 Convert FlightGear route to KML format, so as to display the route in [Marble](http://marble.kde.org).
 
-* If INPUT_FILE is not specified, stdin is used.
-* If OUTPUT_FILE is not specified, stdout is used.
+* If INPUT_FILE is not specified, then stdin is used.
+* If OUTPUT_FILE is not specified, then stdout is used.
 
 `shutdown INSTANCE_NUM`:
 
@@ -61,18 +61,14 @@ Unmute/Mute FlightGear.
 
 `temperature`:
 
-Show temperature CPU and GPU.
+Show both CPU and GPU's temperature.
+
+At present, only nVIDIA's GPU temperature will be fetched via `nvidia-smi`.
 
 * `INSTANCE_NUM` is used to determine which FlightGear instance should be processed, specified by one of 0-9. At most 10 instances could be launched at one time.
 * Multiple digits for `INSTANCE_NUM` means executing command for each instance specified, one digit for one instance.
 
 Please copy `fgtools.nas` to `$FG_ROOT/Nasal` first, so as to get all the stuffs here work well.
-
----
-
-#### temperature
-
-A utility to display both CPU and GPU's temperature. `nvidia-smi` is used for getting GPU temperature at present.
 
 ---
 
@@ -82,7 +78,7 @@ Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](
 
 * Some new viewports added to 777-300ER
 * Adjusted the vertical speed in FLCH mode.
-* Automatically refuel 777-300ER on startup based on the distance of the route if launched via `fgtools launch` and flight plan is specified.
+* Automatically refuel 777-300ER on startup based on the distance of the route if flight plan is specified on startup.
 * Adjusted Autopilot System so as to fly polar route.
 * Reduced the time of manual startup.
 
@@ -93,7 +89,7 @@ Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](
 Patch for [757-200](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraft-3.4/757-200_20150111.zip).
 
 * Adjusted the vertical speed in FLCH mode.
-* Automatically refuel 757-200 on startup based on the distance of the route if launched via `fgtools launch` and flight plan is specified.
+* Automatically refuel 757-200 on startup based on the distance of the route if flight plan is specified on startup.
 
 ---
 
@@ -102,7 +98,7 @@ Patch for [757-200](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircra
 Patch for [747-8f](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraft-3.4/747-8i_20150111.zip) and [747-8i](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraft-3.4/747-8i_20150111.zip)
 
 * Adjusted the vertical speed in FLCH mode.
-* Automatically refuel 747-8f and 747-8i on startup based on the distance of the route if launched via `fgtools launch` and flight plan is specified.
+* Automatically refuel 747-8f and 747-8i on startup based on the distance of the route if flight plan is specified on startup.
 
 ---
 
