@@ -15,7 +15,7 @@ Python library for interacting with FlightGear props telnet interface.
 
 A useful tool to manipulate FlightGear from command line.
 
-**Synopsis: **`fgtools command [parameter] ...`
+**Synopsis:** `fgtools command [parameter] ...`
 
 **Available Commands:**
 
