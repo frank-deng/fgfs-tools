@@ -98,6 +98,7 @@ def route2kml(args):
 	stream_input = sys.stdin;
 	stream_output = sys.stdout;
 	route_name = 'Route'
+	status = 0;
 	try:
 		if (args[0] in ('-h', '--help', '-?')):
 			sys.stderr.write('''Usage: %s route2kml [INPUT_FILE] [OUTPUT_FILE]
@@ -109,11 +110,11 @@ def route2kml(args):
 		stream_input = open(args[0], 'r');
 		route_name = os.path.basename(args[0]);
 	except IndexError:
-		pass;
+		stream_input = sys.stdin;
 	try:
 		stream_output = open(args[1], 'w');
 	except IndexError:
-		pass;
+		stream_output = sys.stdout;
 
 	try:
 		# Fetch waypoints
@@ -176,13 +177,13 @@ def route2kml(args):
 </kml>
 """);
 
-		stream_input.close();
-		stream_output.close();
 	except Exception, e:
 		sys.stderr.write(str(e) + '\n');
-		return 1;
+		status = 1;
 
-	return 0;
+	stream_input.close();
+	stream_output.close();
+	return status;
 
 def fglaunch(args_input):
 	help_info = 'Usage: %s launch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [Other_fgfs_Arguments] ...' % sys.argv[0];
