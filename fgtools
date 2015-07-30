@@ -94,19 +94,18 @@ def temperature(args):
 	return status;
 
 def route2kml(args):
-	if (args[0] in ('-h', '--help', '-?')):
-		sys.stderr.write('''Usage: %s route2kml [INPUT_FILE] [OUTPUT_FILE]
-
-If INPUT_FILE is not specified, stdin is used.
-If OUTPUT_FILE is not specified, stdout is used.
-''' % sys.argv[0]);
-		return 1;
-
 	# Handle command line
 	stream_input = sys.stdin;
 	stream_output = sys.stdout;
 	route_name = 'Route'
 	try:
+		if (args[0] in ('-h', '--help', '-?')):
+			sys.stderr.write('''Usage: %s route2kml [INPUT_FILE] [OUTPUT_FILE]
+
+	If INPUT_FILE is not specified, stdin is used.
+	If OUTPUT_FILE is not specified, stdout is used.
+''' % sys.argv[0]);
+			return 1;
 		stream_input = open(args[0], 'r');
 		route_name = os.path.basename(args[0]);
 	except IndexError:
@@ -274,7 +273,6 @@ def fglaunch(args_input):
 			,'--telnet=socket,bi,60,,%d,tcp' % (telnet_port)
 			,'--httpd=' + str(httpd_port)
 			,'--aircraft=' + aircraft
-			,'--prop:/sim/instance-id=' + str(instance_num)
 		]
 		+ fp_params
 		+ args[1:]
@@ -307,7 +305,10 @@ if __name__ == '__main__':
 
 	# Not a multi-instance command
 	if (func_info[1] == 0):
-		exit(func_info[0](sys.argv[2:]));
+		try:
+			exit(func_info[0](sys.argv[2:]));
+		except KeyboardInterrupt:
+			exit(0);
 
 	# Multi-instance command
 	from FGTelnet import FGTelnet;
