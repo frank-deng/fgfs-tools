@@ -1,6 +1,6 @@
 diff -ruN B-2.orig/B-2-set.xml B-2/B-2-set.xml
---- B-2.orig/B-2-set.xml	2010-12-18 07:25:28.000000000 +0800
-+++ B-2/B-2-set.xml	2015-06-21 22:43:21.483022649 +0800
+--- B-2.orig/B-2-set.xml	2015-01-20 03:43:33.000000000 +0800
++++ B-2/B-2-set.xml	2015-08-21 22:06:35.964866370 +0800
 @@ -170,10 +170,10 @@
  	      <name>O</name>
  	      <desc>open/close cockpit access hatch</desc>
@@ -41,8 +41,8 @@ diff -ruN B-2.orig/B-2-set.xml B-2/B-2-set.xml
 +
  </PropertyList>
 diff -ruN B-2.orig/Models/b2-spirit.xml B-2/Models/b2-spirit.xml
---- B-2.orig/Models/b2-spirit.xml	2010-12-18 07:25:29.000000000 +0800
-+++ B-2/Models/b2-spirit.xml	2015-06-21 22:47:43.987015808 +0800
+--- B-2.orig/Models/b2-spirit.xml	2015-01-20 03:43:33.000000000 +0800
++++ B-2/Models/b2-spirit.xml	2015-06-21 22:47:32.239016114 +0800
 @@ -1296,4 +1296,5 @@
  
  
@@ -52,7 +52,7 @@ diff -ruN B-2.orig/Models/b2-spirit.xml B-2/Models/b2-spirit.xml
 +</PropertyList>
 +
 diff -ruN B-2.orig/Models/Instruments-3d/apmode.xml B-2/Models/Instruments-3d/apmode.xml
---- B-2.orig/Models/Instruments-3d/apmode.xml	2010-12-18 07:25:28.000000000 +0800
+--- B-2.orig/Models/Instruments-3d/apmode.xml	2015-01-20 03:43:32.000000000 +0800
 +++ B-2/Models/Instruments-3d/apmode.xml	2015-06-20 11:38:05.778171694 +0800
 @@ -12,17 +12,17 @@
  	 <top-left>
@@ -83,7 +83,7 @@ diff -ruN B-2.orig/Models/Instruments-3d/apmode.xml B-2/Models/Instruments-3d/ap
 \ No newline at end of file
 +</PropertyList>
 diff -ruN B-2.orig/Models/Instruments-3d/glas_3.xml B-2/Models/Instruments-3d/glas_3.xml
---- B-2.orig/Models/Instruments-3d/glas_3.xml	2010-12-18 07:25:29.000000000 +0800
+--- B-2.orig/Models/Instruments-3d/glas_3.xml	2015-01-20 03:43:32.000000000 +0800
 +++ B-2/Models/Instruments-3d/glas_3.xml	2015-06-20 11:41:14.630176752 +0800
 @@ -12,17 +12,17 @@
  	 <top-left>
@@ -114,7 +114,7 @@ diff -ruN B-2.orig/Models/Instruments-3d/glas_3.xml B-2/Models/Instruments-3d/gl
 \ No newline at end of file
 +</PropertyList>
 diff -ruN B-2.orig/Nasal/b2.nas B-2/Nasal/b2.nas
---- B-2.orig/Nasal/b2.nas	2010-12-18 07:25:30.000000000 +0800
+--- B-2.orig/Nasal/b2.nas	2015-01-20 03:43:33.000000000 +0800
 +++ B-2/Nasal/b2.nas	2015-06-20 12:05:50.562216276 +0800
 @@ -243,7 +243,7 @@
  
@@ -166,7 +166,7 @@ diff -ruN B-2.orig/Nasal/b2.nas B-2/Nasal/b2.nas
 +settimer(next_waypoint, 0);
 +
 diff -ruN B-2.orig/Sounds/B-2-sound.xml B-2/Sounds/B-2-sound.xml
---- B-2.orig/Sounds/B-2-sound.xml	2010-12-18 07:25:30.000000000 +0800
+--- B-2.orig/Sounds/B-2-sound.xml	2015-01-20 03:43:33.000000000 +0800
 +++ B-2/Sounds/B-2-sound.xml	2015-06-20 14:34:05.294454470 +0800
 @@ -22,7 +22,7 @@
  	</orientation>
@@ -464,8 +464,17 @@ diff -ruN B-2.orig/Sounds/B-2-sound.xml B-2/Sounds/B-2-sound.xml
      </gear>
  
 diff -ruN B-2.orig/Systems/B-2-autopilot.xml B-2/Systems/B-2-autopilot.xml
---- B-2.orig/Systems/B-2-autopilot.xml	2014-01-28 05:27:48.000000000 +0800
-+++ B-2/Systems/B-2-autopilot.xml	2015-06-21 22:45:28.655019335 +0800
+--- B-2.orig/Systems/B-2-autopilot.xml	2015-01-20 03:43:33.000000000 +0800
++++ B-2/Systems/B-2-autopilot.xml	2015-08-21 21:59:05.452854306 +0800
+@@ -262,7 +262,7 @@
+ 		  <value>nav1-hold</value>
+ 	  </enable>
+ 	  <input>
+-		  <prop>/autopilot/internal/nav1-track-error-deg</prop>
++		  <prop>/autopilot/internal/nav1-track-error-lookahead-deg</prop>
+ 	  </input>
+ 	  <reference>
+ 		  <value>0.0</value>
 @@ -438,7 +438,7 @@
        <Kp>0.25</Kp>          <!-- proportional gain -->
        <Ki>0.0</Ki>          <!-- integral gain -->

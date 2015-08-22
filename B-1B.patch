@@ -1,6 +1,6 @@
 diff -ruN B-1B.orig/B-1B-set.xml B-1B/B-1B-set.xml
 --- B-1B.orig/B-1B-set.xml	2010-12-18 07:25:23.000000000 +0800
-+++ B-1B/B-1B-set.xml	2015-06-21 22:54:42.119004910 +0800
++++ B-1B/B-1B-set.xml	2015-08-21 21:57:36.948851935 +0800
 @@ -458,7 +458,7 @@
        <target-pitch-deg type="float">0</target-pitch-deg>
        <target-vfps type="float">0</target-vfps>
@@ -58,7 +58,16 @@ diff -ruN B-1B.orig/Nasal/b1b.nas B-1B/Nasal/b1b.nas
 +
 diff -ruN B-1B.orig/Systems/b1b-autopilot.xml B-1B/Systems/b1b-autopilot.xml
 --- B-1B.orig/Systems/b1b-autopilot.xml	2010-12-18 07:25:28.000000000 +0800
-+++ B-1B/Systems/b1b-autopilot.xml	2015-06-21 22:45:51.883018729 +0800
++++ B-1B/Systems/b1b-autopilot.xml	2015-08-21 21:46:55.932834770 +0800
+@@ -192,7 +192,7 @@
+       <value>nav1-hold</value>
+     </enable>
+     <input>
+-      <prop>/autopilot/internal/nav1-track-error-deg</prop>
++      <prop>/autopilot/internal/nav1-track-error-lookahead-deg</prop>
+     </input>
+     <reference>
+       <value>0.0</value>
 @@ -426,8 +426,8 @@
      <config>
        <Kp>0.25</Kp>          <!-- proportional gain -->
