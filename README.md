@@ -122,3 +122,11 @@ Copy this file to `$FG_ROOT/gui/dialogs` to replace the original `gps.xml`.
 
 Directory __routes__ contains flight plans for long-haul and ultra long-haul flights, as well as flight plans based on Jules Verne's novel _Around the World in Eighty Days_, which takes only 8 days to finish by Boeing 757.
 
+Set maximum FPS to 30 from command line:
+
+	wget -qO/dev/null "http://localhost:port/props/sim?submit=set&frame-rate-throttle-hz=30"
+
+Shutdown simulation from command line, by executing fgcommand "exit":
+
+	wget -qO/dev/null "http://localhost:port/run.cgi?value=exit"
+
