@@ -86,6 +86,15 @@ Patch for [747-8f](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraf
 
 ---
 
+#### AN-225-Mrija.patch
+
+Patch for [AN-225-Mrija](https://github.com/HerbyW/AN-225-Mrija):
+
+* Added automatic ground refuel feature, which can calculate out the fuel needed based on the route and aircraft's payload.
+* Adjusted autopilot.
+
+---
+
 #### B-1B.patch
 
 Patch for [Rockwell B-1B Lancer](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.2/B-1B_20130823.zip):
@@ -105,9 +114,36 @@ Patch for [Northrop B-2 Spirit](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.
 
 ---
 
+#### fgtools.nas
+
+This Nasal script includes the following features:
+
+* Pause Manager
+* Automatically activate Route Manager and ILS Frequency
+* Convert ETE time, Flight time in seconds to HH:MM:SS format;
+
+Copy this file to `$FG_ROOT/Nasal` to make it work.
+
+---
+
+#### gps.xml
+
+Added the folling information:
+
+* Full UTC Time
+* Local Time
+* Total Distance
+* Distance Remaining
+* Flight Time
+* ETE
+
+To make the additional information work in `gps.xml`, please make sure that `fgtools.nas` exists under `$FG_ROOT/Nasal`.
+
+Copy this file to `$FG_ROOT/gui/dialogs` to replace the original `gps.xml`.
+
+---
+
 #### Misceallanous
 
-Directory __Around_The_World__ contains a series of flight plans based on Jules Verne's novel _Around the World in Eighty Days_. While the whole journey takes only 8 days by Boeing 757.
-
-Directory __routes__ contains flight plans for long-haul and ultra long-haul flights.
+Directory __routes__ contains flight plans for long-haul and ultra long-haul flights, as well as flight plans based on Jules Verne's novel _Around the World in Eighty Days_, which takes only 8 days to finish by Boeing 757.
 
