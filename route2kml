@@ -1,0 +1,102 @@
+#!/usr/bin/env python
+#encoding=UTF-8
+
+import sys, getopt, os;
+import xml.etree.ElementTree as ET;
+
+if __name__ != '__main__':
+	exit(1);
+
+# Handle command line
+args = sys.argv[1:];
+stream_input = sys.stdin;
+stream_output = sys.stdout;
+route_name = 'Route'
+status = 0;
+try:
+	if (args[0] in ('-h', '--help', '-?')):
+		sys.stderr.write('''Usage: %s route2kml [INPUT_FILE] [OUTPUT_FILE]
+
+If INPUT_FILE is not specified, stdin is used.
+If OUTPUT_FILE is not specified, stdout is used.
+''' % sys.argv[0]);
+		exit(1);
+
+	stream_input = open(args[0], 'r');
+	route_name = os.path.basename(args[0]);
+except IndexError:
+	stream_input = sys.stdin;
+try:
+	stream_output = open(args[1], 'w');
+except IndexError:
+	stream_output = sys.stdout;
+
+try:
+	# Fetch waypoints
+	waypoints = [];
+	tree = ET.parse(stream_input);
+	root = tree.getroot();
+	wp_all = root.findall('route/wp');
+	for wp in wp_all:
+		lon = wp.find('lon');
+		lat = wp.find('lat');
+		if (lon != None or lat != None):
+			waypoints.append((float(lon.text), float(lat.text)));
+
+	# Write to KML
+	stream_output.write("""<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+	<Document>
+		<name>""" + route_name + """</name>
+		<Style id="track">
+			<BalloonStyle>
+				<displayMode>default</displayMode>
+			</BalloonStyle>
+			<IconStyle>
+				<scale>1.000000</scale>
+				<Icon>
+					<href>/usr/share/kde4/apps/marble/data/bitmaps/default_location.png</href>
+				</Icon>
+				<hotSpot x="0.500000" y="0.500000" xunits="fraction" yunits="fraction"/>
+			</IconStyle>
+			<LineStyle>
+				<color>c80008e2</color>
+				<width>4</width>
+			</LineStyle>
+			<ListStyle/>
+			<PolyStyle>
+				<fill>1</fill>
+				<outline>1</outline>
+			</PolyStyle>
+		</Style>
+		<StyleMap id="map-track">
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#track</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Placemark>
+			<name>""" + route_name + """</name>
+			<styleUrl>#map-track</styleUrl>
+			<gx:MultiTrack>
+				<gx:Track>
+""");
+
+	for wp in waypoints:
+		stream_output.write('                     <gx:coord>' + str(wp[0]) + ' ' + str(wp[1]) + '</gx:coord>\n');
+
+	stream_output.write("""                </gx:Track>
+			</gx:MultiTrack>
+		</Placemark>
+	</Document>
+</kml>
+""");
+
+except Exception, e:
+	sys.stderr.write(str(e) + '\n');
+	status = 1;
+
+stream_input.close();
+stream_output.close();
+exit(status);
+

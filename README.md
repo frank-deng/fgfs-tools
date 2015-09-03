@@ -5,23 +5,11 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 ---
 
-#### fgtools
-
-A useful tool to manipulate FlightGear from command line.
-
-**Synopsis:** `fgtools command [parameter] ...`
-
-**Available Commands:**
-
-`fpslimit INSTANCE_NUM FPS`:
-
-Set the maximum FPS for one or more instance(s), so as to prevent the overheat of the computer.
-
-The value of FPS should between 15 and 70, or 0 for disable maximum FPS limit.
-
-`launch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [fgfs_options] ...`:
+#### fglaunch
 
 Start FlightGear with the aircraft specified.
+
+Synopsis: `fglaunch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [fgfs_options] ...`:
 
 If FLIGHT_PLAN is specified,
 
@@ -30,29 +18,16 @@ If FLIGHT_PLAN is specified,
 * The simulation will be paused when the remaining route is short than 20nmi  
   You can specify `PAUSE_DISTANCE_NMI` to set a distance other than 20nmi for Pause Manager.
 
-`route2kml [INPUT_FILE] [OUTPUT_FILE]`:
+---
+
+#### route2kml
 
 Convert FlightGear route to KML format, so as to display the route in [Marble](http://marble.kde.org).
 
+Synopsis: `route2kml [INPUT_FILE] [OUTPUT_FILE]`:
+
 * If INPUT_FILE is not specified, then stdin is used.
 * If OUTPUT_FILE is not specified, then stdout is used.
-
-`shutdown INSTANCE_NUM`:
-
-Shutdown simulation.
-
-`soundon/soundoff INSTANCE_NUM`:
-
-Unmute/Mute FlightGear.
-
-`temperature`:
-
-Show both CPU and GPU's temperature.
-
-At present, only nVIDIA's GPU temperature will be fetched via `nvidia-smi`.
-
-* `INSTANCE_NUM` is used to determine which FlightGear instance should be processed, specified by one of 0-9. At most 10 instances could be launched at one time.
-* Multiple digits for `INSTANCE_NUM` means executing command for each instance specified, one digit for one instance.
 
 ---
 
