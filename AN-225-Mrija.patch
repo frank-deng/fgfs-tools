@@ -1,0 +1,154 @@
+diff -ruN AN-225-Mrija-master/AN-225-Mrija-base.xml AN-225-Mrija/AN-225-Mrija-base.xml
+--- AN-225-Mrija-master/AN-225-Mrija-base.xml	2015-06-03 23:33:18.000000000 +0800
++++ AN-225-Mrija/AN-225-Mrija-base.xml	2015-09-02 21:54:02.184782227 +0800
+@@ -281,6 +281,21 @@
+ 	Have fun!
+       </text>
+     </help>
++	<menubar>
++		<default>
++			<menu n='10'>
++				<label>AN-225</label>
++				<enabled type="bool">true</enabled>
++				<item>
++					<label>Ground Refuel</label>
++					<binding>
++						<command>nasal</command>
++						<script>an225.ground_refuel();</script>
++					</binding>
++				</item>
++			</menu>
++		</default>
++	</menubar>
+     
+ </sim>  
+ 
+@@ -456,11 +471,16 @@
+ <input>
+     <keyboard include="Nasal/AN-225-Mrija-keyboard.xml"/>
+ </input>
++<limits>
++	<estimated-range-nm>5000</estimated-range-nm>
++</limits>
+ 
+   <nasal>    
+     <an225>      
+       <file>Aircraft/AN-225-Mrija/Nasal/light.nas</file>
+       <file>Aircraft/AN-225-Mrija/Nasal/autostart.nas</file>
++      <file>Aircraft/AN-225-Mrija/Nasal/autopilot.nas</file>
++      <file>Aircraft/AN-225-Mrija/Nasal/groundrefuel.nas</file>
+     </an225>
+     <instruments>
+       <file>Aircraft/AN-225-Mrija/Nasal/setprop.nas</file>      
+diff -ruN AN-225-Mrija-master/Nasal/AN-225-Mrija-autopilot.xml AN-225-Mrija/Nasal/AN-225-Mrija-autopilot.xml
+--- AN-225-Mrija-master/Nasal/AN-225-Mrija-autopilot.xml	2015-06-03 23:33:18.000000000 +0800
++++ AN-225-Mrija/Nasal/AN-225-Mrija-autopilot.xml	2015-09-02 07:45:35.104924968 +0800
+@@ -17,6 +17,13 @@
+ 
+ 
+ <PropertyList>
++  <predict-simple>
++     <input>/autopilot/internal/nav1-heading-error-deg</input>
++     <output>/autopilot/internal/nav1-heading-error-lookahead-deg</output>
++     <seconds>8.0</seconds>
++     <filter-gain>0.0</filter-gain>
++  </predict-simple>
++
+ 
+   <!-- =============================================================== -->
+   <!-- Roll Axis Modes                                                 -->
+@@ -190,7 +197,7 @@
+       <value>nav1-hold</value>
+     </enable>
+     <input>
+-      <prop>/autopilot/internal/nav1-heading-error-deg</prop>
++      <prop>/autopilot/internal/nav1-heading-error-lookahead-deg</prop>
+     </input>
+     <reference>
+       <value>0.0</value>
+@@ -329,8 +336,8 @@
+     <config>
+       <Kp>0.3</Kp>          <!-- proportional gain -->
+       <Ki>0.0</Ki>          <!-- integral gain -->
+-      <u_min>-25.0</u_min> <!-- minimum output clamp -->
+-      <u_max>25.0</u_max>   <!-- maximum output clamp -->
++      <u_min>-16.67</u_min> <!-- minimum output clamp -->
++      <u_max>8.4</u_max>   <!-- maximum output clamp -->
+     </config>
+   </pi-simple-controller>
+ 
+@@ -388,7 +395,7 @@
+       <Kp>0.3</Kp>          <!-- proportional gain -->
+       <Ki>0.0</Ki>          <!-- integral gain -->
+       <u_min>-16.67</u_min> <!-- minimum output clamp -->
+-      <u_max>8.33</u_max>   <!-- maximum output clamp -->
++      <u_max>16.67</u_max>   <!-- maximum output clamp -->
+     </config>
+   </pi-simple-controller>
+ 
+diff -ruN AN-225-Mrija-master/Nasal/autopilot.nas AN-225-Mrija/Nasal/autopilot.nas
+--- AN-225-Mrija-master/Nasal/autopilot.nas	1970-01-01 08:00:00.000000000 +0800
++++ AN-225-Mrija/Nasal/autopilot.nas	2015-08-21 23:00:53.286446476 +0800
+@@ -0,0 +1,25 @@
++## Jump to next waypoint earlier
++var next_waypoint = func {
++	if ('true-heading-hold' == getprop('/autopilot/locks/heading')
++		and getprop('/autopilot/route-manager/active')) {
++
++		var max_wpt=getprop("/autopilot/route-manager/route/num");
++		var atm_wpt=getprop("/autopilot/route-manager/current-wp");
++		var eta_seconds = getprop('/autopilot/route-manager/wp/eta-seconds');
++		var wp_dist = getprop("/autopilot/route-manager/wp/dist");
++
++		if (eta_seconds != nil and wp_dist != nil
++			and eta_seconds < 37 and wp_dist < 30) {
++
++			if (getprop("/autopilot/route-manager/current-wp")<=max_wpt){
++				atm_wpt+=1;
++				setprop("/autopilot/route-manager/current-wp", atm_wpt);
++			}
++
++		}
++
++	}
++
++	settimer(next_waypoint, 0);
++}
++settimer(next_waypoint, 0);
+diff -ruN AN-225-Mrija-master/Nasal/groundrefuel.nas AN-225-Mrija/Nasal/groundrefuel.nas
+--- AN-225-Mrija-master/Nasal/groundrefuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ AN-225-Mrija/Nasal/groundrefuel.nas	2015-09-03 09:13:37.827716764 +0800
+@@ -0,0 +1,33 @@
++ground_refuel = func() {
++	if (getprop("/gear/gear[0]/wow")
++		and (getprop("/velocities/groundspeed-kt") < 1)
++		and getprop('/autopilot/route-manager/active')
++	){
++		var route_len = getprop('/autopilot/route-manager/total-distance');
++		var cargo = getprop('/sim/weight/weight-lb') + getprop('/sim/weight[1]/weight-lb') + getprop('/sim/weight[2]/weight-lb');
++		var maxcargo = getprop('sim/weight/max-lb') + getprop('sim/weight[1]/max-lb') + getprop('sim/weight[2]/max-lb');
++		var maxfuel_cargo = 270000;
++		var range = getprop('/limits/estimated-range-nm');
++		var d_range = 0;
++		if (cargo > maxfuel_cargo) {
++			d_range = 0.14 * (cargo - maxfuel_cargo) / (maxcargo - maxfuel_cargo);
++		}
++
++		var fuel_norm = route_len / range * (1 + d_range);
++		if (fuel_norm > 1.0) {
++			fuel_norm = 1.0;
++		} else if (fuel_norm < 0.1) {
++			fuel_norm = 0.1;
++		}
++		setprop('/consumables/fuel/tank/level-norm', fuel_norm);
++		setprop('/consumables/fuel/tank[1]/level-norm', fuel_norm);
++		setprop('/consumables/fuel/tank[2]/level-norm', fuel_norm);
++		setprop('/consumables/fuel/tank[3]/level-norm', fuel_norm);
++		setprop('/consumables/fuel/tank[4]/level-norm', fuel_norm);
++
++		screen.log.write('Aircraft refueled.');
++	} else {
++		screen.log.write('Aircraft is moving or Route Manager not activated.');
++	}
++}
++

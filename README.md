@@ -5,12 +5,6 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 ---
 
-#### FGTelnet.py
-
-Python library for interacting with FlightGear props telnet interface.
-
----
-
 #### fgtools
 
 A useful tool to manipulate FlightGear from command line.
@@ -36,14 +30,6 @@ If FLIGHT_PLAN is specified,
 * The simulation will be paused when the remaining route is short than 20nmi  
   You can specify `PAUSE_DISTANCE_NMI` to set a distance other than 20nmi for Pause Manager.
 
-`pause/resume INSTANCE_NUM`:
-
-Pause/Resume simulation.
-
-`report INSTANCE_NUM`:
-
-Print report of FlightGear.
-
 `route2kml [INPUT_FILE] [OUTPUT_FILE]`:
 
 Convert FlightGear route to KML format, so as to display the route in [Marble](http://marble.kde.org).
@@ -67,8 +53,6 @@ At present, only nVIDIA's GPU temperature will be fetched via `nvidia-smi`.
 
 * `INSTANCE_NUM` is used to determine which FlightGear instance should be processed, specified by one of 0-9. At most 10 instances could be launched at one time.
 * Multiple digits for `INSTANCE_NUM` means executing command for each instance specified, one digit for one instance.
-
-Please copy `fgtools.nas` to `$FG_ROOT/Nasal` first, so as to get all the stuffs here work well.
 
 ---
 

@@ -1,54 +1,26 @@
 #!/usr/bin/env python
 #encoding=UTF-8
 
-import sys, socket, getopt, os, subprocess, platform;
+import sys, urllib2, getopt, os, subprocess, platform;
 import xml.etree.ElementTree as ET;
 
-def get_report(instance_num, fg, args):
-	print 'Instance ID:            ' + str(instance_num);
-	print 'Aircraft:               ' + fg['/sim/description'];
-	print 'UTC Time:               ' + fg['/sim/time/gmt'];
-	print 'Local Time:             ' + fg['/instrumentation/clock/local-short-string'];
-	print 'Position (lat lon):     %.6f %6f' % (fg['/position/latitude-deg'], fg['/position/longitude-deg']);
-
-	if (fg['/autopilot/route-manager/active']):
-		dist_total = fg['/autopilot/route-manager/total-distance'];
-		dist_remaining = fg['/autopilot/route-manager/distance-remaining-nm'];
-		print 'Total Distance:         %.2fnmi' % (dist_total);
-		print 'Distance Remaining:     %.2fnmi' % (dist_remaining);
-		print 'Distance Elapsed:       %.2fnmi' % (dist_total - dist_remaining);
-		print 'Flight Time:            ' + fg['/autopilot/route-manager/flight-time-string'];
-		print 'Estimated Time Enroute: ' + fg['/autopilot/route-manager/ete-string'];
-
-	print 'Paused:                 ' + str(fg['/sim/freeze/clock'] and fg['/sim/freeze/master']);
-	print 'Crashed:                ' + str(fg['/sim/crashed']);
-	print 'FPS Limit:              ' + str(int(fg['/sim/frame-rate-throttle-hz']));
-	print 'Current FPS:            ' + str(int(fg['/sim/frame-rate']));
-	print '';
-
 def sound_on(instance_num, fg, args):
-	fg['/sim/sound/enabled'] = 1;
+	urllib2.urlopen(urllib2.Request(fg + '/props/sim/sound?submit=set&enabled=1'));
 	return 0;
 
 def sound_off(instance_num, fg, args):
-	fg['/sim/sound/enabled'] = 0;
+	urllib2.urlopen(urllib2.Request(fg + '/props/sim/sound?submit=set&enabled=0'));
 	return 0;
-
-def pause(instance_num, fg, args):
-	fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 1;
-
-def resume(instance_num, fg, args):
-	fg['/sim/freeze/master'] = fg['/sim/freeze/clock'] = 0;
 
 def fps_limit(instance_num, fg, args):
 	try:
 		target_fps = int(args[0]);
 		if (target_fps == 0):
-			fg['/sim/gui/frame-rate-throttled'] = 0;
-			fg['/sim/frame-rate-throttle-hz'] = 0;
+			urllib2.urlopen(urllib2.Request(fg + '/props/sim/gui?submit=set&frame-rate-throttled=0'));
+			urllib2.urlopen(urllib2.Request(fg + '/props/sim?submit=set&frame-rate-throttle-hz=0'));
 		elif (target_fps <= 70 and target_fps >= 15):
-			fg['/sim/gui/frame-rate-throttled'] = 1;
-			fg['/sim/frame-rate-throttle-hz'] = target_fps;
+			urllib2.urlopen(urllib2.Request(fg + '/props/sim/gui?submit=set&frame-rate-throttled=1'));
+			urllib2.urlopen(urllib2.Request(fg + '/props/sim?submit=set&frame-rate-throttle-hz=' + str(target_fps)));
 		else:
 			raise ValueError;
 	except:
@@ -56,7 +28,7 @@ def fps_limit(instance_num, fg, args):
 		return 1;
 
 def shutdown(instance_num, fg, args):
-	fg.run('exit');
+	urllib2.urlopen(urllib2.Request(fg + '/run.cgi?value=exit'));
 
 def cpu_temp():
 	fp = open('/sys/class/thermal/thermal_zone0/temp', 'r');
@@ -192,7 +164,6 @@ def fglaunch(args_input):
 		'/usr/bin/fgfs',
 		'/usr/local/bin/fgfs',
 	];
-	fg_telnet_ports = os.getenv('FG_TELNET_PORTS').split(',');
 	fg_httpd_ports = os.getenv('FG_HTTPD_PORTS').split(',');
 	instance_num = None;
 	fp_file = None;
@@ -219,14 +190,12 @@ def fglaunch(args_input):
 		return 1;
 
 	#Check if there is any instance not in use
-	telnet_port = httpd_port = None;
-	for i in range(len(fg_telnet_ports)):
-		telnet_port = int(fg_telnet_ports[i]);
+	httpd_port = None;
+	for i in range(len(fg_httpd_ports)):
 		httpd_port = int(fg_httpd_ports[i]);
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-		telnet_result = sock.connect_ex(('localhost', telnet_port));
 		httpd_result = sock.connect_ex(('localhost', httpd_port));
-		if telnet_result == 0 or httpd_result == 0:
+		if httpd_result == 0:
 			continue;
 		else:
 			instance_num = i;
@@ -271,7 +240,6 @@ def fglaunch(args_input):
 	return subprocess.call(
 		[
 			fgfs_exec
-			,'--telnet=socket,bi,60,,%d,tcp' % (telnet_port)
 			,'--httpd=' + str(httpd_port)
 			,'--aircraft=' + aircraft
 		]
@@ -281,11 +249,8 @@ def fglaunch(args_input):
 
 if __name__ == '__main__':
 	command_all = {
-		'report': (get_report, 1),
 		'soundon': (sound_on, 1),
 		'soundoff': (sound_off, 1),
-		'pause': (pause, 1),
-		'resume': (resume, 1),
 		'shutdown': (shutdown, 1),
 		'fpslimit': (fps_limit, 1),
 		'launch': (fglaunch, 0),
@@ -312,13 +277,12 @@ if __name__ == '__main__':
 			exit(0);
 
 	# Multi-instance command
-	from FGTelnet import FGTelnet;
-	fg_telnet_ports = os.getenv('FG_TELNET_PORTS').split(',');
+	fg_httpd_ports = os.getenv('FG_HTTPD_PORTS').split(',');
 	instance_num_all = [];
 	status = 0;
 	try:
 		for n in sys.argv[2]:
-			if (int(n) > len(fg_telnet_ports) - 1):
+			if (int(n) > len(fg_httpd_ports) - 1):
 				raise ValueError;
 			instance_num_all.append(int(n));
 	except Exception, e:
@@ -328,12 +292,8 @@ if __name__ == '__main__':
 	for instance_num in instance_num_all:
 		fg = None;
 		try:
-			fg = FGTelnet(port = fg_telnet_ports[instance_num]);
+			fg = 'http://localhost:' + str(fg_httpd_ports[instance_num]);
 			func_info[0](instance_num, fg, sys.argv[3:]);
-			fg.quit();
-		except IndexError:
-			sys.stderr.write("Connection Timeout.\n");
-			status = 2;
 		except Exception, e:
 			sys.stderr.write(str(e) + "\n");
 			status = 2;

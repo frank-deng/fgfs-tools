@@ -108,7 +108,7 @@ var extra_data_func = func(){
 			)
 		);
 	} else {
-		setprop('/autopilot/route-manager/ete-string', 'inf');
+		setprop('/autopilot/route-manager/ete-string', 'N/A');
 	}
 
 	#/autopilot/route-manager/flight-time-string
