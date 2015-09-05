@@ -42,7 +42,7 @@ diff -ruN AN-225-Mrija-master/AN-225-Mrija-base.xml AN-225-Mrija/AN-225-Mrija-ba
        <file>Aircraft/AN-225-Mrija/Nasal/setprop.nas</file>      
 diff -ruN AN-225-Mrija-master/Nasal/AN-225-Mrija-autopilot.xml AN-225-Mrija/Nasal/AN-225-Mrija-autopilot.xml
 --- AN-225-Mrija-master/Nasal/AN-225-Mrija-autopilot.xml	2015-06-03 23:33:18.000000000 +0800
-+++ AN-225-Mrija/Nasal/AN-225-Mrija-autopilot.xml	2015-09-02 07:45:35.104924968 +0800
++++ AN-225-Mrija/Nasal/AN-225-Mrija-autopilot.xml	2015-09-05 10:32:07.250537204 +0800
 @@ -17,6 +17,13 @@
  
  
@@ -77,15 +77,6 @@ diff -ruN AN-225-Mrija-master/Nasal/AN-225-Mrija-autopilot.xml AN-225-Mrija/Nasa
      </config>
    </pi-simple-controller>
  
-@@ -388,7 +395,7 @@
-       <Kp>0.3</Kp>          <!-- proportional gain -->
-       <Ki>0.0</Ki>          <!-- integral gain -->
-       <u_min>-16.67</u_min> <!-- minimum output clamp -->
--      <u_max>8.33</u_max>   <!-- maximum output clamp -->
-+      <u_max>16.67</u_max>   <!-- maximum output clamp -->
-     </config>
-   </pi-simple-controller>
- 
 diff -ruN AN-225-Mrija-master/Nasal/autopilot.nas AN-225-Mrija/Nasal/autopilot.nas
 --- AN-225-Mrija-master/Nasal/autopilot.nas	1970-01-01 08:00:00.000000000 +0800
 +++ AN-225-Mrija/Nasal/autopilot.nas	2015-08-21 23:00:53.286446476 +0800
@@ -117,7 +108,7 @@ diff -ruN AN-225-Mrija-master/Nasal/autopilot.nas AN-225-Mrija/Nasal/autopilot.n
 +settimer(next_waypoint, 0);
 diff -ruN AN-225-Mrija-master/Nasal/groundrefuel.nas AN-225-Mrija/Nasal/groundrefuel.nas
 --- AN-225-Mrija-master/Nasal/groundrefuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ AN-225-Mrija/Nasal/groundrefuel.nas	2015-09-03 09:13:37.827716764 +0800
++++ AN-225-Mrija/Nasal/groundrefuel.nas	2015-09-05 10:29:45.538533409 +0800
 @@ -0,0 +1,33 @@
 +ground_refuel = func() {
 +	if (getprop("/gear/gear[0]/wow")
@@ -134,7 +125,7 @@ diff -ruN AN-225-Mrija-master/Nasal/groundrefuel.nas AN-225-Mrija/Nasal/groundre
 +			d_range = 0.14 * (cargo - maxfuel_cargo) / (maxcargo - maxfuel_cargo);
 +		}
 +
-+		var fuel_norm = route_len / range * (1 + d_range);
++		var fuel_norm = route_len / range * (1 + d_range) + 0.06;
 +		if (fuel_norm > 1.0) {
 +			fuel_norm = 1.0;
 +		} else if (fuel_norm < 0.1) {
