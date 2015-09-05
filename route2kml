@@ -9,27 +9,27 @@ if __name__ != '__main__':
 
 # Handle command line
 args = sys.argv[1:];
-stream_input = sys.stdin;
-stream_output = sys.stdout;
-route_name = 'Route'
+stream_input = None;
+stream_output = None;
+route_name = None;
 status = 0;
 try:
-	if (args[0] in ('-h', '--help', '-?')):
-		sys.stderr.write('''Usage: %s route2kml [INPUT_FILE] [OUTPUT_FILE]
-
-If INPUT_FILE is not specified, stdin is used.
-If OUTPUT_FILE is not specified, stdout is used.
-''' % sys.argv[0]);
-		exit(1);
-
 	stream_input = open(args[0], 'r');
 	route_name = os.path.basename(args[0]);
 except IndexError:
-	stream_input = sys.stdin;
+	sys.stderr.write('Usage: route2kml INPUT_FILE [OUTPUT_FILE]\n');
+	exit(1);
+except Exception, e:
+	print(str(e));
+	exit(1);
+
 try:
 	stream_output = open(args[1], 'w');
 except IndexError:
-	stream_output = sys.stdout;
+	stream_output = open(route_name + '.kml', 'w');
+except Exception, e:
+	print(str(e));
+	exit(1);
 
 try:
 	# Fetch waypoints

@@ -24,10 +24,9 @@ If FLIGHT_PLAN is specified,
 
 Convert FlightGear route to KML format, so as to display the route in [Marble](http://marble.kde.org).
 
-Synopsis: `route2kml [INPUT_FILE] [OUTPUT_FILE]`:
+Synopsis: `route2kml INPUT_FILE [OUTPUT_FILE]`:
 
-* If INPUT_FILE is not specified, then stdin is used.
-* If OUTPUT_FILE is not specified, then stdout is used.
+* `OUTPUT_FILE` will be set as `INPUT_FILE.kml` if not specified.
 
 ---
 
