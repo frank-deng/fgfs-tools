@@ -5,7 +5,7 @@
   <departure>
     <airport type="string">YSSY</airport>
     <sid type="string">DEFAULT</sid>
-    <runway type="string">16L</runway>
+    <runway type="string">16R</runway>
   </departure>
   <destination>
     <airport type="string">ZSNJ</airport>
@@ -16,7 +16,7 @@
     <wp>
       <type type="string">runway</type>
       <departure type="bool">true</departure>
-      <ident type="string">16L</ident>
+      <ident type="string">16R</ident>
       <icao type="string">YSSY</icao>
     </wp>
     <wp n="1">
@@ -25,9 +25,9 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">3021</altitude-ft>
-      <ident type="string">16L-3</ident>
-      <lon type="double">151.2065907</lon>
-      <lat type="double">-34.0200535</lat>
+      <ident type="string">16R-3</ident>
+      <lon type="double">151.1932755</lon>
+      <lat type="double">-34.0132454</lat>
     </wp>
     <wp n="2">
       <type type="string">basic</type>
@@ -35,33 +35,33 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">6021</altitude-ft>
-      <ident type="string">16L-6</ident>
-      <lon type="double">151.2193102</lon>
-      <lat type="double">-34.06901031</lat>
+      <ident type="string">16R-6</ident>
+      <lon type="double">151.2059446</lon>
+      <lat type="double">-34.06221113</lat>
     </wp>
     <wp n="3">
       <type type="string">basic</type>
       <departure type="bool">true</departure>
       <generated type="bool">true</generated>
       <ident type="string">DEP-3</ident>
-      <lon type="double">151.1866807</lon>
-      <lat type="double">-34.11110383</lat>
+      <lon type="double">151.1732735</lon>
+      <lat type="double">-34.10428099</lat>
     </wp>
     <wp n="4">
       <type type="string">basic</type>
       <departure type="bool">true</departure>
       <generated type="bool">true</generated>
       <ident type="string">DEP-4</ident>
-      <lon type="double">151.1278128</lon>
-      <lat type="double">-34.12166604</lat>
+      <lon type="double">151.1143993</lon>
+      <lat type="double">-34.11480048</lat>
     </wp>
     <wp n="5">
       <type type="string">basic</type>
       <departure type="bool">true</departure>
       <generated type="bool">true</generated>
       <ident type="string">DEP-5</ident>
-      <lon type="double">151.0772109</lon>
-      <lat type="double">-34.09451508</lat>
+      <lon type="double">151.06383</lon>
+      <lat type="double">-34.08761278</lat>
     </wp>
     <wp n="6">
       <type type="string">navaid</type>
