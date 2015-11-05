@@ -1,15 +1,15 @@
-diff -ruN 757-200.orig/757-200-main.xml /home/frank/.fgdata/Aircraft/757-200/757-200-main.xml
---- 757-200.orig/757-200-main.xml	2015-01-19 13:41:14.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/757-200/757-200-main.xml	2015-03-28 10:12:50.706461839 +0800
-@@ -659,6 +659,7 @@
+diff -ruN 757-200-master/757-200-main.xml 757-200/757-200-main.xml
+--- 757-200-master/757-200-main.xml	2015-07-09 05:37:48.000000000 +0800
++++ 757-200/757-200-main.xml	2015-11-05 21:37:00.532145471 +0800
+@@ -691,6 +691,7 @@
  			<file>Aircraft/757-200/Nasal/pneumatic.nas</file>
  			<file>Aircraft/757-200/Nasal/hydraulic.nas</file>
  			<file>Aircraft/Generic/limits.nas</file>
 +			<file>Aircraft/757-200/Nasal/auto_refuel.nas</file>
  		</Boeing757>
- 		<lights>
- 			<file>Aircraft/757-200/Nasal/light.nas</file>
-@@ -749,6 +750,7 @@
+ 		<electrical>
+ 			<file>Aircraft/757-200/Nasal/electrical.nas</file>
+@@ -781,6 +782,7 @@
          <vne>600</vne>
          <max-positive-g>2.5</max-positive-g>
          <max-negative-g>-1.76</max-negative-g>
@@ -17,10 +17,10 @@ diff -ruN 757-200.orig/757-200-main.xml /home/frank/.fgdata/Aircraft/757-200/757
      </limits>
  
  </PropertyList>
-diff -ruN 757-200.orig/Nasal/auto_refuel.nas /home/frank/.fgdata/Aircraft/757-200/Nasal/auto_refuel.nas
---- 757-200.orig/Nasal/auto_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/757-200/Nasal/auto_refuel.nas	2015-03-14 22:17:03.813681390 +0800
-@@ -0,0 +1,22 @@
+diff -ruN 757-200-master/Nasal/auto_refuel.nas 757-200/Nasal/auto_refuel.nas
+--- 757-200-master/Nasal/auto_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ 757-200/Nasal/auto_refuel.nas	2015-11-05 19:48:24.335970973 +0800
+@@ -0,0 +1,20 @@
 +var l_auto_refuel = setlistener('/sim/signals/fdm-initialized', func {
 +    if (!getprop('/autopilot/route-manager/active')) {
 +        return;
@@ -28,11 +28,9 @@ diff -ruN 757-200.orig/Nasal/auto_refuel.nas /home/frank/.fgdata/Aircraft/757-20
 +
 +	var range = getprop('/limits/estimated-range-nm');
 +	var route_len = getprop('/autopilot/route-manager/total-distance');
-+	var fuel_norm = route_len / range;
++	var fuel_norm = route_len / range + 0.1;
 +	if (fuel_norm > 1.0) {
 +		fuel_norm = 1.0;
-+	} else if (fuel_norm < 0.1) {
-+		fuel_norm = 0.1;
 +	}
 +
 +	setprop('/consumables/fuel/tank/level-norm', fuel_norm);
@@ -43,30 +41,9 @@ diff -ruN 757-200.orig/Nasal/auto_refuel.nas /home/frank/.fgdata/Aircraft/757-20
 +	print('Aircraft refueled.');
 +});
 +
-diff -ruN 757-200.orig/Nasal/systems.nas /home/frank/.fgdata/Aircraft/757-200/Nasal/systems.nas
---- 757-200.orig/Nasal/systems.nas	2015-01-19 13:41:14.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/757-200/Nasal/systems.nas	2015-03-14 23:42:40.701764667 +0800
-@@ -261,6 +261,8 @@
- 		    setprop("controls/APU/off-start-run", 0);
- 		    setprop("controls/electric/APU-generator", 0);
- 		    setprop("controls/pneumatic/apu-bleed", 0);
-+		    setprop("controls/pneumatic/packs/pack-knob", 1);
-+		    setprop("controls/pneumatic/packs/pack-knob[1]", 1);
- 		}, 2);
- 		removelistener(listener2);
- 	    }
-diff -ruN 757-200.orig/Systems/757-autopilot.xml /home/frank/.fgdata/Aircraft/757-200/Systems/757-autopilot.xml
---- 757-200.orig/Systems/757-autopilot.xml	2015-01-19 13:41:14.000000000 +0800
-+++ /home/frank/.fgdata/Aircraft/757-200/Systems/757-autopilot.xml	2015-03-14 23:59:11.861780735 +0800
-@@ -467,7 +467,7 @@
-         <value>-16.67</value>
-       </u_min>
-       <u_max>
--        <value>33.33</value>
-+        <value>16.67</value>
-       </u_max>
-     </config>
-    </pi-simple-controller>
+diff -ruN 757-200-master/Systems/757-autopilot.xml 757-200/Systems/757-autopilot.xml
+--- 757-200-master/Systems/757-autopilot.xml	2015-07-09 05:37:48.000000000 +0800
++++ 757-200/Systems/757-autopilot.xml	2015-11-05 21:33:47.164140293 +0800
 @@ -539,7 +539,7 @@
          <value>-16.67</value>
        </u_min>
@@ -85,18 +62,3 @@ diff -ruN 757-200.orig/Systems/757-autopilot.xml /home/frank/.fgdata/Aircraft/75
        </u_max>
      </config>
    </pi-simple-controller>
-@@ -631,12 +631,12 @@
-       <prop>/autopilot/internal/target-pitch-deg</prop>
-     </output>
-     <config>
--      <Kp>1</Kp>
-+      <Kp>0.5</Kp>
-       <beta>1.0</beta>
-       <alpha>0.1</alpha>
-       <gamma>0.0</gamma>
-       <Ti>10.0</Ti>
--      <Td>0.00001</Td>
-+      <Td>0.0</Td>
-         <u_min>
-             <prop>instrumentation/afds/settings/pitch-min</prop>
-         </u_min>

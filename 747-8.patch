@@ -1,7 +1,7 @@
-diff -ruN 747-8i/747-8f-set.xml 747-8i.new/747-8f-set.xml
---- 747-8i/747-8f-set.xml	2015-01-20 03:42:28.000000000 +0800
-+++ 747-8i.new/747-8f-set.xml	2015-06-11 21:59:26.305368055 +0800
-@@ -272,13 +272,13 @@
+diff -ruN 747-8i-master/747-8f-set.xml 747-8i/747-8f-set.xml
+--- 747-8i-master/747-8f-set.xml	2015-06-30 08:44:10.000000000 +0800
++++ 747-8i/747-8f-set.xml	2015-11-05 21:09:02.792100542 +0800
+@@ -269,13 +269,13 @@
  
  		<weight n="0">
          	    <name>Crew</name>
@@ -17,7 +17,7 @@ diff -ruN 747-8i/747-8f-set.xml 747-8i.new/747-8f-set.xml
  		    <max-lb type="double">291800.0</max-lb>
  		    <min-lb type="double">0.0</min-lb>
  		</weight>
-@@ -312,6 +312,7 @@
+@@ -309,6 +309,7 @@
  		<maximum-landing-mass-lbs>763000</maximum-landing-mass-lbs>
  		<maximum-zero-fuel-mass-lbs>727000</maximum-zero-fuel-mass-lbs>
  	    </mass-and-balance>
@@ -25,10 +25,10 @@ diff -ruN 747-8i/747-8f-set.xml 747-8i.new/747-8f-set.xml
  	</limits>
  
  	<aircraft>
-diff -ruN 747-8i/747-8i-set.xml 747-8i.new/747-8i-set.xml
---- 747-8i/747-8i-set.xml	2015-01-20 03:42:28.000000000 +0800
-+++ 747-8i.new/747-8i-set.xml	2015-06-11 21:53:29.489366041 +0800
-@@ -287,13 +287,13 @@
+diff -ruN 747-8i-master/747-8i-set.xml 747-8i/747-8i-set.xml
+--- 747-8i-master/747-8i-set.xml	2015-06-30 08:44:10.000000000 +0800
++++ 747-8i/747-8i-set.xml	2015-11-05 21:08:48.380100157 +0800
+@@ -278,13 +278,13 @@
  
  		<weight n="0">
          	    <name>Crew</name>
@@ -44,7 +44,7 @@ diff -ruN 747-8i/747-8i-set.xml 747-8i.new/747-8i-set.xml
  		    <max-lb type="double">165100.0</max-lb>
  		    <min-lb type="double">0.0</min-lb>
  		</weight>
-@@ -335,6 +335,7 @@
+@@ -326,6 +326,7 @@
  		<maximum-landing-mass-lbs>688000</maximum-landing-mass-lbs>
  		<maximum-zero-fuel-mass-lbs>651000</maximum-zero-fuel-mass-lbs>
  	    </mass-and-balance>
@@ -52,10 +52,10 @@ diff -ruN 747-8i/747-8i-set.xml 747-8i.new/747-8i-set.xml
  	</limits>
  
  	<aircraft>
-diff -ruN 747-8i/747-8-main.xml 747-8i.new/747-8-main.xml
---- 747-8i/747-8-main.xml	2015-01-20 03:42:29.000000000 +0800
-+++ 747-8i.new/747-8-main.xml	2015-03-14 17:41:30.301413356 +0800
-@@ -521,6 +521,7 @@
+diff -ruN 747-8i-master/747-8-main.xml 747-8i/747-8-main.xml
+--- 747-8i-master/747-8-main.xml	2015-06-30 08:44:10.000000000 +0800
++++ 747-8i/747-8-main.xml	2015-11-05 21:10:38.780103113 +0800
+@@ -520,6 +520,7 @@
  			<file>Aircraft/747-8i/Nasal/IRS-controls.nas</file>
              		<file>Aircraft/747-8i/Nasal/runway.nas</file>
  			<file>Aircraft/747-8i/Nasal/system.nas</file>
@@ -63,96 +63,9 @@ diff -ruN 747-8i/747-8-main.xml 747-8i.new/747-8-main.xml
  		</Boeing747>
  		  	  
  		<cdu>
-diff -ruN 747-8i/Nasal/AFDS.nas 747-8i.new/Nasal/AFDS.nas
---- 747-8i/Nasal/AFDS.nas	2015-01-20 03:42:28.000000000 +0800
-+++ 747-8i.new/Nasal/AFDS.nas	2015-03-08 20:31:10.995761802 +0800
-@@ -401,72 +401,17 @@
-             }
- 	    if (!me.at1.getBoolValue()) me.autothrottle_mode.setValue(0);
-         }elsif(me.step==5){
--	    max_wpt=getprop("/autopilot/route-manager/route/num");
--	    atm_wpt=getprop("/autopilot/route-manager/current-wp");
--	    if ((atm_wpt < 0 or atm_wpt >= max_wpt) and getprop("autopilot/route-manager/active"))
--		setprop("autopilot/route-manager/active",0);
--
--	    if (getprop("/autopilot/route-manager/active") and getprop("/autopilot/route-manager/route/num") >= 2) {
--
--	    	if(atm_wpt < (max_wpt - 1)) {
--		    me.remaining_distance.setValue(getprop("/autopilot/route-manager/wp/remaining-distance-nm") + getprop("autopilot/route-manager/wp/dist"));
--#		    var next_course = getprop("/autopilot/route-manager/wp[1]/bearing-deg");
--	    	} else {
--		    me.remaining_distance.setValue(getprop("autopilot/route-manager/wp/dist"));
--	    	}
--
--		var groundspeed = getprop("/velocities/groundspeed-kt");
--		var f = flightplan();
--		var targetCourse = f.pathGeod(-1, -me.remaining_distance.getValue());
--		var leg = f.currentWP();
--		var enroute = leg.courseAndDistanceFrom(targetCourse);
--		setprop("autopilot/internal/course-deg", enroute[0]);
--
--		var courseCoord = geo.Coord.new().set_latlon(targetCourse.lat, targetCourse.lon);
--		var geocoord = geo.aircraft_position();
--		var CourseError = (geocoord.course_to(courseCoord) - getprop("orientation/heading-deg"));
--		if(CourseError < -180) CourseError += 360;
--		elsif(CourseError > 180) CourseError -= 360;
--		if(CourseError > 0) {
--		    CourseError = geocoord.distance_to(courseCoord);
--		} else {
--		    CourseError = (geocoord.distance_to(courseCoord) * -1);
--		}
--		var cCourseError = CourseError * 0.01;
--		if(cCourseError > 8.0) cCourseError = 8.0;
--		elsif(cCourseError < -8.0) cCourseError = -8.0;
--		setprop("autopilot/internal/course-error", cCourseError);
--
--		if(enroute[1] != nil)   # Course deg
--		{
--		    var wpt_eta = (enroute[1] / groundspeed * 3600);
--		    var brg_err = getprop("/autopilot/route-manager/wp/true-bearing-deg") - getprop("/orientation/heading-deg");
--		    if (brg_err < 0) {
--			brg_err = brg_err + 360;
--		    }
--		    var wp_lead = 30;
--		    if (getprop("instrumentation/airspeed-indicator/indicated-speed-kt") < 240 and getprop("position/altitude-ft") < 10000) {
--			wp_lead = 8;
--			brg_err = 0;
--		    }
--		    brg_err = math.pi * (brg_err / 180);
--		    if (enroute[1] < 16) {
--			wpt_eta = abs(wpt_eta * math.cos(brg_err));
--		    }
--
--		    if((getprop("gear/gear[1]/wow") == 0) and (getprop("gear/gear[2]/wow") == 0)) {
--			var change_wp = abs(getprop("/autopilot/route-manager/wp[1]/bearing-deg") - getprop("orientation/heading-magnetic-deg"));
--		    	if(change_wp > 180) change_wp = (360 - change_wp);
--		    	if (((me.heading_change_rate * change_wp) > wpt_eta) or (wpt_eta < wp_lead)) {
--			    if(atm_wpt < (max_wpt - 1)) {
--			    	atm_wpt += 1;
--			    	props.globals.getNode("/autopilot/route-manager/current-wp").setValue(atm_wpt);
--			    }
--		    	}
--		    }
--		}
--	    }
--
-+			if (getprop("/autopilot/route-manager/active")){
-+				max_wpt=getprop("/autopilot/route-manager/route/num");
-+				atm_wpt=getprop("/autopilot/route-manager/current-wp");
-+				max_wpt-=1;
-+				if (getprop("/autopilot/route-manager/wp/eta")=="0:37" and getprop("/autopilot/route-manager/wp/dist")<20){
-+					if (getprop("/autopilot/route-manager/current-wp")<=max_wpt){
-+						atm_wpt+=1;
-+						props.globals.getNode("/autopilot/route-manager/current-wp").setValue(atm_wpt);
-+					}
-+				}				
-+			}
- 	}elsif(me.step==6){
- 			ma_spd=getprop("/velocities/mach");
- 			banklimit=getprop("/instrumentation/afds/inputs/bank-limit-switch");
-diff -ruN 747-8i/Nasal/auto_refuel.nas 747-8i.new/Nasal/auto_refuel.nas
---- 747-8i/Nasal/auto_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ 747-8i.new/Nasal/auto_refuel.nas	2015-03-14 21:39:39.581645008 +0800
+diff -ruN 747-8i-master/Nasal/auto_refuel.nas 747-8i/Nasal/auto_refuel.nas
+--- 747-8i-master/Nasal/auto_refuel.nas	1970-01-01 08:00:00.000000000 +0800
++++ 747-8i/Nasal/auto_refuel.nas	2015-11-05 21:05:51.960095432 +0800
 @@ -0,0 +1,299 @@
 +var fuel_up = func(stage) {
 +	var tot_level = props.globals.getNode("consumables/fuel/total-fuel-gal_us",1);
@@ -453,29 +366,10 @@ diff -ruN 747-8i/Nasal/auto_refuel.nas 747-8i.new/Nasal/auto_refuel.nas
 +	print('Aircraft refueled.');
 +});
 +
-diff -ruN 747-8i/Systems/747-8-autopilot.xml 747-8i.new/Systems/747-8-autopilot.xml
---- 747-8i/Systems/747-8-autopilot.xml	2015-01-20 03:42:29.000000000 +0800
-+++ 747-8i.new/Systems/747-8-autopilot.xml	2015-03-08 20:12:37.799731991 +0800
-@@ -254,8 +254,7 @@
-       <value>LNAV</value>
-     </enable>
-     <input>
--      <!--prop>/autopilot/internal/waypoint-bearing-error-deg</prop-->
--      <prop>/autopilot/internal/course-error-deg</prop>
-+      <prop>/autopilot/internal/true-heading-error-deg</prop>
-     </input>
-     <reference>
-       <value>0</value>
-@@ -480,7 +479,7 @@
-         <value>-16.67</value>
-       </u_min>
-       <u_max>
--        <value>33.33</value>
-+        <value>16.67</value>
-       </u_max>
-     </config>
-    </pi-simple-controller>
-@@ -552,7 +551,7 @@
+diff -ruN 747-8i-master/Systems/747-8-autopilot.xml 747-8i/Systems/747-8-autopilot.xml
+--- 747-8i-master/Systems/747-8-autopilot.xml	2015-06-30 08:44:10.000000000 +0800
++++ 747-8i/Systems/747-8-autopilot.xml	2015-11-05 20:44:19.256060815 +0800
+@@ -552,7 +552,7 @@
          <value>-16.67</value>
        </u_min>
        <u_max>
@@ -484,7 +378,7 @@ diff -ruN 747-8i/Systems/747-8-autopilot.xml 747-8i.new/Systems/747-8-autopilot.
        </u_max>
      </config>
    </pi-simple-controller>
-@@ -622,7 +621,7 @@
+@@ -622,7 +622,7 @@
          <value>-16.67</value>
        </u_min>
        <u_max>

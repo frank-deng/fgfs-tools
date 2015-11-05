@@ -44,7 +44,7 @@ Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](
 
 #### 757-200.patch
 
-Patch for [757-200](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraft-3.4/757-200_20150111.zip).
+Patch for [757-200](https://github.com/dogsaysmoo/757-200).
 
 * Adjusted the vertical speed in FLCH mode.
 * Automatically refuel 757-200 on startup based on the distance of the route if flight plan is specified on startup.
@@ -53,7 +53,7 @@ Patch for [757-200](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircra
 
 #### 747-8.patch
 
-Patch for [747-8f](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraft-3.4/747-8i_20150111.zip) and [747-8i](http://mirrors.ibiblio.org/pub/mirrors/flightgear/ftp/Aircraft-3.4/747-8i_20150111.zip)
+Patch for [747-8f](https://github.com/dogsaysmoo/747-8i) and [747-8i](https://github.com/dogsaysmoo/747-8i)
 
 * Adjusted the vertical speed in FLCH mode.
 * Automatically refuel 747-8f and 747-8i on startup based on the distance of the route if flight plan is specified on startup.

@@ -68,7 +68,8 @@ else:
 			'--runway='+runway,
 			'--flight-plan='+fp_file,
 			'--prop:/autopilot/pausemgr-dist='+str(pausemgr_dist),
-			'--prop:/sim/rendering/particles=0'
+			'--prop:/sim/rendering/particles=0',
+			'--prop:/sim/frame-rate-throttle-hz=30',
 		];
 	except Exception, e:
 		sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
