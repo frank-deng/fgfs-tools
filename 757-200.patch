@@ -1,6 +1,15 @@
 diff -ruN 757-200-master/757-200-main.xml 757-200/757-200-main.xml
 --- 757-200-master/757-200-main.xml	2015-07-09 05:37:48.000000000 +0800
-+++ 757-200/757-200-main.xml	2015-11-05 21:37:00.532145471 +0800
++++ 757-200/757-200-main.xml	2015-11-06 07:47:35.203652047 +0800
+@@ -26,7 +26,7 @@
+ 				<adf1-bug-deg type="double">0</adf1-bug-deg>
+ 				<adf2-bug-deg type="double">0</adf2-bug-deg>
+ 			</B757-->
+-			<cabin-visible type="bool">1</cabin-visible>
++			<cabin-visible type="bool">0</cabin-visible>
+ 			<hide-yoke type="bool">0</hide-yoke>
+ 			<door>
+ 				<position-x-m type="float">-20.38</position-x-m>
 @@ -691,6 +691,7 @@
  			<file>Aircraft/757-200/Nasal/pneumatic.nas</file>
  			<file>Aircraft/757-200/Nasal/hydraulic.nas</file>
@@ -19,8 +28,8 @@ diff -ruN 757-200-master/757-200-main.xml 757-200/757-200-main.xml
  </PropertyList>
 diff -ruN 757-200-master/Nasal/auto_refuel.nas 757-200/Nasal/auto_refuel.nas
 --- 757-200-master/Nasal/auto_refuel.nas	1970-01-01 08:00:00.000000000 +0800
-+++ 757-200/Nasal/auto_refuel.nas	2015-11-05 19:48:24.335970973 +0800
-@@ -0,0 +1,20 @@
++++ 757-200/Nasal/auto_refuel.nas	2015-11-06 20:59:53.193951426 +0800
+@@ -0,0 +1,30 @@
 +var l_auto_refuel = setlistener('/sim/signals/fdm-initialized', func {
 +    if (!getprop('/autopilot/route-manager/active')) {
 +        return;
@@ -33,9 +42,19 @@ diff -ruN 757-200-master/Nasal/auto_refuel.nas 757-200/Nasal/auto_refuel.nas
 +		fuel_norm = 1.0;
 +	}
 +
-+	setprop('/consumables/fuel/tank/level-norm', fuel_norm);
-+	setprop('/consumables/fuel/tank[1]/level-norm', fuel_norm);
-+	setprop('/consumables/fuel/tank[2]/level-norm', fuel_norm);
++	var density = getprop('/consumables/fuel/tank/density-ppg');
++	var capacity_wing = (getprop('/consumables/fuel/tank/capacity-gal_us') + getprop('/consumables/fuel/tank[1]/capacity-gal_us')) * density;
++	var capacity_center = getprop('/consumables/fuel/tank[2]/capacity-gal_us') * density;
++	var refuel_lbs = (capacity_wing + capacity_center) * fuel_norm;
++	if (refuel_lbs < capacity_wing) {
++		setprop('/consumables/fuel/tank[2]/level-norm', 0);
++		setprop('/consumables/fuel/tank/level-lbs', refuel_lbs / 2);
++		setprop('/consumables/fuel/tank[1]/level-lbs', refuel_lbs / 2);
++	} else {
++		setprop('/consumables/fuel/tank/level-norm', 1);
++		setprop('/consumables/fuel/tank[1]/level-norm', 1);
++		setprop('/consumables/fuel/tank[2]/level-lbs', refuel_lbs - capacity_wing);
++	}
 +
 +    removelistener(l_auto_refuel);
 +	print('Aircraft refueled.');
