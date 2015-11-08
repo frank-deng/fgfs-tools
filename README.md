@@ -129,3 +129,7 @@ Shutdown simulation from command line, by executing fgcommand "exit":
 
 	wget -qO/dev/null "http://localhost:port/run.cgi?value=exit"
 
+Try the following command when you experience some strange errors during compiling FlightGear main program:
+
+	apt-get install --no-install-recommends libxi-dev libxmu-dev
+

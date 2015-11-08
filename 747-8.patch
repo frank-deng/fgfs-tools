@@ -63,6 +63,18 @@ diff -ruN 747-8i-master/747-8-main.xml 747-8i/747-8-main.xml
  		</Boeing747>
  		  	  
  		<cdu>
+diff -ruN 747-8i-master/Nasal/AFDS.nas 747-8i/Nasal/AFDS.nas
+--- 747-8i-master/Nasal/AFDS.nas	2015-06-30 08:44:10.000000000 +0800
++++ 747-8i/Nasal/AFDS.nas	2015-11-06 23:22:01.872740687 +0800
+@@ -476,7 +476,7 @@
+ 		    }
+ 		    var wp_lead = 30;
+ 		    change_wp = abs(getprop("/autopilot/route-manager/wp[1]/bearing-deg") - getprop("orientation/heading-deg"));
+-		    if (getprop("instrumentation/airspeed-indicator/indicated-speed-kt") < 240 and getprop("position/altitude-ft") < 10000) {
++		    if (getprop("position/altitude-ft") < 10000) {
+ 			wp_lead = 8;
+ #			brg_err = 0;
+ 			change_wp = 0;
 diff -ruN 747-8i-master/Nasal/auto_refuel.nas 747-8i/Nasal/auto_refuel.nas
 --- 747-8i-master/Nasal/auto_refuel.nas	1970-01-01 08:00:00.000000000 +0800
 +++ 747-8i/Nasal/auto_refuel.nas	2015-11-05 21:05:51.960095432 +0800
