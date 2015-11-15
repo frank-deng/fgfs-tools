@@ -1,0 +1,51 @@
+diff -ruNx .git -x Liveries -xSounds ./747-8i-set.xml /home/frank/.fgdata/Aircraft/747-8i/747-8i-set.xml
+--- ./747-8i-set.xml	2015-11-15 20:14:49.936075612 +0800
++++ /home/frank/.fgdata/Aircraft/747-8i/747-8i-set.xml	2015-11-15 20:13:12.756070955 +0800
+@@ -329,7 +329,7 @@
+ 		<maximum-landing-mass-lbs>688000</maximum-landing-mass-lbs>
+ 		<maximum-zero-fuel-mass-lbs>651000</maximum-zero-fuel-mass-lbs>
+ 	    </mass-and-balance>
+-		<estimated-range-nm>7600</estimated-range-nm>
++		<estimated-range-nm>10000</estimated-range-nm>
+ 	</limits>
+ 
+ 	<aircraft>
+diff -ruNx .git -x Liveries -xSounds ./747-8i-yasim.xml /home/frank/.fgdata/Aircraft/747-8i/747-8i-yasim.xml
+--- ./747-8i-yasim.xml	2015-11-15 17:02:05.767521534 +0800
++++ /home/frank/.fgdata/Aircraft/747-8i/747-8i-yasim.xml	2015-11-15 20:01:37.140037626 +0800
+@@ -103,7 +103,7 @@
+ </vstab>
+ 
+ <!-- xxxxxxxxxxxxxxxxxxx -->
+-<jet x="-2.17925" y="21.9866"  z="-0.168995" mass="6500" thrust="66500" egt="840" tsfc="0.34">
++<jet x="-2.17925" y="21.9866"  z="-0.168995" mass="6500" thrust="76500" egt="840" tsfc="0.225">
+   <control-input axis="/controls/engines/engine[0]/throttle-fdm" control="THROTTLE"/>
+   <control-input axis="/controls/engines/engine[0]/reverser" control="REVERSE_THRUST"/>
+     <control-output control="REVERSE_THRUST" prop="/surface-positions/reverser-norm[0]"/>
+@@ -112,7 +112,7 @@
+ </jet>
+ 
+ <!-- xxxxxxxxxxxxxxxxxxx -->
+-<jet x="6.83465" y="12.5224"  z="-2.32278" mass="6500" thrust="66500" egt="840" tsfc="0.34">
++<jet x="6.83465" y="12.5224"  z="-2.32278" mass="6500" thrust="76500" egt="840" tsfc="0.225">
+   <control-input axis="/controls/engines/engine[1]/throttle-fdm" control="THROTTLE"/>
+   <control-input axis="/controls/engines/engine[1]/reverser" control="REVERSE_THRUST"/>
+     <control-output control="REVERSE_THRUST" prop="/surface-positions/reverser-norm[1]"/>
+@@ -120,7 +120,7 @@
+ <actionpt x="0.5" y="12.5224" z="-2.32278"/>
+ </jet>
+ <!-- xxxxxxxxxxxxxxxxxxx -->
+-<jet x="6.83465" y="-12.5224" z="-2.32278" mass="6500" thrust="66500" egt="840" tsfc="0.34">
++<jet x="6.83465" y="-12.5224" z="-2.32278" mass="6500" thrust="76500" egt="840" tsfc="0.225">
+   <control-input axis="/controls/engines/engine[2]/throttle-fdm" control="THROTTLE"/>
+   <control-input axis="/controls/engines/engine[2]/reverser" control="REVERSE_THRUST"/>
+     <control-output control="REVERSE_THRUST" prop="/surface-positions/reverser-norm[2]"/>
+@@ -128,7 +128,7 @@
+ <actionpt x="0.5" y="-12.5224" z="-2.32278"/>
+ </jet>
+ <!-- xxxxxxxxxxxxxxxxxxx -->
+-<jet x="-2.17925" y="-21.9866" z="-0.168995" mass="6500" thrust="66500" egt="840" tsfc="0.34">
++<jet x="-2.17925" y="-21.9866" z="-0.168995" mass="6500" thrust="76500" egt="840" tsfc="0.225">
+   <control-input axis="/controls/engines/engine[3]/throttle-fdm" control="THROTTLE"/>
+   <control-input axis="/controls/engines/engine[3]/reverser" control="REVERSE_THRUST"/>
+     <control-output control="REVERSE_THRUST" prop="/surface-positions/reverser-norm[3]"/>

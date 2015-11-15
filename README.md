@@ -30,36 +30,6 @@ Synopsis: `route2kml INPUT_FILE [OUTPUT_FILE]`:
 
 ---
 
-#### 777-300.patch
-
-Patch for [777-300](https://code.google.com/p/b773-flightgear/) and [777-300ER](https://code.google.com/p/b773-flightgear/):
-
-* Some new viewports added to 777-300ER
-* Adjusted the vertical speed in FLCH mode.
-* Automatically refuel 777-300ER on startup based on the distance of the route if flight plan is specified on startup.
-* Adjusted Autopilot System so as to fly polar route.
-* Reduced the time of manual startup.
-
----
-
-#### 757-200.patch
-
-Patch for [757-200](https://github.com/dogsaysmoo/757-200).
-
-* Adjusted the vertical speed in FLCH mode.
-* Automatically refuel 757-200 on startup based on the distance of the route if flight plan is specified on startup.
-
----
-
-#### 747-8.patch
-
-Patch for [747-8f](https://github.com/dogsaysmoo/747-8i) and [747-8i](https://github.com/dogsaysmoo/747-8i)
-
-* Adjusted the vertical speed in FLCH mode.
-* Automatically refuel 747-8f and 747-8i on startup based on the distance of the route if flight plan is specified on startup.
-
----
-
 #### AN-225-Mrija.patch
 
 Patch for [AN-225-Mrija](https://github.com/HerbyW/AN-225-Mrija):
