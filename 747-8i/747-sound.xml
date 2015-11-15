@@ -445,8 +445,8 @@
 			<factor type="double">0.005</factor>
 			<offset type="double">0.025</offset-->
 			<property>/engines/engine/rpm</property>
-			<factor type="double">0.0125</factor>
-			<offset type="double">-0.75</offset>
+			<factor type="double">0.003</factor>
+			<offset type="double">-0.1875</offset>
 			<min>0.0</min>
 			<max>0.6</max>
 		</volume>
@@ -488,7 +488,7 @@
 		</pitch>
 		<volume>
 			<property>/engines/engine/rpm</property>
-			<factor type="double">0.1</factor>
+			<factor type="double">0.025</factor>
 			<min>0.0</min>
 			<max>0.5</max>
 		</volume>
@@ -526,8 +526,8 @@
 			<factor type="double">0.005</factor>
 			<offset type="double">0.025</offset-->
 			<property>/engines/engine[1]/rpm</property>
-			<factor type="double">0.0125</factor>
-			<offset type="double">-0.75</offset>
+			<factor type="double">0.003</factor>
+			<offset type="double">-0.1875</offset>
 			<min>0.0</min>
 			<max>0.6</max>
 		</volume>
@@ -567,7 +567,7 @@
 		</pitch>
 		<volume>
 			<property>/engines/engine[1]/rpm</property>
-			<factor type="double">0.1</factor>
+			<factor type="double">0.025</factor>
 			<min>0.0</min>
 			<max>0.5</max>
 		</volume>
@@ -607,8 +607,8 @@
 			<factor type="double">0.005</factor>
 			<offset type="double">0.025</offset-->
 			<property>/engines/engine[2]/rpm</property>
-			<factor type="double">0.0125</factor>
-			<offset type="double">-0.75</offset>
+			<factor type="double">0.003</factor>
+			<offset type="double">-0.1875</offset>
 			<min>0.0</min>
 			<max>0.6</max>
 		</volume>
@@ -648,7 +648,7 @@
 		</pitch>
 		<volume>
 			<property>/engines/engine[2]/rpm</property>
-			<factor type="double">0.1</factor>
+			<factor type="double">0.025</factor>
 			<min>0.0</min>
 			<max>0.5</max>
 		</volume>
@@ -686,8 +686,8 @@
 			<factor type="double">0.005</factor>
 			<offset type="double">0.025</offset-->
 			<property>/engines/engine[3]/rpm</property>
-			<factor type="double">0.0125</factor>
-			<offset type="double">-0.75</offset>
+			<factor type="double">0.003</factor>
+			<offset type="double">-0.1875</offset>
 			<min>0.0</min>
 			<max>0.6</max>
 		</volume>
@@ -727,7 +727,7 @@
 		</pitch>
 		<volume>
 			<property>/engines/engine[3]/rpm</property>
-			<factor type="double">0.1</factor>
+			<factor type="double">0.025</factor>
 			<min>0.0</min>
 			<max>0.5</max>
 		</volume>
