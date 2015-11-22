@@ -1,4 +1,58 @@
-<!DOCTYPE html>
+<?php
+$FG_CONNECTIONS = Array(
+	Array('host' => 'localhost', 'port' => 5410),
+	Array('host' => 'localhost', 'port' => 5411),
+	Array('host' => 'localhost', 'port' => 5412),
+	Array('host' => 'localhost', 'port' => 5413),
+	Array('host' => 'localhost', 'port' => 5414),
+);
+
+function fgfs_report($host, $port) {
+	$conn = curl_init();
+	curl_setopt($conn, CURLOPT_URL, $host.':'.$port.'/json/fgreport');
+	curl_setopt($conn, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($conn, CURLOPT_HEADER, 0);
+	curl_setopt($conn, CURLOPT_TIMEOUT, 2);
+	$fgreport_raw = curl_exec($conn);
+	curl_close($conn);
+	if (!$fgreport_raw) {
+		return null;
+	}
+
+	$fgreport = json_decode($fgreport_raw, true);
+	$result = Array();
+	foreach ($fgreport['children'] as $i => $item) {
+		switch ($item['type']) {
+			case 'bool':
+				$result[$item['name']] = ($item['value'] == 'true' ? true : false);
+			break;
+			case 'int':
+				$result[$item['name']] = (int)($item['value']);
+			break;
+			case 'double':
+				$result[$item['name']] = (double)($item['value']);
+			break;
+			default:
+				$result[$item['name']] = $item['value'];
+			break;
+		}
+	}
+	return $result;
+}
+
+if (isset($_GET['mod']) && $_GET['mod'] == 'report') {
+	$report_all = Array();
+	foreach ($FG_CONNECTIONS as $i => $conn) {
+		$report = fgfs_report($conn['host'], $conn['port']);
+		if ($report) {
+			$report['instance_num'] = $i;
+			array_push($report_all, $report);
+		}
+	}
+	exit(json_encode($report_all));
+}
+
+?><!DOCTYPE html>
 <html>
 	<head>
 		<meta name='viewport' id='viewport' content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no'/>
@@ -188,7 +242,7 @@ window.onload = function(){
 		id_map: 'map_container',
 		id_info: 'info_container',
 		id_error: 'error_info',
-		fgreport_url: 'fgreport.php',
+		fgreport_url: 'fgmonitor.php?mod=report',
 	});
 
 	document.getElementById('info_container').onclick = function(e){

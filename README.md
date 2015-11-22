@@ -30,34 +30,6 @@ Synopsis: `route2kml INPUT_FILE [OUTPUT_FILE]`:
 
 ---
 
-#### AN-225-Mrija.patch
-
-Patch for [AN-225-Mrija](https://github.com/HerbyW/AN-225-Mrija):
-
-* Added automatic ground refuel feature, which can calculate out the fuel needed based on the route and aircraft's payload.
-* Adjusted autopilot.
-
----
-
-#### B-1B.patch
-
-Patch for [Rockwell B-1B Lancer](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.2/B-1B_20130823.zip):
-
-* Changed the default target speed from 350 to 300.
-* Changed the vertical speed under Altitude Hold mode.
-
----
-
-#### B-2.patch
-
-Patch for [Northrop B-2 Spirit](ftp://ftp.de.flightgear.org/pub/fgfs/Aircraft-3.4/B-2_20140909.zip):
-
-* Fixed the missing engine sound.
-* Fixed the misplaced hotspots for selecting pilot mode.
-* Changed the vertical speed under Altitude Hold mode.
-
----
-
 #### fgtools.nas
 
 This Nasal script includes the following features:
@@ -87,9 +59,32 @@ Copy this file to `$FG_ROOT/gui/dialogs` to replace the original `gps.xml`.
 
 ---
 
+#### FGMonitor
+
+Monitor FlightGear instances from browser.
+
+**Requirements:**
+
+* A browser supports WebGL and [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
+* Apache/Nginx, PHP5, PHP5-cURL installed at server side.
+
+**Installation**
+
+* Copy `fgmonitor.nas` to `$FG_ROOT/Nasal` where FlightGear is deployed.
+* Copy `fgmonitor.php` to the root folder of a web server and set it as index page.
+* Enable CORS (Nginx): `add_header 'Access-Control-Allow-Origin' "example.com";`
+* Enable CORS (Apache): `Header set Access-Control-Allow-Origin example.com`
+
+**Usage**
+
+* For PC platform, Press `r` or `space` to update data.
+* For mobile platform, shake the device to update data.
+
+---
+
 #### Misceallanous
 
-Directory __routes__ contains flight plans for long-haul and ultra long-haul flights, as well as flight plans based on Jules Verne's novel _Around the World in Eighty Days_, which takes only 8 days to finish by Boeing 757.
+Directory __routes__ contains flight plans for long-haul and ultra long-haul flights.
 
 Set maximum FPS to 30 from command line:
 
