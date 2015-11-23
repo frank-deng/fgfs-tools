@@ -57,17 +57,17 @@
     </wp>
     <wp n="5">
       <type type="string">navaid</type>
+      <ident type="string">NOA</ident>
+      <lon type="double">-43.4805</lon>
+      <lat type="double">-22.7185</lat>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">35000</altitude-ft>
-      <ident type="string">SDUB</ident>
-      <lon type="double">-45.075556</lon>
-      <lat type="double">-23.4409725</lat>
     </wp>
     <wp n="6">
       <type type="string">navaid</type>
-      <ident type="string">BCO</ident>
-      <lon type="double">-46.3855</lon>
-      <lat type="double">-23.406333</lat>
+      <ident type="string">SJC</ident>
+      <lon type="double">-45.854167</lon>
+      <lat type="double">-23.246333</lat>
     </wp>
     <wp n="7">
       <type type="string">navaid</type>
