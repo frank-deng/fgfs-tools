@@ -391,23 +391,23 @@
     </wp>
     <wp n="61">
       <type type="string">navaid</type>
-      <ident type="string">MRW</ident>
-      <lon type="double">116.023611</lon>
-      <lat type="double">-29.208889</lat>
+      <ident type="string">YGGE</ident>
+      <lon type="double">116.9713566</lon>
+      <lat type="double">-28.76424375</lat>
     </wp>
     <wp n="62">
       <type type="string">navaid</type>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">4100</altitude-ft>
-      <ident type="string">WAVES</ident>
-      <lon type="double">115.528372</lon>
-      <lat type="double">-31.870828</lat>
+      <ident type="string">ROSMO</ident>
+      <lon type="double">116.742042</lon>
+      <lat type="double">-31.445594</lat>
     </wp>
     <wp n="63">
       <type type="string">navaid</type>
-      <ident type="string">PRL</ident>
-      <lon type="double">116.1175</lon>
-      <lat type="double">-31.859444</lat>
+      <ident type="string">CKL</ident>
+      <lon type="double">116.561667</lon>
+      <lat type="double">-31.684167</lat>
     </wp>
     <wp n="64">
       <type type="string">basic</type>
