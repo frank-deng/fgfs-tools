@@ -10,7 +10,7 @@
   <destination>
     <airport type="string">NZCH</airport>
     <approach type="string">DEFAULT</approach>
-    <runway type="string">20</runway>
+    <runway type="string">02</runway>
   </destination>
   <route>
     <wp>
@@ -371,88 +371,64 @@
     </wp>
     <wp n="57">
       <type type="string">navaid</type>
-      <ident type="string">PP</ident>
-      <lon type="double">174.981897</lon>
-      <lat type="double">-40.902744</lat>
+      <ident type="string">CABLE</ident>
+      <lon type="double">174.578781</lon>
+      <lat type="double">-41.511684</lat>
     </wp>
     <wp n="58">
       <type type="string">navaid</type>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">4000</altitude-ft>
-      <ident type="string">OKODI</ident>
-      <lon type="double">174.207444</lon>
-      <lat type="double">-42.581194</lat>
+      <altitude-ft type="double">4100</altitude-ft>
+      <ident type="string">AVOCA</ident>
+      <lon type="double">171.806778</lon>
+      <lat type="double">-43.131667</lat>
     </wp>
     <wp n="59">
       <type type="string">navaid</type>
-      <ident type="string">BIDEV</ident>
-      <lon type="double">172.596024</lon>
-      <lat type="double">-43.329945</lat>
+      <ident type="string">BERMA</ident>
+      <lon type="double">171.603699</lon>
+      <lat type="double">-43.43539</lat>
     </wp>
     <wp n="60">
       <type type="string">navaid</type>
-      <ident type="string">GURTU</ident>
-      <lon type="double">172.697784</lon>
-      <lat type="double">-43.483891</lat>
+      <ident type="string">HODDE</ident>
+      <lon type="double">172.018417</lon>
+      <lat type="double">-43.713032</lat>
     </wp>
     <wp n="61">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
-      <ident type="string">APP-6</ident>
-      <lon type="double">172.8510821</lon>
-      <lat type="double">-43.39915201</lat>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4123</altitude-ft>
+      <ident type="string">02-12</ident>
+      <lon type="double">172.3450753</lon>
+      <lat type="double">-43.65074592</lat>
     </wp>
     <wp n="62">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
-      <ident type="string">APP-5</ident>
-      <lon type="double">172.8450928</lon>
-      <lat type="double">-43.34933424</lat>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2123</altitude-ft>
+      <ident type="string">02-8</ident>
+      <lon type="double">172.4041867</lon>
+      <lat type="double">-43.59973797</lat>
     </wp>
     <wp n="63">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
-      <ident type="string">APP-4</ident>
-      <lon type="double">172.7925904</lon>
-      <lat type="double">-43.31720758</lat>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2123</altitude-ft>
+      <ident type="string">02-GS</ident>
+      <lon type="double">172.4295636</lon>
+      <lat type="double">-43.57780399</lat>
     </wp>
     <wp n="64">
-      <type type="string">basic</type>
-      <approach type="bool">true</approach>
-      <generated type="bool">true</generated>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">4123</altitude-ft>
-      <ident type="string">20-12</ident>
-      <lon type="double">172.7243611</lon>
-      <lat type="double">-43.32159524</lat>
-    </wp>
-    <wp n="65">
-      <type type="string">basic</type>
-      <approach type="bool">true</approach>
-      <generated type="bool">true</generated>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">2123</altitude-ft>
-      <ident type="string">20-8</ident>
-      <lon type="double">172.6657676</lon>
-      <lat type="double">-43.37275714</lat>
-    </wp>
-    <wp n="66">
-      <type type="string">basic</type>
-      <approach type="bool">true</approach>
-      <generated type="bool">true</generated>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">2123</altitude-ft>
-      <ident type="string">20-GS</ident>
-      <lon type="double">172.6405525</lon>
-      <lat type="double">-43.39473839</lat>
-    </wp>
-    <wp n="67">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
-      <ident type="string">20</ident>
+      <ident type="string">02</ident>
       <icao type="string">NZCH</icao>
     </wp>
   </route>
