@@ -429,7 +429,7 @@
 	
 	<engine>
 		<name>engine1 inside</name>
-		<path>Aircraft/747-8i/Sounds/whine-inside.wav</path>
+		<path>Aircraft/747-8i/Sounds/whine.wav</path>
 		<mode>looped</mode>
 		<condition>
 			<property>engines/engine/running</property>
@@ -445,7 +445,7 @@
 			<factor type="double">0.005</factor>
 			<offset type="double">0.025</offset-->
 			<property>/engines/engine/rpm</property>
-			<factor type="double">0.003</factor>
+			<factor type="double">0.00015</factor>
 			<offset type="double">-0.1875</offset>
 			<min>0.0</min>
 			<max>0.6</max>
@@ -468,7 +468,7 @@
 	</engine>
 	<engine>
 		<name>engine1 n1 inside</name>
-		<path>Aircraft/747-8i/Sounds/jet.wav</path>
+		<path>Aircraft/747-8i/Sounds/turbine.wav</path>
 		<mode>looped</mode>
 		<condition>
 			<property>engines/engine/rpm</property>
@@ -488,12 +488,9 @@
 		</pitch>
 		<volume>
 			<property>/engines/engine/rpm</property>
-			<factor type="double">0.025</factor>
+			<factor type="double">0.001</factor>
 			<min>0.0</min>
 			<max>0.5</max>
-		</volume>
-		<volume>
-			<property>sim/sound/volume</property>
 		</volume>
 		<reference-dist>600.0</reference-dist>
 		<max-dist>6000.0</max-dist>
@@ -510,7 +507,7 @@
 	
 	<engine>
 		<name>engine2 inside</name>
-		<path>Aircraft/747-8i/Sounds/whine-inside.wav</path>
+		<path>Aircraft/747-8i/Sounds/whine.wav</path>
 		<mode>looped</mode>
 		<condition>
 			<property>engines/engine[1]/running</property>
@@ -526,7 +523,7 @@
 			<factor type="double">0.005</factor>
 			<offset type="double">0.025</offset-->
 			<property>/engines/engine[1]/rpm</property>
-			<factor type="double">0.003</factor>
+			<factor type="double">0.00015</factor>
 			<offset type="double">-0.1875</offset>
 			<min>0.0</min>
 			<max>0.6</max>
@@ -547,7 +544,7 @@
 	</engine>
 	<engine>
 		<name>engine2 n1 inside</name>
-		<path>Aircraft/747-8i/Sounds/jet.wav</path>
+		<path>Aircraft/747-8i/Sounds/turbine.wav</path>
 		<mode>looped</mode>
 		<condition>
 			<property>engines/engine[1]/rpm</property>
@@ -567,12 +564,9 @@
 		</pitch>
 		<volume>
 			<property>/engines/engine[1]/rpm</property>
-			<factor type="double">0.025</factor>
+			<factor type="double">0.001</factor>
 			<min>0.0</min>
 			<max>0.5</max>
-		</volume>
-		<volume>
-			<property>sim/sound/volume</property>
 		</volume>
 		<reference-dist>600.0</reference-dist>
 		<max-dist>6000.0</max-dist>
@@ -589,7 +583,7 @@
 
 	<engine>
 		<name>engine3 inside</name>
-		<path>Aircraft/747-8i/Sounds/whine-inside.wav</path>
+		<path>Aircraft/747-8i/Sounds/whine.wav</path>
 		<mode>looped</mode>
 		<condition>
 			<property>engines/engine[2]/running</property>
@@ -607,7 +601,7 @@
 			<factor type="double">0.005</factor>
 			<offset type="double">0.025</offset-->
 			<property>/engines/engine[2]/rpm</property>
-			<factor type="double">0.003</factor>
+			<factor type="double">0.00015</factor>
 			<offset type="double">-0.1875</offset>
 			<min>0.0</min>
 			<max>0.6</max>
@@ -628,7 +622,7 @@
 	</engine>
 	<engine>
 		<name>engine3 n1 inside</name>
-		<path>Aircraft/747-8i/Sounds/jet.wav</path>
+		<path>Aircraft/747-8i/Sounds/turbine.wav</path>
 		<mode>looped</mode>
 		<condition>
 			<property>engines/engine[2]/rpm</property>
@@ -648,12 +642,9 @@
 		</pitch>
 		<volume>
 			<property>/engines/engine[2]/rpm</property>
-			<factor type="double">0.025</factor>
+			<factor type="double">0.001</factor>
 			<min>0.0</min>
 			<max>0.5</max>
-		</volume>
-		<volume>
-			<property>sim/sound/volume</property>
 		</volume>
 		<reference-dist>600.0</reference-dist>
 		<max-dist>6000.0</max-dist>
@@ -670,7 +661,7 @@
 	
 	<engine>
 		<name>engine4 inside</name>
-		<path>Aircraft/747-8i/Sounds/whine-inside.wav</path>
+		<path>Aircraft/747-8i/Sounds/whine.wav</path>
 		<mode>looped</mode>
 		<condition>
 			<property>engines/engine[3]/running</property>
@@ -686,7 +677,7 @@
 			<factor type="double">0.005</factor>
 			<offset type="double">0.025</offset-->
 			<property>/engines/engine[3]/rpm</property>
-			<factor type="double">0.003</factor>
+			<factor type="double">0.00015</factor>
 			<offset type="double">-0.1875</offset>
 			<min>0.0</min>
 			<max>0.6</max>
@@ -707,7 +698,7 @@
 	</engine>
 	<engine>
 		<name>engine4 n1 inside</name>
-		<path>Aircraft/747-8i/Sounds/jet.wav</path>
+		<path>Aircraft/747-8i/Sounds/turbine.wav</path>
 		<mode>looped</mode>
 		<condition>
 			<property>engines/engine[3]/rpm</property>
@@ -727,12 +718,9 @@
 		</pitch>
 		<volume>
 			<property>/engines/engine[3]/rpm</property>
-			<factor type="double">0.025</factor>
+			<factor type="double">0.001</factor>
 			<min>0.0</min>
 			<max>0.5</max>
-		</volume>
-		<volume>
-			<property>sim/sound/volume</property>
 		</volume>
 		<reference-dist>600.0</reference-dist>
 		<max-dist>6000.0</max-dist>
@@ -744,29 +732,6 @@
             <max>2.0</max>
         </pitch>
 	</engine>
-	<reverser>
-		<name>engine4rev</name>
-		<path>Aircraft/747-8i/Sounds/reverser.wav</path>
-		<mode>looped</mode>
-		<condition>
-			<property>engines/engine[3]/running</property>
-		</condition>
-		<position>
-                        <x>-30.0</x>
-                        <y>-40.0</y>
-                        <z>0.0</z>
-                </position>
-                <volume>
-                        <property>/engines/engine[3]/n1-ind</property>
-                        <factor type="double">0.005</factor>
-                        <offset type="double">-0.025</offset>
-                </volume>
-		<volume>
-			<property>sim/multiplay/generic/float[6]</property>
-		</volume>
-		<reference-dist>600.0</reference-dist>
-		<max-dist>6000.0</max-dist>
-	</reverser>
 	
 	<!-- Flaps -->
 	
