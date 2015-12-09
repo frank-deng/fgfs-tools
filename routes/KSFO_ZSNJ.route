@@ -43,9 +43,9 @@
       <type type="string">navaid</type>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">35000</altitude-ft>
-      <ident type="string">OAK</ident>
-      <lon type="double">-122.2235889</lon>
-      <lat type="double">37.72591944</lat>
+      <ident type="string">SUTRO</ident>
+      <lon type="double">-122.546817</lon>
+      <lat type="double">37.712019</lat>
     </wp>
     <wp n="4">
       <type type="string">navaid</type>
