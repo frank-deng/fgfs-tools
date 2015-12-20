@@ -10,7 +10,7 @@
   <destination>
     <airport type="string">EGLL</airport>
     <approach type="string">DEFAULT</approach>
-    <runway type="string">27R</runway>
+    <runway type="string">09L</runway>
   </destination>
   <route>
     <wp>
@@ -383,23 +383,25 @@
     </wp>
     <wp n="59">
       <type type="string">navaid</type>
-      <ident type="string">RDL</ident>
-      <lon type="double">-0.13925</lon>
-      <lat type="double">51.214944</lat>
+      <ident type="string">GODAL</ident>
+      <lon type="double">-0.742222</lon>
+      <lat type="double">51.276389</lat>
     </wp>
     <wp n="60">
-      <type type="string">navaid</type>
-      <ident type="string">BIG</ident>
-      <lon type="double">0.034811</lon>
-      <lat type="double">51.330875</lat>
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <ident type="string">APP-5</ident>
+      <lon type="double">-0.8649149643</lon>
+      <lat type="double">51.39023027</lat>
     </wp>
     <wp n="61">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
       <ident type="string">APP-4</ident>
-      <lon type="double">-0.0565080265</lon>
-      <lat type="double">51.44342947</lat>
+      <lon type="double">-0.8654304114</lon>
+      <lat type="double">51.44016801</lat>
     </wp>
     <wp n="62">
       <type type="string">basic</type>
@@ -407,9 +409,9 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">4083</altitude-ft>
-      <ident type="string">27R-12</ident>
-      <lon type="double">-0.1133780894</lon>
-      <lat type="double">51.47852627</lat>
+      <ident type="string">09L-12</ident>
+      <lon type="double">-0.8092941462</lon>
+      <lat type="double">51.47572054</lat>
     </wp>
     <wp n="63">
       <type type="string">basic</type>
@@ -417,9 +419,9 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">2083</altitude-ft>
-      <ident type="string">27R-8</ident>
-      <lon type="double">-0.2200085877</lon>
-      <lat type="double">51.47833866</lat>
+      <ident type="string">09L-8</ident>
+      <lon type="double">-0.7026741997</lon>
+      <lat type="double">51.47639287</lat>
     </wp>
     <wp n="64">
       <type type="string">basic</type>
@@ -427,14 +429,14 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">2083</altitude-ft>
-      <ident type="string">27R-GS</ident>
-      <lon type="double">-0.2658406632</lon>
-      <lat type="double">51.47822822</lat>
+      <ident type="string">09L-GS</ident>
+      <lon type="double">-0.6568454273</lon>
+      <lat type="double">51.47665206</lat>
     </wp>
     <wp n="65">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
-      <ident type="string">27R</ident>
+      <ident type="string">09L</ident>
       <icao type="string">EGLL</icao>
     </wp>
   </route>
