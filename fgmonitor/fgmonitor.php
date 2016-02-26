@@ -73,7 +73,7 @@ body{font-size:14px;text-shadow:0px 0px 2px #000;color:#FFF;}
 #info_container .item-name{padding-right:10px;}
 #info_container .crashed{color:#F00;}
 		</style>
-		<script src="http://frank-deng.gitcafe.io/world-map/v2/api.js"></script>
+		<script src="http://www.webglearth.com/v2/api.js"></script>
 		<script type='text/javascript'>
 function FGReport(params) {
 	var _this = this;
