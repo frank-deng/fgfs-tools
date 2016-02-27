@@ -59,29 +59,6 @@ Copy this file to `$FG_ROOT/gui/dialogs` to replace the original `gps.xml`.
 
 ---
 
-#### FGMonitor
-
-Monitor FlightGear instances from browser.
-
-**Requirements:**
-
-* A browser supports WebGL and [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
-* Apache/Nginx, PHP5, PHP5-cURL installed at server side.
-
-**Installation**
-
-* Copy `fgmonitor.nas` to `$FG_ROOT/Nasal` where FlightGear is deployed.
-* Copy `fgmonitor.php` to the root folder of a web server and set it as index page.
-* Enable CORS (Nginx): `add_header 'Access-Control-Allow-Origin' "example.com";`
-* Enable CORS (Apache): `Header set Access-Control-Allow-Origin example.com`
-
-**Usage**
-
-* For PC platform, Press `r` or `space` to update data.
-* For mobile platform, shake the device to update data.
-
----
-
 #### Misceallanous
 
 Directory __routes__ contains flight plans for long-haul and ultra long-haul flights.

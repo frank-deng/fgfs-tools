@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 #encoding=UTF-8
 
-if __name__ != '__main__':
-	exit(1);
-
 import sys, socket, getopt, os, subprocess, platform;
 import xml.etree.ElementTree as ET;
 
@@ -12,86 +9,69 @@ fgfs_possible_exec = [
 	'/usr/bin/fgfs',
 	'/usr/local/bin/fgfs',
 ];
-fg_httpd_ports = os.getenv('FG_HTTPD_PORTS').split(',');
-instance_num = None;
-fp_file = None;
+fgfs_httpd_port=5410;
 pausemgr_dist = 20;
 
-#Process Command Line
-try:
-	opts, args = getopt.getopt(sys.argv[1:], '+f:p:');
-	if (len(args) < 1):
-		raise Exception;
-	aircraft = args[0];
-	for opt, arg in opts:
-		if opt == '-f':
-			fp_file = os.path.abspath(arg);
-		if opt == '-p':
-			pausemgr_dist = int(arg);
-except Exception, e:
-	print('Usage: fglaunch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [Other_fgfs_Arguments] ...');
-	exit(1);
-
-#Check if reboot is required
-if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
-	sys.stderr.write('Please reboot your machine before launching FlightGear.\n');
-	exit(1);
-
-#Check if there is any instance not in use
-httpd_port = None;
-for i in range(len(fg_httpd_ports)):
-	httpd_port = int(fg_httpd_ports[i]);
-	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-	httpd_result = sock.connect_ex(('localhost', httpd_port));
-	if httpd_result == 0:
-		continue;
-	else:
-		instance_num = i;
-		break;
-if (None == instance_num):
-	sys.stderr.write('Unable to launch more FlightGear Instance.\n');
-	exit(1);
-else: 
-	print 'Use instance #' + str(instance_num) + '.';
-
-#Get runway to takeoff
-if (None == fp_file):
-	fp_params = ['--prop:/sim/rendering/particles=1'];
-else:
+if __name__ == '__main__':
+	#Process Command Line
+	fp_file = None;
 	try:
-		fp_tree = ET.parse(fp_file);
-		fp_root = fp_tree.getroot();
-		airport = fp_root.findall('departure/airport')[0].text;
-		runway = fp_root.findall('departure/runway')[0].text;
-		fp_params = [
-			'--airport='+airport,
-			'--runway='+runway,
-			'--flight-plan='+fp_file,
-			'--prop:/autopilot/pausemgr-dist='+str(pausemgr_dist),
-			'--prop:/sim/rendering/particles=0',
-			'--prop:/sim/frame-rate-throttle-hz=30',
-		];
+		opts, args = getopt.getopt(sys.argv[1:], '+f:p:');
+		if (len(args) < 1):
+			raise Exception;
+		aircraft = args[0];
+		for opt, arg in opts:
+			if opt == '-f':
+				fp_file = os.path.abspath(arg);
+			if opt == '-p':
+				pausemgr_dist = int(arg);
 	except Exception, e:
-		sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
+		print('Usage: fglaunch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [Other_fgfs_Arguments] ...');
 		exit(1);
 
-#Launch FlightGear
-for i in fgfs_possible_exec:
-	if i == None:
-		continue;
-	if os.path.isfile(i):
-		fgfs_exec = i;
-		break;
-if (fgfs_exec == None):
-	sys.stderr.write('Executable of fgfs not found.\n');
-	exit(1);
+	#Check if reboot is required
+	if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
+		sys.stderr.write('Please reboot your machine before launching FlightGear.\n');
+		exit(1);
 
-exit(subprocess.call(
-	[
-		fgfs_exec
-		,'--httpd=' + str(httpd_port)
-		,'--aircraft=' + aircraft
-	]
-	+ fp_params
-	+ args[1:]
-));
+	#Check if fgfs is already running
+	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+	httpd_result = sock.connect_ex(('localhost', fgfs_httpd_port));
+	if httpd_result == 0:
+		sys.stderr.write('An instance of FlightGear is running.\n');
+		exit(1);
+
+	#Get runway to takeoff
+	if (None == fp_file):
+		fp_params = ['--prop:/sim/rendering/particles=1'];
+	else:
+		try:
+			fp_tree = ET.parse(fp_file);
+			fp_root = fp_tree.getroot();
+			airport = fp_root.findall('departure/airport')[0].text;
+			runway = fp_root.findall('departure/runway')[0].text;
+			fp_params = [
+				'--airport='+airport,
+				'--runway='+runway,
+				'--flight-plan='+fp_file,
+				'--prop:/autopilot/pausemgr-dist='+str(pausemgr_dist),
+				'--prop:/sim/rendering/particles=0',
+				'--prop:/sim/frame-rate-throttle-hz=30',
+			];
+		except Exception, e:
+			sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
+			exit(1);
+
+	#Launch FlightGear
+	for i in fgfs_possible_exec:
+		if i == None:
+			continue;
+		if os.path.isfile(i):
+			fgfs_exec = i;
+			break;
+	if (fgfs_exec == None):
+		sys.stderr.write('Executable of fgfs not found.\n');
+		exit(1);
+
+	exit(subprocess.call([fgfs_exec ,'--aircraft=' + aircraft] + fp_params + args[1:]));
+

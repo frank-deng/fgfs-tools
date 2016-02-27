@@ -41,7 +41,7 @@ var pause_manager = func
 		}
 	}
 
-	settimer(pause_manager, 0);
+	settimer(pause_manager, 0.1);
 }
 _setlistener('/sim/signals/nasal-dir-initialized', func() {
 	if (nil == getprop('/autopilot/pausemgr-dist')) {
@@ -122,7 +122,7 @@ var extra_data_func = func(){
 		)
 	);
 
-	settimer(extra_data_func, 0);
+	settimer(extra_data_func, 0.1);
 }
 _setlistener("/sim/signals/nasal-dir-initialized", func {
 	extra_data_func();
