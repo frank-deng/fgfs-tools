@@ -42,26 +42,23 @@ Copy this file to `$FG_ROOT/Nasal` to make it work.
 
 ---
 
-#### gps.xml
+#### Frequently Used Unit Conversion
 
-Added the folling information:
+Length:
 
-* Full UTC Time
-* Local Time
-* Total Distance
-* Distance Remaining
-* Flight Time
-* ETE
+	1 feet = 0.3048 m    1 m = 3.2808 feet
+	1 mile = 1.6093 km   1 km = 0.6214 mile
+	1 nmi = 1.852 km     1 km = 0.5400 nmi
+	1 mile = 0.869 nmi   1 nmi = 1.1508 mile
 
-To make the additional information work in `gps.xml`, please make sure that `fgtools.nas` exists under `$FG_ROOT/Nasal`.
+Mass:
 
-Copy this file to `$FG_ROOT/gui/dialogs` to replace the original `gps.xml`.
+	1 lbs = 0.4536 kg    1 kg = 2.2046 lbs
+	1 lbs = 1 pound
 
 ---
 
 #### Misceallanous
-
-Directory __routes__ contains flight plans for long-haul and ultra long-haul flights.
 
 Set maximum FPS to 30 from command line:
 
@@ -71,7 +68,9 @@ Shutdown simulation from command line, by executing fgcommand "exit":
 
 	wget -qO/dev/null "http://localhost:port/run.cgi?value=exit"
 
-Try the following command when you experience some strange errors during compiling FlightGear main program:
+Recommened configuration for `~/.fgfsrc`
 
-	apt-get install --no-install-recommends libxi-dev libxmu-dev
+	--time-match-real
+	--httpd=8080
+	--nmea=socket,out,5,localhost,5500,udp
 

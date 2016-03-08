@@ -1,9 +1,0 @@
---enable-fullscreen
---callsign='Frank'
---enable-horizon-effect
---enable-specular-highlight
---time-match-real
---httpd=5410
-
-#For Marble map use
---nmea=socket,out,5,localhost,5500,udp
