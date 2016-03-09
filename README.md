@@ -9,14 +9,14 @@ A collection of useful tools, patches, routes, etc for FlightGear.
 
 Start FlightGear with the aircraft specified.
 
-Synopsis: `fglaunch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [fgfs_options] ...`:
+Synopsis: `fglaunch [-f flight_plan [-p pause_distance_nmi]] [-a aircraft] [-- Other_Arguments...]`
 
 If FLIGHT_PLAN is specified,
 
 * The aircraft will be placed at the departure airport & runway specified by the Flight Plan.
 * ILS frequency will be automatically prepared for the distination runway.
 * The simulation will be paused when the remaining route is short than 20nmi  
-  You can specify `PAUSE_DISTANCE_NMI` to set a distance other than 20nmi for Pause Manager.
+  You can specify `pause_distance_nmi` to set a distance other than 20nmi for Pause Manager.
 
 ---
 
@@ -42,7 +42,7 @@ Copy this file to `$FG_ROOT/Nasal` to make it work.
 
 ---
 
-#### Frequently Used Unit Conversion
+#### Useful Unit Conversions
 
 Length:
 
@@ -72,5 +72,9 @@ Recommened configuration for `~/.fgfsrc`
 
 	--time-match-real
 	--httpd=8080
+	--prop:/sim/frame-rate-throttle-hz=60
+	--prop:/autopilot/pausemgr-dist=20
+
+	#For Marble map use
 	--nmea=socket,out,5,localhost,5500,udp
 

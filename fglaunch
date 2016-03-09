@@ -9,24 +9,23 @@ fgfs_possible_exec = [
 	'/usr/bin/fgfs',
 	'/usr/local/bin/fgfs',
 ];
-fgfs_httpd_port=5410;
 pausemgr_dist = 20;
 
 if __name__ == '__main__':
 	#Process Command Line
 	fp_file = None;
+	aircraft = None;
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], '+f:p:');
-		if (len(args) < 1):
-			raise Exception;
-		aircraft = args[0];
+		opts, args = getopt.getopt(sys.argv[1:], '+f:p:a:');
 		for opt, arg in opts:
 			if opt == '-f':
 				fp_file = os.path.abspath(arg);
 			if opt == '-p':
 				pausemgr_dist = int(arg);
+			if opt == '-a':
+				aircraft = arg;
 	except Exception, e:
-		print('Usage: fglaunch [-f FLIGHT_PLAN [-p PAUSE_DISTANCE_NMI]] Aircraft [Other_fgfs_Arguments] ...');
+		print('Usage: fglaunch [-f flight_plan [-p pause_distance_nmi]] [-a aircraft] [-- Other_Arguments...]');
 		exit(1);
 
 	#Check if reboot is required
@@ -34,33 +33,23 @@ if __name__ == '__main__':
 		sys.stderr.write('Please reboot your machine before launching FlightGear.\n');
 		exit(1);
 
-	#Check if fgfs is already running
-	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-	httpd_result = sock.connect_ex(('localhost', fgfs_httpd_port));
-	if httpd_result == 0:
-		sys.stderr.write('An instance of FlightGear is running.\n');
-		exit(1);
-
 	#Get runway to takeoff
-	if (None == fp_file):
-		fp_params = ['--prop:/sim/rendering/particles=1'];
-	else:
-		try:
-			fp_tree = ET.parse(fp_file);
-			fp_root = fp_tree.getroot();
-			airport = fp_root.findall('departure/airport')[0].text;
-			runway = fp_root.findall('departure/runway')[0].text;
-			fp_params = [
-				'--airport='+airport,
-				'--runway='+runway,
-				'--flight-plan='+fp_file,
-				'--prop:/autopilot/pausemgr-dist='+str(pausemgr_dist),
-				'--prop:/sim/rendering/particles=0',
-				'--prop:/sim/frame-rate-throttle-hz=30',
-			];
-		except Exception, e:
-			sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
-			exit(1);
+	try:
+		fp_tree = ET.parse(fp_file);
+		fp_root = fp_tree.getroot();
+		airport = fp_root.findall('departure/airport')[0].text;
+		runway = fp_root.findall('departure/runway')[0].text;
+		fp_params = [
+			'--airport='+airport,
+			'--runway='+runway,
+			'--flight-plan='+fp_file,
+			'--prop:/autopilot/pausemgr-dist='+str(pausemgr_dist),
+		];
+		if (aircraft):
+			fp_params.append('--aircraft=' + aircraft);
+	except Exception, e:
+		sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
+		exit(1);
 
 	#Launch FlightGear
 	for i in fgfs_possible_exec:
@@ -73,5 +62,5 @@ if __name__ == '__main__':
 		sys.stderr.write('Executable of fgfs not found.\n');
 		exit(1);
 
-	exit(subprocess.call([fgfs_exec ,'--aircraft=' + aircraft] + fp_params + args[1:]));
+	exit(subprocess.call([fgfs_exec] + fp_params + args));
 
