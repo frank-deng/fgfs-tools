@@ -1,9 +1,0 @@
-Length:
-1 feet = 0.3048 m  / 1 m = 3.2808 feet
-1 mile = 1.6093 km / 1 km = 0.6214 mile
-1 nmi = 1.852 km   / 1 km = 0.5400 nmi
-1 mile = 0.869 nmi / 1 nmi = 1.1508 mile
-
-Mass:
-1 lbs = 0.4536 kg  / 1 kg = 2.2046 lbs
-1 lbs = 1 pound
