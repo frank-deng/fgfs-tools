@@ -36,7 +36,6 @@ This Nasal script includes the following features:
 
 * Pause Manager
 * Automatically activate Route Manager and ILS Frequency
-* Convert ETE time, Flight time in seconds to HH:MM:SS format;
 
 Copy this file to `$FG_ROOT/Nasal` to make it work.
 
