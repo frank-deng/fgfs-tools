@@ -3,9 +3,7 @@ fgfs-tools
 
 A collection of useful tools, patches, routes, etc for FlightGear.
 
----
-
-#### fglaunch
+## fglaunch
 
 Start FlightGear with the aircraft specified.
 
@@ -18,9 +16,7 @@ If FLIGHT_PLAN is specified,
 * The simulation will be paused when the remaining route is short than 20nmi  
   You can specify `pause_distance_nmi` to set a distance other than 20nmi for Pause Manager.
 
----
-
-#### route2kml
+## route2kml
 
 Convert FlightGear route to KML format, so as to display the route in [Marble](http://marble.kde.org).
 
@@ -28,9 +24,7 @@ Synopsis: `route2kml INPUT_FILE [OUTPUT_FILE]`:
 
 * `OUTPUT_FILE` will be set as `INPUT_FILE.kml` if not specified.
 
----
-
-#### fgtools.nas
+## fgtools.nas
 
 This Nasal script includes the following features:
 
@@ -39,9 +33,7 @@ This Nasal script includes the following features:
 
 Copy this file to `$FG_ROOT/Nasal` to make it work.
 
----
-
-#### Useful Unit Conversions
+## Useful Unit Conversions
 
 Length:
 
@@ -55,9 +47,25 @@ Mass:
 	1 lbs = 0.4536 kg    1 kg = 2.2046 lbs
 	1 lbs = 1 pound
 
----
+## Fix Slow FPS For Boeing Airliners
 
-#### Misceallanous
+Open `$FG_ROOT/Nasal/canvas/map/navdisplay.styles`.
+
+Find out code like follows:
+
+	{ name:'RTE', isMapStructure:1, update_on:['toggle_range','toggle_display_mode'],
+		predicate: func(nd, layer) {
+			var visible= (nd.in_mode('toggle_display_mode', ['MAP','PLAN']));
+			layer.group.setVisible( visible );
+			if (visible)
+				layer.update();
+		}, # end of layer update predicate
+		'z-index': 1,
+	}, # end of route layer
+
+Then comment out the code above.
+
+## Misceallanous
 
 Set maximum FPS to 30 from command line:
 
