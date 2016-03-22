@@ -132,66 +132,60 @@
       <lat type="double">79.189167</lat>
     </wp>
     <wp n="18">
-      <type type="string">basic</type>
-      <ident type="string">E001N089</ident>
-      <lon type="double">1</lon>
-      <lat type="double">89.999</lat>
-    </wp>
-    <wp n="19">
       <type type="string">navaid</type>
       <ident type="string">PEVAR</ident>
       <lon type="double">-46.939722</lon>
       <lat type="double">66.699167</lat>
     </wp>
-    <wp n="20">
+    <wp n="19">
       <type type="string">navaid</type>
       <ident type="string">OSKEL</ident>
       <lon type="double">-46.994189</lon>
       <lat type="double">61.213529</lat>
     </wp>
-    <wp n="21">
+    <wp n="20">
       <type type="string">navaid</type>
       <ident type="string">BUTUX</ident>
       <lon type="double">-45.38</lon>
       <lat type="double">18</lat>
     </wp>
-    <wp n="22">
+    <wp n="21">
       <type type="string">navaid</type>
       <ident type="string">IRAXI</ident>
       <lon type="double">-45</lon>
       <lat type="double">13</lat>
     </wp>
-    <wp n="23">
+    <wp n="22">
       <type type="string">navaid</type>
       <ident type="string">SLI</ident>
       <lon type="double">-44.24</lon>
       <lat type="double">-2.589167</lat>
     </wp>
-    <wp n="24">
+    <wp n="23">
       <type type="string">navaid</type>
       <ident type="string">BARKA</ident>
       <lon type="double">-44.181667</lon>
       <lat type="double">-7.962833</lat>
     </wp>
-    <wp n="25">
+    <wp n="24">
       <type type="string">navaid</type>
       <ident type="string">LAP</ident>
       <lon type="double">-43.413075</lon>
       <lat type="double">-13.264864</lat>
     </wp>
-    <wp n="26">
+    <wp n="25">
       <type type="string">navaid</type>
       <ident type="string">FORTI</ident>
       <lon type="double">-42.825667</lon>
       <lat type="double">-16.3745</lat>
     </wp>
-    <wp n="27">
+    <wp n="26">
       <type type="string">navaid</type>
       <ident type="string">FALSE</ident>
       <lon type="double">-42.765833</lon>
       <lat type="double">-19.803333</lat>
     </wp>
-    <wp n="28">
+    <wp n="27">
       <type type="string">navaid</type>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">4000</altitude-ft>
@@ -199,13 +193,13 @@
       <lon type="double">-43.368911</lon>
       <lat type="double">-22.987886</lat>
     </wp>
-    <wp n="29">
+    <wp n="28">
       <type type="string">navaid</type>
       <ident type="string">IH</ident>
       <lon type="double">-43.146064</lon>
       <lat type="double">-23.063856</lat>
     </wp>
-    <wp n="30">
+    <wp n="29">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -213,7 +207,7 @@
       <lon type="double">-42.94745871</lon>
       <lat type="double">-22.81104746</lat>
     </wp>
-    <wp n="31">
+    <wp n="30">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -221,7 +215,7 @@
       <lon type="double">-42.96202118</lon>
       <lat type="double">-22.76272755</lat>
     </wp>
-    <wp n="32">
+    <wp n="31">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -231,7 +225,7 @@
       <lon type="double">-43.0091575</lon>
       <lat type="double">-22.73811284</lat>
     </wp>
-    <wp n="33">
+    <wp n="32">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -241,7 +235,7 @@
       <lon type="double">-43.0785981</lon>
       <lat type="double">-22.75618908</lat>
     </wp>
-    <wp n="34">
+    <wp n="33">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
@@ -251,7 +245,7 @@
       <lon type="double">-43.10845097</lon>
       <lat type="double">-22.76394939</lat>
     </wp>
-    <wp n="35">
+    <wp n="34">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
       <ident type="string">28</ident>

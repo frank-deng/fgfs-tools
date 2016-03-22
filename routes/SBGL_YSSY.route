@@ -76,10 +76,10 @@
       <lat type="double">-60.717222</lat>
     </wp>
     <wp n="8">
-      <type type="string">basic</type>
-      <ident type="string">E000S089</ident>
-      <lon type="double">0</lon>
-      <lat type="double">-89.999</lat>
+      <type type="string">navaid</type>
+      <ident type="string">NZIR</ident>
+      <lon type="double">166.9689345</lon>
+      <lat type="double">-77.8918361</lat>
     </wp>
     <wp n="9">
       <type type="string">navaid</type>
