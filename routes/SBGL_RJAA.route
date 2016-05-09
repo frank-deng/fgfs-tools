@@ -191,9 +191,9 @@
     </wp>
     <wp n="27">
       <type type="string">navaid</type>
-      <ident type="string">GUPPY</ident>
-      <lon type="double">141.721672</lon>
-      <lat type="double">35.581744</lat>
+      <ident type="string">ACQUA</ident>
+      <lon type="double">142.163833</lon>
+      <lat type="double">35.162489</lat>
     </wp>
     <wp n="28">
       <type type="string">navaid</type>
