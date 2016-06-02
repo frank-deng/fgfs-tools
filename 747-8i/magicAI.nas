@@ -88,7 +88,7 @@ var magicAI_start_cruise = func {
 	if (getprop('/position/altitude-agl-ft') > 2000 and 800 < vs and vs < 1200 and abs(vs - vs_prev) < 100) {
 		setprop('/instrumentation/afds/inputs/vertical-index', 5);
 		setprop('/controls/flight/elevator', 0);
-		return;
+		magicAI_cruise();return;
 	}
 	vs_prev = vs;
 	settimer(magicAI_start_cruise, 1);
@@ -97,15 +97,24 @@ var magicAI_cruise = func {
 	var route_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
 	if (route_remaining < 22) {
 		setprop('/autopilot/settings/vertical-speed-fpm', -1000);
+		setprop('/autopilot/settings/target-speed-kt', 200);
 		setprop('/instrumentation/afds/inputs/vertical-index', 5);
 		setprop('/autopilot/settings/target-altitude-ft', getprop('/autopilot/settings/target-altitude-ft') - 2000);
 		settimer(func(){
 			setprop('/autopilot/locks/altitude', 'gs1-hold');
 			setprop('/autopilot/locks/heading', 'nav1-hold');
+			magicAI_landing();
 		}, 0.5);
 		return;
 	}
 	settimer(magicAI_cruise, 1);
+}
+var magicAI_landing = func {
+	if (getprop('/instrumentation/afds/inputs/vertical-index') == 2) {
+		setprop('/autopilot/settings/target-speed-kt', 160);
+		return;
+	}
+	settimer(magicAI_landing, 1);
 }
 
 if (getprop('/sim/magicAI') == 1) {
