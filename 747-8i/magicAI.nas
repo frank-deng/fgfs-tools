@@ -32,9 +32,9 @@ var magicAI_start = func {
 
 		#Begin takeoff
 		settimer(func(){
-			#for (i = 0; i < 12; i += 1) {
-			#	setprop('/controls/engines/engine['~i~']/throttle', 1);
-			#}
+			for (i = 0; i < 12; i += 1) {
+				setprop('/controls/engines/engine['~i~']/throttle', 1);
+			}
 			setprop('/controls/gear/brake-parking', 0);
 			magicAI_takeoff();
 		}, 20);
@@ -98,11 +98,13 @@ var magicAI_cruise = func {
 	if (route_remaining < 22) {
 		setprop('/autopilot/settings/vertical-speed-fpm', -1000);
 		setprop('/autopilot/settings/target-speed-kt', 200);
-		setprop('/instrumentation/afds/inputs/vertical-index', 5);
-		setprop('/autopilot/settings/target-altitude-ft', getprop('/autopilot/settings/target-altitude-ft') - 2000);
+		setprop('/instrumentation/afds/inputs/vertical-index', 1);
+		setprop('/autopilot/settings/alt-display-ft', getprop('/autopilot/settings/target-altitude-ft') - 2000);
+		setprop('/autopilot/settings/altitude-setting-ft', getprop('/autopilot/settings/target-altitude-ft') - 2000);
+		setprop('/controls/flight/speedbrake-lever', 1);
 		settimer(func(){
-			setprop('/autopilot/locks/altitude', 'gs1-hold');
-			setprop('/autopilot/locks/heading', 'nav1-hold');
+			setprop('/instrumentation/afds/inputs/loc-armed', 1);
+			setprop('/instrumentation/afds/inputs/gs-armed', 1);
 			magicAI_landing();
 		}, 0.5);
 		return;
@@ -110,16 +112,45 @@ var magicAI_cruise = func {
 	settimer(magicAI_cruise, 1);
 }
 var magicAI_landing = func {
-	if (getprop('/instrumentation/afds/inputs/vertical-index') == 2) {
-		setprop('/autopilot/settings/target-speed-kt', 160);
-		return;
+	if (getprop('/instrumentation/afds/inputs/vertical-index') == 6) {
+		setprop('/controls/gear/gear-down', 1);
+		setprop('/autopilot/settings/target-speed-kt', 157);
+		setprop('/controls/lighting/taxi-lights', 1);
+		setprop('/controls/lighting/logo-lights', 1);
+		setprop('/controls/lighting/wing-lights', 1);
+		setprop('/controls/lighting/landing-lights[0]', 1);
+		setprop('/controls/lighting/landing-lights[1]', 1);
+		setprop('/controls/lighting/landing-lights[2]', 1);
+		magicAI_pause();return;
 	}
 	settimer(magicAI_landing, 1);
+}
+var magicAI_pause = func {
+	if (getprop('/position/altitude-agl-ft') < 400) {
+		props.globals.getNode('/sim/freeze/clock').setBoolValue(1);
+		props.globals.getNode('/sim/freeze/master').setBoolValue(1);
+		magicAI_aftermath();return;
+	}
+	settimer(magicAI_pause, 1);
+}
+var magicAI_aftermath = func {
+	if (getprop('/gear/on-ground') and getprop('/velocities/airspeed-kt') < 50) {
+		for (i = 0; i < 12; i += 1) {
+			setprop('/controls/engines/engine['~i~']/throttle', 0);
+			setprop('/controls/engines/engine['~i~']/reverser', 0);
+		}
+		setprop('/controls/flight/flaps', 0);
+		setprop('/controls/flight/speedbrake-lever', 0);
+		setprop('/controls/flight/elevator', 0);
+		setprop('/controls/flight/elevator-trim', 0);
+		return;
+	}
+	settimer(magicAI_aftermath, 1);
 }
 
 if (getprop('/sim/magicAI') == 1) {
 	settimer(func(){
-		setprop('/autopilot/pausemgr-dist', 5);
+		setprop('/autopilot/pausemgr-dist', -1);
 		magicAI_start();
 	}, 3);
 }
