@@ -32,9 +32,6 @@ var magicAI_start = func {
 
 		#Begin takeoff
 		settimer(func(){
-			for (i = 0; i < 12; i += 1) {
-				setprop('/controls/engines/engine['~i~']/throttle', 1);
-			}
 			setprop('/controls/gear/brake-parking', 0);
 			magicAI_takeoff();
 		}, 20);
