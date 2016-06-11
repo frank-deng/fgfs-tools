@@ -7,6 +7,8 @@ var magicAI_start = func {
 		setprop('/controls/lighting/landing-lights', 0);
 		setprop('/controls/lighting/landing-lights[1]', 0);
 		setprop('/controls/lighting/logo-lights', 0);
+		setprop('/controls/lighting/mcp-panel-norm', 1);
+		setprop('/controls/lighting/cockpit-panel-norm', 1);
 
 		setprop('/controls/flight/flaps', 0.667);
 
