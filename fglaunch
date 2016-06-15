@@ -5,62 +5,67 @@ import sys, socket, getopt, os, subprocess, platform;
 import xml.etree.ElementTree as ET;
 
 fgfs_possible_exec = [
-	os.getenv('FGFS_BIN'),
-	'/usr/bin/fgfs',
-	'/usr/local/bin/fgfs',
+    os.getenv('FGFS_BIN'),
+    '/usr/bin/fgfs',
+    '/usr/local/bin/fgfs',
 ];
 pausemgr_dist = 20;
 
 if __name__ == '__main__':
-	#Process Command Line
-	fp_file = None;
-	aircraft = None;
-	try:
-		opts, args = getopt.getopt(sys.argv[1:], '+f:p:a:');
-		for opt, arg in opts:
-			if opt == '-f':
-				fp_file = os.path.abspath(arg);
-			if opt == '-p':
-				pausemgr_dist = int(arg);
-			if opt == '-a':
-				aircraft = arg;
-	except Exception, e:
-		print('Usage: fglaunch [-f flight_plan [-p pause_distance_nmi]] [-a aircraft] [-- Other_Arguments...]');
-		exit(1);
+    #Process Command Line
+    fp_file = None;
+    aircraft = None;
+    magicAI = False;
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], '+f:p:a:M');
+        for opt, arg in opts:
+            if opt == '-f':
+                fp_file = os.path.abspath(arg);
+            if opt == '-p':
+                pausemgr_dist = int(arg);
+            if opt == '-a':
+                aircraft = arg;
+            if opt == '-M':
+                magicAI = True;
+    except Exception, e:
+        print('Usage: fglaunch [-f flight_plan [-p pause_distance_nmi]] [-a aircraft] [-M] [-- Other_Arguments...]');
+        exit(1);
 
-	#Check if reboot is required
-	if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
-		sys.stderr.write('Please reboot your machine before launching FlightGear.\n');
-		exit(1);
+    #Check if reboot is required
+    if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
+        sys.stderr.write('Please reboot your machine before launching FlightGear.\n');
+        exit(1);
 
-	#Get runway to takeoff
-	try:
-		fp_tree = ET.parse(fp_file);
-		fp_root = fp_tree.getroot();
-		airport = fp_root.findall('departure/airport')[0].text;
-		runway = fp_root.findall('departure/runway')[0].text;
-		fp_params = [
-			'--airport='+airport,
-			'--runway='+runway,
-			'--flight-plan='+fp_file,
-			'--prop:/autopilot/pausemgr-dist='+str(pausemgr_dist),
-		];
-		if (aircraft):
-			fp_params.append('--aircraft=' + aircraft);
-	except Exception, e:
-		sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
-		exit(1);
+    #Get runway to takeoff
+    try:
+        fp_tree = ET.parse(fp_file);
+        fp_root = fp_tree.getroot();
+        airport = fp_root.findall('departure/airport')[0].text;
+        runway = fp_root.findall('departure/runway')[0].text;
+        fp_params = [
+            '--airport='+airport,
+            '--runway='+runway,
+            '--flight-plan='+fp_file,
+            '--prop:/autopilot/pausemgr-dist='+str(pausemgr_dist),
+        ];
+        if (aircraft):
+            fp_params.append('--aircraft=' + aircraft);
+        if (magicAI):
+            fp_params.append('--prop:/sim/magicAI=1');
+    except Exception, e:
+        sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
+        exit(1);
 
-	#Launch FlightGear
-	for i in fgfs_possible_exec:
-		if i == None:
-			continue;
-		if os.path.isfile(i):
-			fgfs_exec = i;
-			break;
-	if (fgfs_exec == None):
-		sys.stderr.write('Executable of fgfs not found.\n');
-		exit(1);
+    #Launch FlightGear
+    for i in fgfs_possible_exec:
+        if i == None:
+            continue;
+        if os.path.isfile(i):
+            fgfs_exec = i;
+            break;
+    if (fgfs_exec == None):
+        sys.stderr.write('Executable of fgfs not found.\n');
+        exit(1);
 
-	exit(subprocess.call([fgfs_exec] + fp_params + args));
+    exit(subprocess.call([fgfs_exec] + fp_params + args));
 
