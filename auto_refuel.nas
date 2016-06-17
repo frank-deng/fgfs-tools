@@ -8,6 +8,9 @@ var auto_refuel_748 = func(range=7600) {
 	}
 	print('Aircraft refueled.');
 }
+var auto_refuel_748X = func{
+	auto_refuel_748(10000);
+}
 
 var auto_refuel_757 = func{
 	var range = 3200;
@@ -107,6 +110,7 @@ var do_magic_refuel = func(estimated_range = 7300){
 
 var exec_func_list = [
 	['747-8i', auto_refuel_748],
+	['747-8X', auto_refuel_748X],
 	['757-200-PW2040', auto_refuel_757],
 	['B-2', do_magic_refuel],
 ];
