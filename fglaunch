@@ -56,6 +56,14 @@ if __name__ == '__main__':
         sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
         exit(1);
 
+    #Launch nvidia-settings before launching fgfs
+    try:
+        p = subprocess.call(['nvidia-settings'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT);
+        p.communicate();
+        p.wait();
+    except:
+        pass;
+
     #Launch FlightGear
     for i in fgfs_possible_exec:
         if i == None:
