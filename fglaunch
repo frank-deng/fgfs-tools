@@ -47,6 +47,7 @@ if __name__ == '__main__':
             '--runway='+runway,
             '--flight-plan='+fp_file,
             '--prop:/autopilot/pausemgr-dist='+str(pausemgr_dist),
+            '--disable-real-weather-fetch',
         ];
         if (aircraft):
             fp_params.append('--aircraft=' + aircraft);
