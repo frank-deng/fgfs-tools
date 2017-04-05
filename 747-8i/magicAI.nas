@@ -1,5 +1,25 @@
 var abs = func(n) { n < 0 ? -n : n }
 
+var flaps_manager = func {
+	if (!getprop('/gear/on-ground') and getprop('/position/altitude-agl-ft') > 100) {
+		var speed = getprop('/velocities/airspeed-kt');
+		var flaps = getprop('/controls/flight/flaps');
+		if (260 < speed and flaps != 0) {
+			setprop('/controls/flight/flaps', 0);
+		} else if (230 < speed and speed < 260 and flaps != 0.033) {
+			setprop('/controls/flight/flaps', 0.033);
+		} else if (205 < speed and speed < 230 and flaps != 0.166) {
+			setprop('/controls/flight/flaps', 0.166);
+		} else if (180 < speed and speed < 205 and flaps != 0.500) {
+			setprop('/controls/flight/flaps', 0.500);
+		} else if (170 < speed and speed < 180 and flaps != 0.666) {
+			setprop('/controls/flight/flaps', 0.666);
+		} else if (speed < 170 and flaps != 1.000) {
+			setprop('/controls/flight/flaps', 1.000);
+		}
+	}
+	settimer(flaps_manager, 1);
+}
 var magicAI_start = func {
 	magic_autostart();
 	flaps_manager();
@@ -37,33 +57,12 @@ var magicAI_start = func {
 		}, 20);
 	}, 2);
 }
-var flaps_manager = func {
-	if (!getprop('/gear/on-ground') and getprop('/position/altitude-agl-ft') > 100) {
-		var speed = getprop('/velocities/airspeed-kt');
-		var flaps = getprop('/controls/flight/flaps');
-		if (260 < speed and flaps != 0) {
-			setprop('/controls/flight/flaps', 0);
-		} else if (230 < speed and speed < 260 and flaps != 0.033) {
-			setprop('/controls/flight/flaps', 0.033);
-		} else if (205 < speed and speed < 230 and flaps != 0.166) {
-			setprop('/controls/flight/flaps', 0.166);
-		} else if (180 < speed and speed < 205 and flaps != 0.500) {
-			setprop('/controls/flight/flaps', 0.500);
-		} else if (170 < speed and speed < 180 and flaps != 0.666) {
-			setprop('/controls/flight/flaps', 0.666);
-		} else if (speed < 170 and flaps != 1.000) {
-			setprop('/controls/flight/flaps', 1.000);
-		}
-	}
-	settimer(flaps_manager, 1);
-}
 var magicAI_takeoff = func {
 	if (!getprop('/gear/on-ground') and getprop('/position/altitude-agl-ft') > 40) {
 		setprop('/controls/gear/gear-down', 0);
 		setprop('/controls/lighting/taxi-lights', 0);
 		setprop('/controls/lighting/logo-lights', 0);
 		setprop('/controls/lighting/wing-lights', 0);
-		setprop('/instrumentation/afds/inputs/vertical-index', 2);
 		magicAI_climb();return;
 	}
 	settimer(magicAI_takeoff, 1);
@@ -72,23 +71,10 @@ var magicAI_climb = func {
 	if (!getprop('/gear/on-ground') and getprop('/position/altitude-agl-ft') > 210) {
 		setprop('/instrumentation/afds/inputs/autothrottle-index', 5);
 		setprop('/instrumentation/afds/inputs/AP', 1);
-		setprop('/autopilot/settings/vertical-speed-fpm', 1000);
 		setprop('/controls/flight/rudder', 0);
-		magicAI_start_cruise();return;
-	}
-	settimer(magicAI_climb, 1);
-}
-
-var vs_prev = 0;
-var magicAI_start_cruise = func {
-	var vs = getprop('/velocities/vertical-speed-fps') * 60;
-	if (getprop('/position/altitude-agl-ft') > 2000 and 800 < vs and vs < 1200 and abs(vs - vs_prev) < 100) {
-		setprop('/instrumentation/afds/inputs/vertical-index', 5);
-		setprop('/controls/flight/elevator', 0);
 		magicAI_cruise();return;
 	}
-	vs_prev = vs;
-	settimer(magicAI_start_cruise, 1);
+	settimer(magicAI_climb, 1);
 }
 var magicAI_cruise = func {
 	var route_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
