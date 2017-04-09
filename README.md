@@ -79,9 +79,10 @@ Recommened configuration for `~/.fgfsrc`
 
 	--time-match-real
 	--httpd=8080
-	--prop:/sim/frame-rate-throttle-hz=60
 	--prop:/autopilot/pausemgr-dist=20
-
-	#For Marble map use
+	--prop:/sim/rendering/multi-sample-buffers=true
+	--prop:/sim/rendering/multi-samples=8
 	--nmea=socket,out,5,localhost,5500,udp
+
+Boeing airliners should start descending when remaining distance is at around 131 nmi (including 20 nmi for landing procedure).
 

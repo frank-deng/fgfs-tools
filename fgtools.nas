@@ -24,7 +24,7 @@ var pause_manager = func
 		}
 
 		if (paused) {
-			#Slow down fps to reduce overhead
+			#Slow down fps to reduce computer's temperature
 			if (nil == getprop('/sim/gui/frame-rate-throttled')) {
 				props.globals.getNode('/sim/gui').addChild('frame-rate-throttled');
 			}
