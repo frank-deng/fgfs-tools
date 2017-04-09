@@ -239,14 +239,14 @@
     </wp>
     <wp n="35">
       <type type="string">navaid</type>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">4000</altitude-ft>
-      <ident type="string">MDG</ident>
-      <lon type="double">149.61625</lon>
-      <lat type="double">-32.565361</lat>
+      <ident type="string">GIZMO</ident>
+      <lon type="double">149.07</lon>
+      <lat type="double">-32.286111</lat>
     </wp>
     <wp n="36">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">RICNB</ident>
       <lon type="double">150.776397</lon>
       <lat type="double">-33.596931</lat>
