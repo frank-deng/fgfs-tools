@@ -10,6 +10,14 @@ var updateReport = func{
 _setlistener("/sim/signals/nasal-dir-initialized", func {
 	var l = setlistener('/sim/signals/fdm-initialized', func {
 		setprop('/fgreport/aircraft', getprop('/sim/description'));
+		setprop('/fgreport/paused', 0);
+		setprop('/fgreport/crashed', 0);
+		setlistener('/sim/freeze/master', func {
+			props.globals.getNode('/fgreport/paused').setBoolValue(getprop('/sim/freeze/master'));
+		});
+		setlistener('/sim/crashed', func {
+			props.globals.getNode('/fgreport/crashed').setBoolValue(getprop('/sim/crashed'));
+		});
 		updateReport();
 		removelistener(l);
 	});
