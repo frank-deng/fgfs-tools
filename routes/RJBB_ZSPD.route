@@ -24,20 +24,20 @@
       <departure type="bool">true</departure>
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">3000</altitude-ft>
+      <altitude-ft type="double">3026</altitude-ft>
       <ident type="string">24L-3</ident>
-      <lon type="double">135.1823399</lon>
-      <lat type="double">34.38584721</lat>
+      <lon type="double">135.1824782</lon>
+      <lat type="double">34.38570611</lat>
     </wp>
     <wp n="2">
       <type type="string">basic</type>
       <departure type="bool">true</departure>
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">6000</altitude-ft>
+      <altitude-ft type="double">6026</altitude-ft>
       <ident type="string">24L-6</ident>
-      <lon type="double">135.1354304</lon>
-      <lat type="double">34.35429384</lat>
+      <lon type="double">135.1356536</lon>
+      <lat type="double">34.35406626</lat>
     </wp>
     <wp n="3">
       <type type="string">navaid</type>
@@ -79,45 +79,41 @@
     </wp>
     <wp n="9">
       <type type="string">navaid</type>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">LAMEN</ident>
       <lon type="double">124</lon>
       <lat type="double">31.61</lat>
     </wp>
     <wp n="10">
       <type type="string">navaid</type>
-      <ident type="string">ELAGO</ident>
-      <lon type="double">122.183333</lon>
-      <lat type="double">30.8</lat>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4000</altitude-ft>
+      <ident type="string">BOLEX</ident>
+      <lon type="double">123</lon>
+      <lat type="double">31</lat>
     </wp>
     <wp n="11">
-      <type type="string">basic</type>
-      <approach type="bool">true</approach>
-      <generated type="bool">true</generated>
-      <ident type="string">APP-4</ident>
-      <lon type="double">121.9220989</lon>
-      <lat type="double">30.91339849</lat>
+      <type type="string">navaid</type>
+      <ident type="string">PONAB</ident>
+      <lon type="double">122.4</lon>
+      <lat type="double">30.586667</lat>
     </wp>
     <wp n="12">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">4013</altitude-ft>
-      <ident type="string">35-12</ident>
-      <lon type="double">121.8703525</lon>
-      <lat type="double">30.93623004</lat>
+      <ident type="string">APP-4</ident>
+      <lon type="double">121.9220555</lon>
+      <lat type="double">30.91337882</lat>
     </wp>
     <wp n="13">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">2013</altitude-ft>
-      <ident type="string">35-8</ident>
-      <lon type="double">121.8465463</lon>
-      <lat type="double">30.99982077</lat>
+      <altitude-ft type="double">4013</altitude-ft>
+      <ident type="string">35-12</ident>
+      <lon type="double">121.8703137</lon>
+      <lat type="double">30.93621816</lat>
     </wp>
     <wp n="14">
       <type type="string">basic</type>
@@ -125,11 +121,21 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">2013</altitude-ft>
-      <ident type="string">35-GS</ident>
-      <lon type="double">121.8363042</lon>
-      <lat type="double">31.02715207</lat>
+      <ident type="string">35-8</ident>
+      <lon type="double">121.8465205</lon>
+      <lat type="double">30.99981246</lat>
     </wp>
     <wp n="15">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2013</altitude-ft>
+      <ident type="string">35-GS</ident>
+      <lon type="double">121.8362838</lon>
+      <lat type="double">31.0271453</lat>
+    </wp>
+    <wp n="16">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
       <ident type="string">35</ident>

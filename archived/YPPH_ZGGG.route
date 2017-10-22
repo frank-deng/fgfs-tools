@@ -26,8 +26,8 @@
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">3070</altitude-ft>
       <ident type="string">03-3</ident>
-      <lon type="double">115.9825485</lon>
-      <lat type="double">-31.87978432</lat>
+      <lon type="double">115.9826033</lon>
+      <lat type="double">-31.87967287</lat>
     </wp>
     <wp n="2">
       <type type="string">basic</type>
@@ -36,8 +36,8 @@
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">6070</altitude-ft>
       <ident type="string">03-6</ident>
-      <lon type="double">115.9966157</lon>
-      <lat type="double">-31.83113781</lat>
+      <lon type="double">115.9966804</lon>
+      <lat type="double">-31.83102845</lat>
     </wp>
     <wp n="3">
       <type type="string">navaid</type>
@@ -175,17 +175,17 @@
     </wp>
     <wp n="25">
       <type type="string">navaid</type>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">4100</altitude-ft>
       <ident type="string">SKATE</ident>
       <lon type="double">115.144444</lon>
       <lat type="double">21.531944</lat>
     </wp>
     <wp n="26">
       <type type="string">navaid</type>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">4100</altitude-ft>
       <ident type="string">CH</ident>
-      <lon type="double">114.030056</lon>
-      <lat type="double">22.219542</lat>
+      <lon type="double">114.030208</lon>
+      <lat type="double">22.219914</lat>
     </wp>
     <wp n="27">
       <type type="string">navaid</type>
@@ -200,8 +200,8 @@
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">4050</altitude-ft>
       <ident type="string">02R-12</ident>
-      <lon type="double">113.253181</lon>
-      <lat type="double">23.18073617</lat>
+      <lon type="double">113.2531807</lon>
+      <lat type="double">23.18073475</lat>
     </wp>
     <wp n="29">
       <type type="string">basic</type>
@@ -210,8 +210,8 @@
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">2050</altitude-ft>
       <ident type="string">02R-8</ident>
-      <lon type="double">113.2705456</lon>
-      <lat type="double">23.24567338</lat>
+      <lon type="double">113.2705453</lon>
+      <lat type="double">23.24567196</lat>
     </wp>
     <wp n="30">
       <type type="string">basic</type>
@@ -220,8 +220,8 @@
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">2050</altitude-ft>
       <ident type="string">02R-GS</ident>
-      <lon type="double">113.2780145</lon>
-      <lat type="double">23.27358422</lat>
+      <lon type="double">113.2780142</lon>
+      <lat type="double">23.2735828</lat>
     </wp>
     <wp n="31">
       <type type="string">runway</type>

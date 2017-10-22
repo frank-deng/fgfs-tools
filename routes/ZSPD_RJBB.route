@@ -26,8 +26,8 @@
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">3013</altitude-ft>
       <ident type="string">35-3</ident>
-      <lon type="double">121.7680079</lon>
-      <lat type="double">31.20897883</lat>
+      <lon type="double">121.7680244</lon>
+      <lat type="double">31.20898231</lat>
     </wp>
     <wp n="2">
       <type type="string">basic</type>
@@ -36,16 +36,16 @@
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">6013</altitude-ft>
       <ident type="string">35-6</ident>
-      <lon type="double">121.7500539</lon>
-      <lat type="double">31.25665611</lat>
+      <lon type="double">121.7500802</lon>
+      <lat type="double">31.25666229</lat>
     </wp>
     <wp n="3">
       <type type="string">basic</type>
       <departure type="bool">true</departure>
       <generated type="bool">true</generated>
       <ident type="string">DEP-3</ident>
-      <lon type="double">121.7766303</lon>
-      <lat type="double">31.30126664</lat>
+      <lon type="double">121.7766657</lon>
+      <lat type="double">31.30126882</lat>
     </wp>
     <wp n="4">
       <type type="string">navaid</type>
@@ -81,49 +81,55 @@
     </wp>
     <wp n="9">
       <type type="string">navaid</type>
+      <ident type="string">DONAR</ident>
+      <lon type="double">132.484639</lon>
+      <lat type="double">33.351428</lat>
+    </wp>
+    <wp n="10">
+      <type type="string">navaid</type>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">4000</altitude-ft>
       <ident type="string">IGOSO</ident>
       <lon type="double">134.098128</lon>
       <lat type="double">34.058864</lat>
     </wp>
-    <wp n="10">
+    <wp n="11">
       <type type="string">navaid</type>
       <ident type="string">HALKA</ident>
       <lon type="double">134.984017</lon>
       <lat type="double">34.218208</lat>
-    </wp>
-    <wp n="11">
-      <type type="string">basic</type>
-      <approach type="bool">true</approach>
-      <generated type="bool">true</generated>
-      <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">4000</altitude-ft>
-      <ident type="string">06R-12</ident>
-      <lon type="double">135.0417103</lon>
-      <lat type="double">34.29112834</lat>
     </wp>
     <wp n="12">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">2000</altitude-ft>
-      <ident type="string">06R-8</ident>
-      <lon type="double">135.1041704</lon>
-      <lat type="double">34.33324377</lat>
+      <altitude-ft type="double">4026</altitude-ft>
+      <ident type="string">06R-12</ident>
+      <lon type="double">135.0420587</lon>
+      <lat type="double">34.29077357</lat>
     </wp>
     <wp n="13">
       <type type="string">basic</type>
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
-      <altitude-ft type="double">2000</altitude-ft>
-      <ident type="string">06R-GS</ident>
-      <lon type="double">135.1310364</lon>
-      <lat type="double">34.35133612</lat>
+      <altitude-ft type="double">2026</altitude-ft>
+      <ident type="string">06R-8</ident>
+      <lon type="double">135.1044026</lon>
+      <lat type="double">34.33300714</lat>
     </wp>
     <wp n="14">
+      <type type="string">basic</type>
+      <approach type="bool">true</approach>
+      <generated type="bool">true</generated>
+      <alt-restrict type="string">at</alt-restrict>
+      <altitude-ft type="double">2026</altitude-ft>
+      <ident type="string">06R-GS</ident>
+      <lon type="double">135.1312187</lon>
+      <lat type="double">34.35115031</lat>
+    </wp>
+    <wp n="15">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
       <ident type="string">06R</ident>
