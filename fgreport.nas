@@ -42,3 +42,40 @@ _setlistener("/sim/signals/nasal-dir-initialized", func {
 		removelistener(l);
 	});
 });
+
+var mod = func(n, m) {
+    var x = n - m * int(n/m);      # int() truncates to zero, not -Inf
+    return x < 0 ? x + abs(m) : x; # ...so must handle negative n's
+}
+var update_time_string = func(){
+	#/autopilot/route-manager/ete-string
+	var time_remaining = getprop('/autopilot/route-manager/ete');
+	if (time_remaining <= 2147483647) {
+		setprop('/autopilot/route-manager/ete-string'
+			,sprintf('%02d:%02d:%02d'
+				,int(time_remaining / 3600)
+				,mod(int(time_remaining / 60), 60)
+				,mod(time_remaining, 60)
+			)
+		);
+	} else {
+		setprop('/autopilot/route-manager/ete-string', '00:00:00');
+	}
+
+	#/autopilot/route-manager/flight-time-string
+	var time_elapsed = getprop('/autopilot/route-manager/flight-time');
+	setprop('/autopilot/route-manager/flight-time-string',
+		sprintf(
+			'%02d:%02d:%02d'
+			,int(time_elapsed / 3600)
+			,mod(int(time_elapsed / 60), 60)
+			,mod(time_elapsed, 60)
+		)
+	);
+
+	settimer(update_time_string, 0.1);
+}
+_setlistener("/sim/signals/nasal-dir-initialized", func {
+	update_time_string();
+});
+
