@@ -86,3 +86,4 @@ Recommened configuration for `~/.fgfsrc`
 
 Boeing airliners should start descending when remaining distance is at around 131 nmi (including 20 nmi for landing procedure).
 
+For PCs with touch screen, please disable touch screen from Device Manager first before running FlightGear under Windows 10. Otherwise FlightGear will be inoperatable.
