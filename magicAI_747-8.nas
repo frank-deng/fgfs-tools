@@ -76,8 +76,24 @@ var magicAI_climb = func {
 	}
 	settimer(magicAI_climb, 1);
 }
+var magicAI_adjust_elev = func{
+	if(getprop('/position/altitude-agl-ft')>1000){
+		var elev=getprop('/controls/flight/elevator');
+		if(abs(elev)<0.02){
+			setprop('/controls/flight/elevator',0);
+			return;
+		}
+		if(elev>0){
+			setprop('/controls/flight/elevator',elev-0.02);
+		} else if(elev<0){
+			setprop('/controls/flight/elevator',elev+0.02);
+		}
+	}
+	settimer(magicAI_adjust_elev, 200);
+}
 var magicAI_cruise = func {
 	var route_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
+	magicAI_adjust_elev();
 	if (route_remaining < 22) {
 		setprop('/autopilot/settings/vertical-speed-fpm', -1000);
 		setprop('/autopilot/settings/target-speed-kt', 200);
