@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET;
 
 fgfs_possible_exec = [
     os.getenv('FGFS_BIN'),
+    'D:\\Program Files\\FlightGear 2020.3.2\\bin\\fgfs.exe',
     '/usr/bin/fgfs',
     '/usr/local/bin/fgfs',
 ];
@@ -31,11 +32,6 @@ if __name__ == '__main__':
         print('Usage: fglaunch [-f flight_plan [-p pause_distance_nmi]] [-a aircraft] [-M] [-- Other_Arguments...]');
         exit(1);
 
-    #Check if reboot is required
-    if ('Linux' == platform.system() and os.path.isfile('/var/run/reboot-required')):
-        sys.stderr.write('Please reboot your machine before launching FlightGear.\n');
-        exit(1);
-
     #Get runway to takeoff
     try:
         fp_tree = ET.parse(fp_file);
@@ -55,14 +51,6 @@ if __name__ == '__main__':
         fp_params.append('--aircraft=' + aircraft);
     if (magicAI):
         fp_params.append('--prop:/sim/magicAI=1');
-
-    #Launch nvidia-settings before launching fgfs
-    #try:
-    #    p = subprocess.call(['nvidia-settings'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT);
-    #    p.communicate();
-    #    p.wait();
-    #except:
-    #    pass;
 
     #Launch FlightGear
     fgfs_exec=None;

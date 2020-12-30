@@ -72,6 +72,7 @@ var magicAI_climb = func {
 		setprop('/instrumentation/afds/inputs/autothrottle-index', 5);
 		setprop('/instrumentation/afds/inputs/AP', 1);
 		setprop('/controls/flight/rudder', 0);
+		magicAI_adjust_elev();
 		magicAI_cruise();return;
 	}
 	settimer(magicAI_climb, 1);
@@ -93,7 +94,6 @@ var magicAI_adjust_elev = func{
 }
 var magicAI_cruise = func {
 	var route_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
-	magicAI_adjust_elev();
 	if (route_remaining < 22) {
 		setprop('/autopilot/settings/vertical-speed-fpm', -1000);
 		setprop('/autopilot/settings/target-speed-kt', 200);
