@@ -77,7 +77,7 @@ var magicAI_adjust_elev = func{
 			setprop('/controls/flight/elevator',elev+0.02);
 		}
 	}
-	settimer(magicAI_adjust_elev, 200);
+	settimer(magicAI_adjust_elev, 1);
 }
 var magicAI_cruise = func {
 	var route_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');

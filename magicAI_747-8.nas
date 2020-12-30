@@ -67,16 +67,6 @@ var magicAI_takeoff = func {
 	}
 	settimer(magicAI_takeoff, 1);
 }
-var magicAI_climb = func {
-	if (!getprop('/gear/on-ground') and getprop('/position/altitude-agl-ft') > 210) {
-		setprop('/instrumentation/afds/inputs/autothrottle-index', 5);
-		setprop('/instrumentation/afds/inputs/AP', 1);
-		setprop('/controls/flight/rudder', 0);
-		magicAI_adjust_elev();
-		magicAI_cruise();return;
-	}
-	settimer(magicAI_climb, 1);
-}
 var magicAI_adjust_elev = func{
 	if(getprop('/position/altitude-agl-ft')>1000){
 		var elev=getprop('/controls/flight/elevator');
@@ -90,7 +80,17 @@ var magicAI_adjust_elev = func{
 			setprop('/controls/flight/elevator',elev+0.02);
 		}
 	}
-	settimer(magicAI_adjust_elev, 200);
+	settimer(magicAI_adjust_elev, 1);
+}
+var magicAI_climb = func {
+	if (!getprop('/gear/on-ground') and getprop('/position/altitude-agl-ft') > 210) {
+		setprop('/instrumentation/afds/inputs/autothrottle-index', 5);
+		setprop('/instrumentation/afds/inputs/AP', 1);
+		setprop('/controls/flight/rudder', 0);
+		magicAI_adjust_elev();
+		magicAI_cruise();return;
+	}
+	settimer(magicAI_climb, 1);
 }
 var magicAI_cruise = func {
 	var route_remaining = getprop('/autopilot/route-manager/distance-remaining-nm');
