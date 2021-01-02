@@ -42,10 +42,10 @@ if __name__ == '__main__':
     except Exception as e:
         sys.stderr.write('Failed to parse Flight Plan: ' + str(e) + '\n');
     
-    if (aircraft):
-        fp_params.append('--aircraft=' + aircraft);
+    #if (aircraft):
+    #    fp_params.append('--aircraft=' + aircraft);
 
-    if (re.search(r'747|757',aircraft,re.M|re.I)):
+    if (aircraft and re.search(r'747|757',aircraft,re.M|re.I)):
         fp_params.append('--prop:/sim/magicAI=1');
 
     #Launch FlightGear
