@@ -2,10 +2,13 @@
 
 <PropertyList>
   <version type="int">2</version>
+  <flight-rules type="string">V</flight-rules>
+  <flight-type type="string">X</flight-type>
+  <estimated-duration-minutes type="int">0</estimated-duration-minutes>
   <departure>
     <airport type="string">ZSPD</airport>
     <sid type="string">DEFAULT</sid>
-    <runway type="string">35</runway>
+    <runway type="string">34</runway>
   </departure>
   <destination>
     <airport type="string">RJBB</airport>
@@ -16,7 +19,7 @@
     <wp>
       <type type="string">runway</type>
       <departure type="bool">true</departure>
-      <ident type="string">35</ident>
+      <ident type="string">34</ident>
       <icao type="string">ZSPD</icao>
     </wp>
     <wp n="1">
@@ -25,9 +28,9 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">3013</altitude-ft>
-      <ident type="string">35-3</ident>
-      <lon type="double">121.7680244</lon>
-      <lat type="double">31.20898231</lat>
+      <ident type="string">34-3</ident>
+      <lon type="double">121.7938</lon>
+      <lat type="double">31.20670551</lat>
     </wp>
     <wp n="2">
       <type type="string">basic</type>
@@ -35,17 +38,17 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">6013</altitude-ft>
-      <ident type="string">35-6</ident>
-      <lon type="double">121.7500802</lon>
-      <lat type="double">31.25666229</lat>
+      <ident type="string">34-6</ident>
+      <lon type="double">121.7758565</lon>
+      <lat type="double">31.25438559</lat>
     </wp>
     <wp n="3">
       <type type="string">basic</type>
       <departure type="bool">true</departure>
       <generated type="bool">true</generated>
       <ident type="string">DEP-3</ident>
-      <lon type="double">121.7766657</lon>
-      <lat type="double">31.30126882</lat>
+      <lon type="double">121.8024413</lon>
+      <lat type="double">31.29899214</lat>
     </wp>
     <wp n="4">
       <type type="string">navaid</type>
