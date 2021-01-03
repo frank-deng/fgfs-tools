@@ -2,6 +2,9 @@
 
 <PropertyList>
   <version type="int">2</version>
+  <flight-rules type="string">V</flight-rules>
+  <flight-type type="string">X</flight-type>
+  <estimated-duration-minutes type="int">0</estimated-duration-minutes>
   <departure>
     <airport type="string">RJBB</airport>
     <sid type="string">DEFAULT</sid>
@@ -10,7 +13,7 @@
   <destination>
     <airport type="string">ZSPD</airport>
     <approach type="string">DEFAULT</approach>
-    <runway type="string">35</runway>
+    <runway type="string">34</runway>
   </destination>
   <route>
     <wp>
@@ -102,8 +105,8 @@
       <approach type="bool">true</approach>
       <generated type="bool">true</generated>
       <ident type="string">APP-4</ident>
-      <lon type="double">121.9220555</lon>
-      <lat type="double">30.91337882</lat>
+      <lon type="double">121.9471878</lon>
+      <lat type="double">30.9128098</lat>
     </wp>
     <wp n="13">
       <type type="string">basic</type>
@@ -111,9 +114,9 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">4013</altitude-ft>
-      <ident type="string">35-12</ident>
-      <lon type="double">121.8703137</lon>
-      <lat type="double">30.93621816</lat>
+      <ident type="string">34-12</ident>
+      <lon type="double">121.8954463</lon>
+      <lat type="double">30.93564914</lat>
     </wp>
     <wp n="14">
       <type type="string">basic</type>
@@ -121,9 +124,9 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">2013</altitude-ft>
-      <ident type="string">35-8</ident>
-      <lon type="double">121.8465205</lon>
-      <lat type="double">30.99981246</lat>
+      <ident type="string">34-8</ident>
+      <lon type="double">121.8716532</lon>
+      <lat type="double">30.99924345</lat>
     </wp>
     <wp n="15">
       <type type="string">basic</type>
@@ -131,14 +134,14 @@
       <generated type="bool">true</generated>
       <alt-restrict type="string">at</alt-restrict>
       <altitude-ft type="double">2013</altitude-ft>
-      <ident type="string">35-GS</ident>
-      <lon type="double">121.8362838</lon>
-      <lat type="double">31.0271453</lat>
+      <ident type="string">34-GS</ident>
+      <lon type="double">121.8614166</lon>
+      <lat type="double">31.02657629</lat>
     </wp>
     <wp n="16">
       <type type="string">runway</type>
       <approach type="bool">true</approach>
-      <ident type="string">35</ident>
+      <ident type="string">34</ident>
       <icao type="string">ZSPD</icao>
     </wp>
   </route>
