@@ -2,6 +2,10 @@ var updateReport = func{
 	setprop('/fgreport/latitude-deg', getprop('/position/latitude-deg'));
 	setprop('/fgreport/longitude-deg', getprop('/position/longitude-deg'));
 	setprop('/fgreport/ete-string', getprop('/autopilot/route-manager/ete-string'));
+	if(getprop('/sim/time/local-day-string')){
+		setprop('/fgreport/local-time-string', getprop('/sim/time/local-day-string'));
+	}
+	setprop('/fgreport/gmt-string', getprop('/sim/time/gmt-string'));
 	setprop('/fgreport/flight-time-string', getprop('/autopilot/route-manager/flight-time-string'));
 	setprop('/fgreport/distance-remaining-nm', getprop('/autopilot/route-manager/distance-remaining-nm'));
 	setprop('/fgreport/total-distance', getprop('/autopilot/route-manager/total-distance'));
@@ -72,6 +76,18 @@ var update_time_string = func(){
 			,mod(time_elapsed, 60)
 		)
 	);
+
+	var local_time = getprop('/sim/time/local-day-seconds');
+	if(local_time){
+		setprop('/sim/time/local-day-string',
+			sprintf(
+				'%02d:%02d:%02d'
+				,int(local_time / 3600)
+				,mod(int(local_time / 60), 60)
+				,mod(local_time, 60)
+			)
+		);
+	}
 
 	settimer(update_time_string, 0.1);
 }
