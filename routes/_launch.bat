@@ -1,2 +1,2 @@
 @echo off
-start "" ../fglaunch.pyw %1
+start "" python ../fglaunch.pyw %1
