@@ -65,6 +65,21 @@ Find out code like follows:
 
 Then comment out the code above.
 
+## Remap Arrow Keys
+
+Use [AutoHotkey](https://www.autohotkey.com/) to remap arrow keys for operating throttle and rudder instead of aileron and elevator. Useful for keyboards without keys for operating rudder.
+
+	#IfWinActive ahk_exe fgfs.exe
+	*Up::ControlSend,,{Blind}{PgUp Down}
+	*Up Up::ControlSend,,{Blind}{PgUp Up}
+	*Down::ControlSend,,{Blind}{PgDn Down}
+	*Down Up::ControlSend,,{Blind}{PgDn Up}
+	*Left::ControlSend,,{Blind}{Insert Down}
+	*Left Up::ControlSend,,{Blind}{Insert Up}
+	*Right::ControlSend,,{Blind}{Enter Down}
+	*Right Up::ControlSend,,{Blind}{Enter Up}
+	#if
+
 ## Misceallanous
 
 Set maximum FPS to 30 from command line:
