@@ -109,7 +109,7 @@ module.exports=class{
         this.terminal.setattr(Terminal.RESET_ATTR);
     }
     _drawTime(){
-        let timestr=fecha.format(new Date(),'YYYY-MM-DD hh:mm:ss');
+        let timestr=fecha.format(new Date(),'YYYY-MM-DD HH:mm:ss');
         this.terminal.setattr(Terminal.ATTR_REVERSED,Terminal.FG_BLACK,Terminal.BG_CYAN);
         this.terminal.locate(80-timestr.length,1);
         this.terminal.print(timestr);
