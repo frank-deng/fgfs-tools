@@ -6,6 +6,7 @@ const fgConsole=new FGConsole(process.stdout,()=>{
   process.stdin.resume();
   process.exit();
 },{
+  FGFS_HOST:"http://10.0.2.2:8123",
   language:'zh.CN'
 });
 process.stdin.on('data',(data)=>{
