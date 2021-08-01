@@ -6,7 +6,7 @@ const fgConsole=new FGConsole(process.stdout,()=>{
   process.stdin.resume();
   process.exit();
 },{
-  language:'zh-cn'
+  language:'zh.CN'
 });
 process.stdin.on('data',(data)=>{
   fgConsole.ondata(data);

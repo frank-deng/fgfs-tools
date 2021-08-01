@@ -131,34 +131,7 @@ function readln(stream,param={}){
         clearTimeout(timer);
     });
 }
-class LanguagePack{
-	_lang={};
-	_currentLang='en';
-	constructor(data,defaultLang='en'){
-		this._lang=data;
-		this._currentLang=defaultLang
-    }
-    setLanguage(lang){
-        this._currentLang=lang;
-    }
-    t(key,language=null){
-        try{
-            let data=this._lang[language || this._currentLang];
-            if(!data){
-                return key;
-            }
-            return data[key] || key;
-        }catch(e){
-            console.error(e);
-        }
-        return key;
-    }
-    get(key,language=null){
-        return this.t(key,language);
-    }
-}
 module.exports={
     readln,
-    Terminal,
-    LanguagePack
+    Terminal
 }
