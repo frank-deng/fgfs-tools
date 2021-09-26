@@ -4,10 +4,11 @@ const FGConsole=require('./fgconsole');
 const fgConsole=new FGConsole(process.stdout,()=>{
   process.stdin.setRawMode(false);
   process.stdin.resume();
-  process.exit();
+  setTimeout(process.exit,200);
 },{
   FGFS_HOST:"http://10.0.2.2:8123",
-  language:'zh.CN'
+  language:process.env.FGCONSOLE_LANGUAGE||'zh.CN',
+  encoding:process.env.ENCODING
 });
 process.stdin.on('data',(data)=>{
   fgConsole.ondata(data);

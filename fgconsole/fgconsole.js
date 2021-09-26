@@ -67,17 +67,16 @@ const LANGUAGE_PACK_DATA={
     }
 };
 
-module.exports=class{
+module.exports=class extends Terminal{
     data=undefined;
     running=true;
     flightStatus=null;
     constructor(stream,_exit,param={}){
-        this._exit=_exit;
-        this._timer=null;
-        
-        this.terminal=new Terminal(stream,{
+        super(stream,{
             outputEncoding:param.encoding
         });
+        this._exit=_exit;
+        this._timer=null;
         
         i18next.init({
             lng:param.language,
@@ -85,35 +84,35 @@ module.exports=class{
         }).then((t)=>{
             this.$t=t;
             this.FGFS_HOST=param.FGFS_HOST;
-            this.terminal.clrscr();
-            this.terminal.locate(0,0);
-            this.terminal.setcursor(false);
-            this.terminal.print(this.$t('Loading'));
+            this.clrscr();
+            this.locate(0,0);
+            this.setcursor(false);
+            this.print(this.$t('Loading'));
             this.refresh();
         });
     }
     drawFrame(){
-        this.terminal.clrscr();
-        this.terminal.locate(0,1);
-        this.terminal.setattr(Terminal.ATTR_BOLD,Terminal.ATTR_REVERSED,Terminal.FG_YELLOW,Terminal.BG_CYAN);
-        this.terminal.print(' '.repeat(79));
+        this.clrscr();
+        this.locate(0,1);
+        this.setattr(Terminal.ATTR_BOLD,Terminal.ATTR_REVERSED,Terminal.FG_YELLOW,Terminal.BG_CYAN);
+        this.print(' '.repeat(79));
         let title=this.$t('Flight Control Center');
-        this.terminal.locate(Math.round((80-Terminal.strlen(title))/2),1);
-        this.terminal.print(title);
+        this.locate(Math.round((80-Terminal.strlen(title))/2),1);
+        this.print(title);
         
-        this.terminal.locate(0,24);
-        this.terminal.setattr(Terminal.RESET_ATTR,Terminal.ATTR_REVERSED,Terminal.FG_BLACK,Terminal.BG_CYAN);
-        this.terminal.print(' '.repeat(79));
-        this.terminal.locate(2,24);
-        this.terminal.print(this.$t(this.data ? 'KEYBOARD_HELP' : 'KEYBOARD_HELP_IDLE'),79);
-        this.terminal.setattr(Terminal.RESET_ATTR);
+        this.locate(0,24);
+        this.setattr(Terminal.RESET_ATTR,Terminal.ATTR_REVERSED,Terminal.FG_BLACK,Terminal.BG_CYAN);
+        this.print(' '.repeat(79));
+        this.locate(2,24);
+        this.print(this.$t(this.data ? 'KEYBOARD_HELP' : 'KEYBOARD_HELP_IDLE'),79);
+        this.setattr(Terminal.RESET_ATTR);
     }
     _drawTime(){
         let timestr=fecha.format(new Date(),'YYYY-MM-DD HH:mm:ss');
-        this.terminal.setattr(Terminal.ATTR_REVERSED,Terminal.FG_BLACK,Terminal.BG_CYAN);
-        this.terminal.locate(80-timestr.length,1);
-        this.terminal.print(timestr);
-        this.terminal.setattr(Terminal.RESET_ATTR);
+        this.setattr(Terminal.ATTR_REVERSED,Terminal.FG_BLACK,Terminal.BG_CYAN);
+        this.locate(80-timestr.length,1);
+        this.print(timestr);
+        this.setattr(Terminal.RESET_ATTR);
     }
     async refresh(){
         if(!this.running){
@@ -142,8 +141,8 @@ module.exports=class{
                 this.data=null;
                 this.drawFrame();
                 let text=this.$t('No Flight Mission');
-                this.terminal.locate(Math.floor((80-Terminal.strlen(text))/2),12);
-                this.terminal.print(text);
+                this.locate(Math.floor((80-Terminal.strlen(text))/2),12);
+                this.print(text);
             }
             this._drawTime();
             return;
@@ -155,101 +154,101 @@ module.exports=class{
                 fgreport[item.name]=item.value;
             }
 
-            this.terminal.setattr(Terminal.RESET_ATTR);
+            this.setattr(Terminal.RESET_ATTR);
 
             //绘制框架
             if(!this.data){
                 this.data=fgreport;
                 this.drawFrame();
 
-                this.terminal.locate(0,3);
-                this.terminal.print(this.$t('Aircraft Model'));
-                this.terminal.locate(0,4);
-                this.terminal.print(this.$t('UTC Time'));
-                this.terminal.locate(0,5);
-                this.terminal.print(this.$t('Local Time'));
-                this.terminal.locate(0,6);
-                this.terminal.print(this.$t('Longitude'));
-                this.terminal.locate(0,7);
-                this.terminal.print(this.$t('Latitude'));
-                this.terminal.locate(0,8);
-                this.terminal.print(this.$t('Flight Time'));
-                this.terminal.locate(0,9);
-                this.terminal.print(this.$t('Remaining Time'));
-                this.terminal.locate(0,10);
-                this.terminal.print(this.$t('Total Distance'));
-                this.terminal.locate(0,11);
-                this.terminal.print(this.$t('Remaining Distance'));
-                this.terminal.locate(0,12);
-                this.terminal.print(this.$t('Elapsed Distance'));
+                this.locate(0,3);
+                this.print(this.$t('Aircraft Model'));
+                this.locate(0,4);
+                this.print(this.$t('UTC Time'));
+                this.locate(0,5);
+                this.print(this.$t('Local Time'));
+                this.locate(0,6);
+                this.print(this.$t('Longitude'));
+                this.locate(0,7);
+                this.print(this.$t('Latitude'));
+                this.locate(0,8);
+                this.print(this.$t('Flight Time'));
+                this.locate(0,9);
+                this.print(this.$t('Remaining Time'));
+                this.locate(0,10);
+                this.print(this.$t('Total Distance'));
+                this.locate(0,11);
+                this.print(this.$t('Remaining Distance'));
+                this.locate(0,12);
+                this.print(this.$t('Elapsed Distance'));
 
-                this.terminal.locate(40,4);
-                this.terminal.print(this.$t('Direction'));
-                this.terminal.locate(40,5);
-                this.terminal.print(this.$t('Altitude'));
-                this.terminal.locate(40,6);
-                this.terminal.print(this.$t('AGL'));
-                this.terminal.locate(40,7);
-                this.terminal.print(this.$t('Vertical Speed'));
+                this.locate(40,4);
+                this.print(this.$t('Direction'));
+                this.locate(40,5);
+                this.print(this.$t('Altitude'));
+                this.locate(40,6);
+                this.print(this.$t('AGL'));
+                this.locate(40,7);
+                this.print(this.$t('Vertical Speed'));
                 if('ufo'==fgreport['flight-model']){
-                    this.terminal.locate(40,8);
-                    this.terminal.print(this.$t('Speed'));
+                    this.locate(40,8);
+                    this.print(this.$t('Speed'));
                 }else{
-                    this.terminal.locate(40,8);
-                    this.terminal.print(this.$t('Airspeed'));
-                    this.terminal.locate(40,9);
-                    this.terminal.print(this.$t('Groundspeed'));
-                    this.terminal.locate(40,10);
-                    this.terminal.print(this.$t('Mach'));
-                    this.terminal.locate(40,11);
-                    this.terminal.print(this.$t('Fuel'));
+                    this.locate(40,8);
+                    this.print(this.$t('Airspeed'));
+                    this.locate(40,9);
+                    this.print(this.$t('Groundspeed'));
+                    this.locate(40,10);
+                    this.print(this.$t('Mach'));
+                    this.locate(40,11);
+                    this.print(this.$t('Fuel'));
                 }
             }
             fgreport['longitude'] = Math.abs(fgreport['longitude-deg']).toFixed(6)+(fgreport['longitude-deg']>=0 ? 'E' : 'W');
             fgreport['latitude'] = Math.abs(fgreport['latitude-deg']).toFixed(6)+(fgreport['latitude-deg']>=0 ? 'N' : 'S');
             let padSize=11;
-            this.terminal.locate(padSize,3);
-            this.terminal.print(fgreport.aircraft+'        ');
-            this.terminal.locate(padSize,4);
-            this.terminal.print(fgreport['gmt-string']+'        ');
-            this.terminal.locate(padSize,5);
-            this.terminal.print(fgreport['local-time-string']+'        ');
-            this.terminal.locate(padSize,6);
-            this.terminal.print(fgreport['longitude']+'        ');
-            this.terminal.locate(padSize,7);
-            this.terminal.print(fgreport['latitude']+'        ');
-            this.terminal.locate(padSize,8);
-            this.terminal.print(fgreport['flight-time-string']+'        ');
-            this.terminal.locate(padSize,9);
-            this.terminal.print(fgreport['ete-string']+'        ');
-            this.terminal.locate(padSize,10);
-            this.terminal.print(fgreport['total-distance'].toFixed(1)+'nm        ');
-            this.terminal.locate(padSize,11);
-            this.terminal.print(fgreport['distance-remaining-nm'].toFixed(1)+'nm        ');
-            this.terminal.locate(padSize,12);
-            this.terminal.print((Number(fgreport['total-distance'])-Number(fgreport['distance-remaining-nm'])).toFixed(1)+'nm        ');
+            this.locate(padSize,3);
+            this.print(fgreport.aircraft+'        ');
+            this.locate(padSize,4);
+            this.print(fgreport['gmt-string']+'        ');
+            this.locate(padSize,5);
+            this.print(fgreport['local-time-string']+'        ');
+            this.locate(padSize,6);
+            this.print(fgreport['longitude']+'        ');
+            this.locate(padSize,7);
+            this.print(fgreport['latitude']+'        ');
+            this.locate(padSize,8);
+            this.print(fgreport['flight-time-string']+'        ');
+            this.locate(padSize,9);
+            this.print(fgreport['ete-string']+'        ');
+            this.locate(padSize,10);
+            this.print(fgreport['total-distance'].toFixed(1)+'nm        ');
+            this.locate(padSize,11);
+            this.print(fgreport['distance-remaining-nm'].toFixed(1)+'nm        ');
+            this.locate(padSize,12);
+            this.print((Number(fgreport['total-distance'])-Number(fgreport['distance-remaining-nm'])).toFixed(1)+'nm        ');
             
-            this.terminal.locate(40+padSize,4);
-            this.terminal.print((Number(fgreport['heading-deg'])).toFixed(2)+'°        ');
-            this.terminal.locate(40+padSize,5);
-            this.terminal.print((Number(fgreport['altitude-ft'])).toFixed(1)+'ft        ');
-            this.terminal.locate(40+padSize,6);
-            this.terminal.print((Number(fgreport['altitude-agl-ft'])).toFixed(1)+'ft        ');
-            this.terminal.locate(40+padSize,7);
-            this.terminal.print((Number(fgreport['vertical-speed-fps'])*60).toFixed(1)+'ft/min        ');
+            this.locate(40+padSize,4);
+            this.print((Number(fgreport['heading-deg'])).toFixed(2)+'°        ');
+            this.locate(40+padSize,5);
+            this.print((Number(fgreport['altitude-ft'])).toFixed(1)+'ft        ');
+            this.locate(40+padSize,6);
+            this.print((Number(fgreport['altitude-agl-ft'])).toFixed(1)+'ft        ');
+            this.locate(40+padSize,7);
+            this.print((Number(fgreport['vertical-speed-fps'])*60).toFixed(1)+'ft/min        ');
             if('ufo'==fgreport['flight-model']){
-                this.terminal.locate(40+padSize,8);
-                this.terminal.print((Number(fgreport['vertical-speed-fps'])).toFixed(1)+'kts        ');
+                this.locate(40+padSize,8);
+                this.print((Number(fgreport['vertical-speed-fps'])).toFixed(1)+'kts        ');
             }else{
-                this.terminal.locate(40+padSize,8);
-                this.terminal.print((Number(fgreport['airspeed-kt'])).toFixed(1)+'kts        ');
-                this.terminal.locate(40+padSize,9);
-                this.terminal.print((Number(fgreport['groundspeed-kt'])).toFixed(1)+'kts        ');
-                this.terminal.locate(40+padSize,10);
-                this.terminal.print((Number(fgreport['mach'])).toFixed(4)+'     ');
-                this.terminal.locate(40+padSize,11);
+                this.locate(40+padSize,8);
+                this.print((Number(fgreport['airspeed-kt'])).toFixed(1)+'kts        ');
+                this.locate(40+padSize,9);
+                this.print((Number(fgreport['groundspeed-kt'])).toFixed(1)+'kts        ');
+                this.locate(40+padSize,10);
+                this.print((Number(fgreport['mach'])).toFixed(4)+'     ');
+                this.locate(40+padSize,11);
                 let fuelPercentage=Number(fgreport['remain-fuel'])/Number(fgreport['initial-fuel'])*100;
-                this.terminal.print(fuelPercentage.toFixed(2)+'%     ');
+                this.print(fuelPercentage.toFixed(2)+'%     ');
             }
 
             let status=null;
@@ -262,24 +261,24 @@ module.exports=class{
             }
             if(this.flightStatus!=status){
                 this.flightStatus=status;
-                this.terminal.locate(0,23);
-                this.terminal.clrline();
+                this.locate(0,23);
+                this.clrline();
                 switch(status){
                     case 'crashed':
-                        this.terminal.setattr(Terminal.ATTR_BOLD,Terminal.ATTR_UNDERLINE,Terminal.FG_YELLOW,Terminal.BG_RED);
-                        this.terminal.print(this.$t('Crashed'));
+                        this.setattr(Terminal.ATTR_BOLD,Terminal.ATTR_UNDERLINE,Terminal.FG_YELLOW,Terminal.BG_RED);
+                        this.print(this.$t('Crashed'));
                     break;
                     case 'paused':
-                        this.terminal.setattr(Terminal.ATTR_BOLD,Terminal.FG_YELLOW);
-                        this.terminal.print(this.$t('Paused'));
+                        this.setattr(Terminal.ATTR_BOLD,Terminal.FG_YELLOW);
+                        this.print(this.$t('Paused'));
                     break;
                     default:
-                        this.terminal.setattr(Terminal.ATTR_BOLD,Terminal.FG_GREEN);
-                        this.terminal.print(this.$t('In Flight'));
+                        this.setattr(Terminal.ATTR_BOLD,Terminal.FG_GREEN);
+                        this.print(this.$t('In Flight'));
                     break;
                 }
-                this.terminal.setattr(Terminal.RESET_ATTR);
-                this.terminal.print(' '.repeat(20));
+                this.setattr(Terminal.RESET_ATTR);
+                this.print(' '.repeat(20));
             }
             this._drawTime();
         }catch(e){
@@ -292,6 +291,7 @@ module.exports=class{
             if(this._timer){
               clearTimeout(this._timer);
             }
+            this.reset();
         }catch(e){
             console.error(e);
         }finally{
@@ -324,7 +324,6 @@ module.exports=class{
         try{
             switch(data[0]){
                 case 0x1b:
-                    this.terminal.reset();
                     this.destroy();
                     return;
                 break;
